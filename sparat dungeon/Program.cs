@@ -1,9 +1,12 @@
 ﻿namespace sparat_dungeon
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
+            
+
+
             Console.WriteLine("스파르타 던전 게임에 오신 것을 환영합니다!");
             Console.WriteLine("1.START");
             Console.WriteLine("2.EXIT");
