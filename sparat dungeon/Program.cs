@@ -6,10 +6,13 @@
         {
             
 
-
+            
             Console.WriteLine("스파르타 던전 게임에 오신 것을 환영합니다!");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("1.START");
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("2.EXIT");
+            Console.ResetColor();
             string gmaeStart = Console.ReadLine();
             if (gmaeStart == "1")
             {
