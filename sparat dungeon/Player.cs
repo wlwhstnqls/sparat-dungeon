@@ -13,12 +13,16 @@ namespace sparat_dungeon
         public string PlayerJob { get; }
         public int PlayerAtk { get; }
         public int PlayerDef { get; }
-        public int PlayerHp { get; }
+        public int PlayerHp { set; get; }
         public int PlayerGold { get; private set; }
 
 
         public int PlayerExtraAtk { get; private set; }
         public int PlayerExtraDef { get; private set; }
+
+
+        public static Item EquipWepon { get; set; }
+        public static Item EquipArmor { get; set; }
 
         //private List<Item> Inventory = new List<Item>();
         //private List<Item> EquipLIst = new List<Item>();
@@ -31,7 +35,7 @@ namespace sparat_dungeon
         //    }
         //}
 
-        public Player(int playerLevel, string playerName, string playerJob, int playerAtk, int playerDef, int playerHp,int playerGold )
+        public Player(int playerLevel, string playerName, string playerJob, int playerAtk, int playerDef, int playerHp, int playerGold)
         {
             PlayerLevel = playerLevel;
             PlayerName = playerName;
@@ -46,10 +50,122 @@ namespace sparat_dungeon
             Console.WriteLine($"레벨: {PlayerLevel}");
             Console.WriteLine($"이름: {PlayerName}");
             Console.WriteLine($"직업: {PlayerJob}");
-            Console.WriteLine($"공격력: {PlayerAtk}");
-            Console.WriteLine($"방어력: {PlayerDef}");
+            Console.WriteLine(PlayerExtraAtk > 0 ? $"공격력: {PlayerAtk} +{PlayerExtraAtk}" : $"공격력: {PlayerAtk}");
+            Console.WriteLine(PlayerExtraAtk > 0 ? $"방어력: {PlayerAtk} +{PlayerExtraAtk}" : $"방어력: {PlayerAtk}");
             Console.WriteLine($"체력: {PlayerHp}");
             Console.WriteLine($"골드: {PlayerGold} Gold");
         }
+
+        public void EquipItem(Item item)
+        {
+
+            if (item.Type != ItemType.장비)
+            {
+                Console.WriteLine("장비 아이템이 아닙니다.");
+                return;
+            }
+
+            if (item.Slot == SlotType.무기)
+            {
+                if (EquipWepon == null)
+                {
+                    EquipWepon = item;
+                    PlayerExtraAtk = PlayerAtk + EquipWepon.DMG;
+                }
+                else
+                {
+                    PlayerExtraAtk = PlayerAtk - EquipWepon.DMG;
+                    EquipWepon = item;
+                    PlayerExtraAtk = PlayerAtk + EquipWepon.DMG;
+                }
+
+            }
+            else if (item.Slot == SlotType.방어구)
+            {
+                if (EquipArmor == null)
+                {
+                    EquipArmor = item;
+                    PlayerExtraDef = PlayerDef + EquipArmor.DF;
+                }
+                else
+                {
+                    PlayerExtraDef = PlayerDef - EquipArmor.DF;
+                    EquipArmor = item;
+                    PlayerExtraDef = PlayerDef + EquipArmor.DF;
+                }
+            }
+
+        }
+
+        public static void ShowInventoryE()
+        {
+            string str;
+            int index = 0;
+
+            Console.Clear();
+            Console.SetCursorPosition(6, 2);
+            Console.WriteLine("\u001b[38;2;135;206;250m[장착 가능 장비]\u001b[38;2;240;248;255m");
+            Console.WriteLine("");
+            for (int i = 0; i < Item.inventory.Length; i++)
+            {
+                int idx = Item.inventory[i];
+
+                if (idx > 0)
+                {
+                    Item item = Item.items[idx - 1];
+
+                    if (ItemType.장비 == item.Type)
+                    {
+                        Item.inventoryE[index] = Item.inventory[i];
+                        index += 1;
+                        if (EquipWepon == item || EquipArmor == item)
+                        {
+                            str = $"\u001b[\u001b[38;2;65;105;225m[E]\u001b[38;2;240;248;255m {item.Name} ";
+                        }
+                        else
+                        {
+                            str = $"\u001b[38;2;135;206;250m[{index}]\u001b[38;2;240;248;255m {item.Name} ";
+                        }
+
+                        if (item.DMG > 0)
+                        {
+                            str = str + $"{Item.FL} 공격력 +{item.DMG} ";
+                        }
+                        if (item.DF > 0)
+                        {
+                            str = str + $"{Item.FL} 방어력 +{item.DF} ";
+                        }
+                        if (item.HP > 0)
+                        {
+                            str = str + $"{Item.FL} 최대 체력 +{item.HP} ";
+                        }
+
+                        str = str + $"{Item.FL} {item.Ex}";
+
+                        Console.SetCursorPosition(5, Console.CursorTop);
+                        Console.WriteLine(str);
+                    }
+                }
+
+
+            }
+
+            if (index == 0)
+            {
+                Item.ShowInventory();
+                Console.Write("\x1b[38;2;181;53;53m");
+                Console.Write("[!] 장착 가능한 장비가 없습니다.");
+            }
+            else
+            {
+                Console.WriteLine("");
+                Console.SetCursorPosition(6, Console.CursorTop);
+                Console.Write($"\x1b[38;2;135;206;250m0.\x1b[38;2;240;248;255m");
+                Console.Write("뒤로가기");
+                Console.WriteLine("", 30, 10);
+            }
+        }
+
+
     }
 }
