@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -114,7 +116,7 @@ namespace sparat_dungeon
                     }
                     if (item.DF > 0)
                     {
-                        str = str + $"{FL} 방어력 +{item.DMG} ";
+                        str = str + $"{FL} 방어력 +{item.DF} ";
                     }
                     if (item.HP > 0)
                     {
@@ -136,6 +138,48 @@ namespace sparat_dungeon
             Console.WriteLine($"\x1b[38;2;135;206;250m0.\x1b[38;2;240;248;255m  돌아가기");
         }
 
+
+        public static void Inven_eq(string choice, int index)
+        {
+            int number;
+
+            if (int.TryParse(choice, out number))
+            {
+                if (number > 0 && number <= index)
+                {
+                    int itemIndex = inventoryE[number - 1] - 1;
+
+                    if (itemIndex >= 0 && itemIndex < items.Count)
+                    {
+                        Player.EquipItem(items[itemIndex]);
+
+                        Console.Write(new string(' ', Console.WindowWidth));
+                        Console.SetCursorPosition(0, Console.CursorTop - 1);
+                        Console.Write("\u001b[38;2;255;200;82m");
+                        Console.Write($"[장착 완료] {items[itemIndex].Name}을(를) 장착했습니다!");
+
+                        Thread.Sleep(1000);
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 아이템입니다.");
+                        Item.Inven_eq(Console.ReadLine(), index);
+                    }
+                }
+                else
+                {
+                    Console.Write(new string(' ', Console.WindowWidth));
+                    Console.SetCursorPosition(0, Console.CursorTop - 1);
+                    Console.Write("\u001b[38;2;181;53;53m");
+                    Console.Write("[!] 잘못된 번호입니다.");
+                    Console.SetCursorPosition(0, Console.CursorTop - 1);
+                    Item.Inven_eq(Console.ReadLine(), index);
+                }
+            }
+            else
+            {
+            }
+        }
 
 
 

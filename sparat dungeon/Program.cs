@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Threading;
 namespace sparat_dungeon
 
@@ -79,7 +80,6 @@ namespace sparat_dungeon
                     if (inventoryout == "1")
                     {
                         Player.ShowInventoryE();
-                        inventoryout = Console.ReadLine();
                     }
                     if (inventoryout == "0")
                     {

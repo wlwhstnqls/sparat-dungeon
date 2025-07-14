@@ -17,8 +17,8 @@ namespace sparat_dungeon
         public int PlayerGold { get; private set; }
 
 
-        public int PlayerExtraAtk { get; private set; }
-        public int PlayerExtraDef { get; private set; }
+        public static int PlayerExtraAtk { get; set; }
+        public static int PlayerExtraDef { get; set; }
 
 
         public static Item EquipWepon { get; set; }
@@ -56,7 +56,7 @@ namespace sparat_dungeon
             Console.WriteLine($"골드: {PlayerGold} Gold");
         }
 
-        public void EquipItem(Item item)
+        public static void EquipItem(Item item)
         {
 
             if (item.Type != ItemType.장비)
@@ -70,13 +70,13 @@ namespace sparat_dungeon
                 if (EquipWepon == null)
                 {
                     EquipWepon = item;
-                    PlayerExtraAtk = PlayerAtk + EquipWepon.DMG;
+                    PlayerExtraAtk = PlayerExtraAtk + EquipWepon.DMG;
                 }
                 else
                 {
-                    PlayerExtraAtk = PlayerAtk - EquipWepon.DMG;
+                    PlayerExtraAtk = PlayerExtraAtk - EquipWepon.DMG;
                     EquipWepon = item;
-                    PlayerExtraAtk = PlayerAtk + EquipWepon.DMG;
+                    PlayerExtraAtk = PlayerExtraAtk + EquipWepon.DMG;
                 }
 
             }
@@ -85,13 +85,13 @@ namespace sparat_dungeon
                 if (EquipArmor == null)
                 {
                     EquipArmor = item;
-                    PlayerExtraDef = PlayerDef + EquipArmor.DF;
+                    PlayerExtraDef = PlayerExtraAtk + EquipArmor.DF;
                 }
                 else
                 {
-                    PlayerExtraDef = PlayerDef - EquipArmor.DF;
+                    PlayerExtraDef = PlayerExtraAtk - EquipArmor.DF;
                     EquipArmor = item;
-                    PlayerExtraDef = PlayerDef + EquipArmor.DF;
+                    PlayerExtraDef = PlayerExtraAtk + EquipArmor.DF;
                 }
             }
 
@@ -163,7 +163,10 @@ namespace sparat_dungeon
                 Console.Write($"\x1b[38;2;135;206;250m0.\x1b[38;2;240;248;255m");
                 Console.Write("뒤로가기");
                 Console.WriteLine("", 30, 10);
+                Item.Inven_eq(Console.ReadLine(), index);
             }
+
+
         }
 
 
