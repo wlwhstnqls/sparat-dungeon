@@ -35,8 +35,6 @@ namespace sparat_dungeon
         public int Gold { get; set; }
         public ItemType Type { get; set; }
         public SlotType Slot { get; set; }
-        public static Item EquipWepon { get; set; }
-        public static Item EquipArmor { get; set; }
 
         public Item(string name, string ex, int dmg, int df, int hp, int gold, ItemType type, SlotType slot)
         {
@@ -101,7 +99,7 @@ namespace sparat_dungeon
                 {
                     Item item = items[idx - 1];
 
-                    if (EquipWepon == item || EquipArmor == item)
+                    if (Player.EquipWepon == item || Player.EquipArmor == item)
                     {
                         str = $"\u001b[\u001b[38;2;65;105;225m[E]\u001b[38;2;240;248;255m {item.Name} ";
                     }

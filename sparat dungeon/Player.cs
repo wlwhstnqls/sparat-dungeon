@@ -51,7 +51,7 @@ namespace sparat_dungeon
             Console.WriteLine($"이름: {PlayerName}");
             Console.WriteLine($"직업: {PlayerJob}");
             Console.WriteLine(PlayerExtraAtk > 0 ? $"공격력: {PlayerAtk} +{PlayerExtraAtk}" : $"공격력: {PlayerAtk}");
-            Console.WriteLine(PlayerExtraAtk > 0 ? $"방어력: {PlayerAtk} +{PlayerExtraAtk}" : $"방어력: {PlayerAtk}");
+            Console.WriteLine(PlayerExtraDef > 0 ? $"방어력: {PlayerDef} +{PlayerExtraDef}" : $"방어력: {PlayerDef}");
             Console.WriteLine($"체력: {PlayerHp}");
             Console.WriteLine($"골드: {PlayerGold} Gold");
         }
