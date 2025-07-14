@@ -1,12 +1,16 @@
-﻿namespace sparat_dungeon
+﻿using System;
+using System.Threading;
+namespace sparat_dungeon
+
 {
     public class Program
     {
+
         static void Main(string[] args)
         {
             
 
-            
+
             Console.WriteLine("스파르타 던전 게임에 오신 것을 환영합니다!");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("1.START");
@@ -29,6 +33,7 @@
                 Console.WriteLine("잘못된 입력입니다. 게임을 종료합니다.");
                 return;
             }
+            Thread.Sleep(1000);
             Console.Clear();
             while (true)
             {
