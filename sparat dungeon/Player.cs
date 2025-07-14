@@ -25,38 +25,27 @@ namespace sparat_dungeon
         public static Item EquipWepon { get; set; }
         public static Item EquipArmor { get; set; }
 
-        public Player(int playerLevel, string playerName, string playerJob, int playerAtk, int playerDef, int playerHp, int playerGold)
+        public Player(string playerName, string jobSelect)
         {
-            PlayerLevel = playerLevel;
-            PlayerName = playerName;
-            PlayerJob = playerJob;
-            PlayerAtk = playerAtk;
-            PlayerDef = playerDef;
-            PlayerHp = playerHp;
-            PlayerGold = playerGold;
+            playerName = PlayerName;
+
+            if (jobSelect == "1" || jobSelect == "전사")
+            {
+                PlayerJob = "전사";
+                PlayerHp = 100;
+                PlayerAtk = 10;
+                PlayerDef = 5;
+                PlayerGold = 1500;
+            }
+            else if (jobSelect == "2" || jobSelect == "도적")
+            {
+                PlayerJob = "도적";
+                PlayerHp = 80;
+                PlayerAtk = 8;
+                PlayerDef = 3;
+                PlayerGold = 1500;
+            }
         }
-
-        //public Player(string playerName, string jobSelect)
-        //{
-        //    playerName = PlayerName;
-
-        //    if (jobSelect == "1" || jobSelect == "전사")
-        //    {
-        //        PlayerJob = "전사";
-        //        PlayerHp = 100;
-        //        PlayerAtk = 10;
-        //        PlayerDef = 5;
-        //        PlayerGold = 1500;
-        //    }
-        //    else if (jobSelect == "2" || jobSelect == "도적")
-        //    {
-        //        PlayerJob = "도적";
-        //        PlayerHp = 80;
-        //        PlayerAtk = 8;
-        //        PlayerDef = 3;
-        //        PlayerGold = 1500;
-        //    }
-        //}
 
         public void Playerinfo()
         {

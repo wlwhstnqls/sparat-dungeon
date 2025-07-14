@@ -9,8 +9,13 @@ namespace sparat_dungeon
 
         static void Main(string[] args)
         {
-            
-            Player player = new Player(1, "김용사", "용사", 10, 5, 100, 0);
+            Console.Write("당신의 이름은? : ");
+            string playerName = Console.ReadLine();
+            Console.Write("당신의 직업은?(1전사or2도적) : ");
+            string jobSelect = Console.ReadLine();
+
+            Player player = new Player(playerName, jobSelect);
+
             Battle.BattleSystem battleSystem = new Battle.BattleSystem();
 
             Console.WriteLine("스파르타 던전 게임에 오신 것을 환영합니다!");
