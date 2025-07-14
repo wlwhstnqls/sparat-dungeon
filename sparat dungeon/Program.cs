@@ -10,6 +10,7 @@ namespace sparat_dungeon
         {
             
             Player player = new Player(1, "김용사", "용사", 10, 5, 100, 0);
+            Battle.BattleSystem battleSystem = new Battle.BattleSystem();
 
             Console.WriteLine("스파르타 던전 게임에 오신 것을 환영합니다!");
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -93,7 +94,8 @@ namespace sparat_dungeon
                 }
                 else if (input == "3")
                 {
-                    Console.WriteLine("Battle!!");
+                    Console.Clear();
+                    battleSystem.StartBattle();
                     //전투 기능을 여기에 추가
                 }
                 else

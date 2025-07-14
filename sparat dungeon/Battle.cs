@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace sparat_dungeon
 {
-    internal class Battle
+    public class Battle
     {
         public class Monster
         {
