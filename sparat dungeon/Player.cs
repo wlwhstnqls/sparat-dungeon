@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,17 +25,6 @@ namespace sparat_dungeon
         public static Item EquipWepon { get; set; }
         public static Item EquipArmor { get; set; }
 
-        //private List<Item> Inventory = new List<Item>();
-        //private List<Item> EquipLIst = new List<Item>();
-
-        //public int InventoryCount
-        //{
-        //    get
-        //    {
-        //        return Inventory.Count;
-        //    }
-        //}
-
         public Player(int playerLevel, string playerName, string playerJob, int playerAtk, int playerDef, int playerHp, int playerGold)
         {
             PlayerLevel = playerLevel;
@@ -45,6 +35,29 @@ namespace sparat_dungeon
             PlayerHp = playerHp;
             PlayerGold = playerGold;
         }
+
+        //public Player(string playerName, string jobSelect)
+        //{
+        //    playerName = PlayerName;
+
+        //    if (jobSelect == "1" || jobSelect == "전사")
+        //    {
+        //        PlayerJob = "전사";
+        //        PlayerHp = 100;
+        //        PlayerAtk = 10;
+        //        PlayerDef = 5;
+        //        PlayerGold = 1500;
+        //    }
+        //    else if (jobSelect == "2" || jobSelect == "도적")
+        //    {
+        //        PlayerJob = "도적";
+        //        PlayerHp = 80;
+        //        PlayerAtk = 8;
+        //        PlayerDef = 3;
+        //        PlayerGold = 1500;
+        //    }
+        //}
+
         public void Playerinfo()
         {
             Console.WriteLine($"레벨: {PlayerLevel}");
