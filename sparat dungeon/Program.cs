@@ -69,7 +69,7 @@ namespace sparat_dungeon
                     {
                         Console.WriteLine("잘못된 입력입니다. 상태보기를 종료합니다.");
                     }
-                    
+                    Console.Clear();
                 }
                 else if (input == "2")
                 {
@@ -89,7 +89,7 @@ namespace sparat_dungeon
                     {
                         Console.WriteLine("잘못된 입력입니다. 인벤토리를 종료합니다.");
                     }
-                    
+                    Console.Clear();
                 }
                 else if (input == "3")
                 {
