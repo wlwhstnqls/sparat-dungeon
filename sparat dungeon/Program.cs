@@ -39,7 +39,13 @@ namespace sparat_dungeon
             {
                 Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n이제 전투를 시작할 수 있습니다.");
                 Console.WriteLine("");
-                Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 전투 시작");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("1. 상태 보기");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("2. 인벤토리");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("3. 전투 시작");
+                Console.ResetColor();
                 Console.WriteLine("");
                 Console.WriteLine("원하는 행동을 입력해주세요.");
 
