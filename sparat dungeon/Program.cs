@@ -47,6 +47,8 @@ namespace sparat_dungeon
                 Console.WriteLine("2. 인벤토리");
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("3. 전투 시작");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("4. 퀘스트");
                 Console.ResetColor();
                 Console.WriteLine("");
                 Console.WriteLine("원하는 행동을 입력해주세요.");
@@ -97,6 +99,11 @@ namespace sparat_dungeon
                     Console.Clear();
                     battleSystem.StartBattle();
                     //전투 기능을 여기에 추가
+                }
+                else if (input == "4")
+                {
+                    Console.Clear();
+                    Console.WriteLine("퀘스트 수락.");
                 }
                 else
                 {
