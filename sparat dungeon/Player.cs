@@ -1,0 +1,45 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace sparat_dungeon
+{
+    internal class Player
+    {
+        public int PlayerLevel { get; }
+        public string PlayerName { get; }
+        public string PlayerJob { get; }
+        public int PlayerAtk { get; }
+        public int PlayerDef { get; }
+        public int PlayerHp { get; }
+        public int PlayerGold { get; private set; }
+
+
+        public int PlayerExtraAtk { get; private set; }
+        public int PlayerExtraDef { get; private set; }
+
+        //private List<Item> Inventory = new List<Item>();
+        //private List<Item> EquipLIst = new List<Item>();
+
+        //public int InventoryCount
+        //{
+        //    get
+        //    {
+        //        return Inventory.Count;
+        //    }
+        //}
+
+        public Player(int playerLevel, string playername, string playerjob, int playerAtk, int playerDef, int playerHp,int playerGold )
+        {
+            PlayerLevel = playerLevel;
+            PlayerName = playername;
+            PlayerJob = playerjob;
+            PlayerAtk = playerAtk;
+            PlayerDef = playerDef;
+            PlayerHp = playerHp;
+            PlayerGold = playerGold;
+        }
+    }
+}
