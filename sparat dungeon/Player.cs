@@ -35,11 +35,11 @@ namespace sparat_dungeon
         //    }
         //}
 
-        public Player(int playerLevel, string playername, string playerjob, int playerAtk, int playerDef, int playerHp,int playerGold )
+        public Player(int playerLevel, string playerName, string playerJob, int playerAtk, int playerDef, int playerHp,int playerGold )
         {
             PlayerLevel = playerLevel;
-            PlayerName = playername;
-            PlayerJob = playerjob;
+            PlayerName = playerName;
+            PlayerJob = playerJob;
             PlayerAtk = playerAtk;
             PlayerDef = playerDef;
             PlayerHp = playerHp;
