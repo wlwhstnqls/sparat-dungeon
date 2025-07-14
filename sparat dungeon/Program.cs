@@ -4,7 +4,27 @@
     {
         static void Main(string[] args)
         {
-          while (true)
+            Console.WriteLine("스파르타 던전 게임에 오신 것을 환영합니다!");
+            Console.WriteLine("1.START");
+            Console.WriteLine("2.EXIT");
+            string gmaeStart = Console.ReadLine();
+            if (gmaeStart == "1")
+            {
+                Console.WriteLine("게임을 시작합니다");
+               
+            }
+            else if (gmaeStart == "2")
+            {
+                Console.WriteLine("게임을 종료합니다.");
+                return;
+            }
+            else
+            {
+                Console.WriteLine("잘못된 입력입니다. 게임을 종료합니다.");
+                return;
+            }
+            Console.Clear();
+            while (true)
             {
                 Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n이제 전투를 시작할 수 있습니다.");
                 Console.WriteLine("");
