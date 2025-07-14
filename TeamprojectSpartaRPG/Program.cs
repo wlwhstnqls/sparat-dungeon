@@ -1,4 +1,8 @@
-﻿namespace TeamprojectSpartaRPG//전투 시스템(플레이어,에너미)
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace TeamprojectSpartaRPG//전투 시스템(플레이어,에너미)
 {
     public class Monster
     {
