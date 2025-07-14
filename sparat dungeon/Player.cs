@@ -27,10 +27,12 @@ namespace sparat_dungeon
 
         public Player(string playerName, string jobSelect)
         {
-            playerName = PlayerName;
+            
 
             if (jobSelect == "1" || jobSelect == "전사")
             {
+                PlayerLevel = 1;
+                PlayerName = playerName;
                 PlayerJob = "전사";
                 PlayerHp = 100;
                 PlayerAtk = 10;
@@ -39,6 +41,8 @@ namespace sparat_dungeon
             }
             else if (jobSelect == "2" || jobSelect == "도적")
             {
+                PlayerLevel = 1;
+                PlayerName = playerName;
                 PlayerJob = "도적";
                 PlayerHp = 80;
                 PlayerAtk = 8;

@@ -9,12 +9,9 @@ namespace sparat_dungeon
 
         static void Main(string[] args)
         {
-            Console.Write("당신의 이름은? : ");
-            string playerName = Console.ReadLine();
-            Console.Write("당신의 직업은?(1전사or2도적) : ");
-            string jobSelect = Console.ReadLine();
+           
 
-            Player player = new Player(playerName, jobSelect);
+            
 
             Battle.BattleSystem battleSystem = new Battle.BattleSystem();
 
@@ -42,6 +39,28 @@ namespace sparat_dungeon
             }
             Thread.Sleep(1000);
             Console.Clear();
+
+            Console.Write("당신의 이름은? : ");
+            string playerName = Console.ReadLine();
+            Console.Write("당신의 직업은?(1.전사\n2.도적) : ");
+            string jobSelect = Console.ReadLine();
+
+            Player player = new Player(playerName, jobSelect);
+
+            if (jobSelect == "1")
+            {
+                Console.WriteLine("전사를 선택하셨습니다.");
+            }
+            else if (jobSelect == "2")
+            {
+                Console.WriteLine("도적을 선택하셨습니다.");
+            }
+            else
+            {
+                Console.WriteLine("잘못된 직업입니다. 전사로 설정합니다.");
+                jobSelect = "1";
+            }
+
             while (true)
             {
                 Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n이제 전투를 시작할 수 있습니다.");
