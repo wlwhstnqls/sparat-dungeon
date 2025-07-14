@@ -55,9 +55,9 @@
                 }
                 else if (input == "2")
                 {
-                    Console.WriteLine("인벤토리가 표시됩니다.");
-                    //인벤토리 기능을 여기에 추가
-                    Console.WriteLine("인벤토리에서 나가려면 0 키를 누르세요.");
+
+                    //인벤토리
+                    Item.ShowInventory();
                     string inventoryout = Console.ReadLine();
                     if (inventoryout == "0")
                     {
