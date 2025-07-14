@@ -63,6 +63,7 @@ namespace sparat_dungeon
         {
             1, 2, 3, 4, 5, 6, 0, 0, 0, 0
         };
+
         public static void AddItem(int itemIndex)
         {
             for (int i = 0; i < inventory.Length; i++)
