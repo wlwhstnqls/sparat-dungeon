@@ -166,16 +166,7 @@ namespace sparat_dungeon
                 }
                 else
                 {
-                    Console.Write(new string(' ', Console.WindowWidth));
-                    Console.SetCursorPosition(0, Console.CursorTop - 1);
-                    Console.Write("\u001b[38;2;181;53;53m");
-                    Console.Write("[!] 잘못된 번호입니다.");
-                    Console.SetCursorPosition(0, Console.CursorTop - 1);
-                    Item.Inven_eq(Console.ReadLine(), index);
                 }
-            }
-            else
-            {
             }
         }
 
