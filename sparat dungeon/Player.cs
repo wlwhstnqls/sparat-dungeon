@@ -41,5 +41,15 @@ namespace sparat_dungeon
             PlayerHp = playerHp;
             PlayerGold = playerGold;
         }
+        public void Playerinfo()
+        {
+            Console.WriteLine($"레벨: {PlayerLevel}");
+            Console.WriteLine($"이름: {PlayerName}");
+            Console.WriteLine($"직업: {PlayerJob}");
+            Console.WriteLine($"공격력: {PlayerAtk}");
+            Console.WriteLine($"방어력: {PlayerDef}");
+            Console.WriteLine($"체력: {PlayerHp}");
+            Console.WriteLine($"골드: {PlayerGold} Gold");
+        }
     }
 }

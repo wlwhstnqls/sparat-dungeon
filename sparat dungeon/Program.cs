@@ -9,7 +9,7 @@ namespace sparat_dungeon
         static void Main(string[] args)
         {
             
-
+            Player player = new Player(1, "김용사", "용사", 10, 5, 100, 0);
 
             Console.WriteLine("스파르타 던전 게임에 오신 것을 환영합니다!");
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -54,6 +54,9 @@ namespace sparat_dungeon
                 if (input == "1")
                 {
                     Console.WriteLine("상태보기\n캐릭터의 정보가 표시됩니다.");
+                    Console.WriteLine("");
+                    player.Playerinfo();
+                    Console.WriteLine("");
                     //플레이어 상태를 여기에 추가
                     Console.WriteLine("상태보기에서 나가려면 0 키를 누르세요.");
                     string statusout = Console.ReadLine();
