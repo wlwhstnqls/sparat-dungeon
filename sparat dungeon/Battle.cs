@@ -32,15 +32,18 @@ namespace sparat_dungeon
 
             public void StartBattle()
             {
+                Console.Clear();
                 Console.WriteLine("Battle!!\n");
 
                 GenerateMonsters();
 
-                foreach (var monster in _enemies)
+                while (_enemies.Count > 0)
                 {
-                    Console.WriteLine(monster);
+                    foreach (var monster in _enemies)
+                    {
+                        Console.WriteLine(monster);
+                    }
                 }
-
                 PrintPlayerInfo();
 
                 Console.WriteLine("1. 공격");
