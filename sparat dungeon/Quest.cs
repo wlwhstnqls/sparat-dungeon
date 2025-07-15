@@ -20,22 +20,6 @@ namespace sparat_dungeon
         public abstract void ShowQuestUI();
 
         public abstract void CheckComplete(Player player);
-
-        public  void ApplyReward()
-        {
-            // 퀘스트 달성시 보상
-        }
-
-        public  void StateChange()
-        {
-            // 퀘스트 상태 변경
-        }
-
-        public virtual void ShowCompleteUI()
-        {
-            // 완료시 출력
-        }
-
     }
 
     internal class KillQuest : Quest
@@ -69,7 +53,6 @@ namespace sparat_dungeon
             // 플레이어에 킬카운트 만들고 가져와서 충족요건 확인하기
 
         }
-
     }
 
     internal class EquipQuest : Quest
@@ -97,7 +80,8 @@ namespace sparat_dungeon
 
         public override void CheckComplete(Player player)
         {
-            // 플레이어에 킬카운트 만들고 가져와서 충족요건 확인하기
+            // 장비 장착 중인지 확인
+
 
         }
     }
@@ -127,7 +111,7 @@ namespace sparat_dungeon
 
         public override void CheckComplete(Player player)
         {
-            // 플레이어에 킬카운트 만들고 가져와서 충족요건 확인하기
+            // 현재 공격력 몇인지 체크 
 
         }
     }
