@@ -13,12 +13,13 @@ namespace sparat_dungeon
         static void Main(string[] args)
         {
             //Battle.BattleSystem battleSystem = new Battle.BattleSystem();
-
+            monsters = new List<Monster>();
+            
             List<Quest> quests = new List<Quest>()
             {
-                new Quest(1, "마을을 위협하는 미니언 처치", false, QuestState.NotStarted),
-                new Quest(2, "장비를 장착해보자", false, QuestState.NotStarted),
-                new Quest(3, "더욱 더 강해지기", false, QuestState.NotStarted)
+                //new Quest(1, "마을을 위협하는 미니언 처치", false, QuestState.NotStarted),
+                //new Quest(2, "장비를 장착해보자", false, QuestState.NotStarted),
+                //new Quest(3, "더욱 더 강해지기", false, QuestState.NotStarted)
             };
 
             Console.WriteLine("스파르타 던전 게임에 오신 것을 환영합니다!");
@@ -69,6 +70,7 @@ namespace sparat_dungeon
 
             while (true)
             {
+                SpawnMonster();
                 Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n이제 전투를 시작할 수 있습니다.");
                 Console.WriteLine("");
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -128,6 +130,7 @@ namespace sparat_dungeon
                 {
                     Console.Clear();
                     
+                    
                     ShowBattleUI();
                 }
                 else if (input == "4")
@@ -153,15 +156,15 @@ namespace sparat_dungeon
                             break;
                         case 1:
                             // 1번 퀘스트 출력
-                            quests[0].ShowQuestUI(1);
+                            //quests[0].ShowQuestUI(1);
                             break;
                         case 2:
                             // 2번 퀘스트 출력
-                            quests[1].ShowQuestUI(2);
+                            //quests[1].ShowQuestUI(2);
                             break;
                         case 3:
                             // 3번 퀘스트 출력
-                            quests[2].ShowQuestUI(3);
+                            //quests[2].ShowQuestUI(3);
                             break;
                         default:
                             Console.WriteLine("잘못된 입력입니다.");
@@ -178,7 +181,7 @@ namespace sparat_dungeon
         static void ShowBattleUI()
         {
             Console.Clear();
-            SpawnMonster();
+            
             int PlayerEnterHp = player.PlayerHp;
             Console.WriteLine("Battle!!");
             Console.WriteLine();
@@ -187,8 +190,12 @@ namespace sparat_dungeon
                 if (monsters[i].IsDead == true)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine($"{i + 1} Lv.{monsters[i].Level} {monsters[i].Name} HP 0");
                 }
-                Console.WriteLine($"{i + 1} Lv.{monsters[i].Level} {monsters[i].Name} HP {monsters[i].Hp}");
+                else
+                {
+                    Console.WriteLine($"{i + 1} Lv.{monsters[i].Level} {monsters[i].Name} HP {monsters[i].Hp}");
+                }
                 Console.ResetColor();
             }
             Console.WriteLine();
@@ -229,7 +236,7 @@ namespace sparat_dungeon
         {
             Random random = new Random();
             int spawnNum = random.Next(1, 5);
-            monsters = new List<Monster>();
+            
 
             for (int i = 0; i < spawnNum; i++)
             {
