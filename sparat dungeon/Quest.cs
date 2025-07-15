@@ -19,10 +19,7 @@ namespace sparat_dungeon
 
         public abstract void ShowQuestUI();
 
-        public  void CompleteProgress()
-        {
-            // 퀘스트 진행 상황
-        }
+        public abstract void CheckComplete(Player player);
 
         public  void ApplyReward()
         {
@@ -66,6 +63,13 @@ namespace sparat_dungeon
             int input = int.Parse(Console.ReadLine());
 
         }
+
+        public override void CheckComplete(Player player)
+        {
+            // 플레이어에 킬카운트 만들고 가져와서 충족요건 확인하기
+
+        }
+
     }
 
     internal class EquipQuest : Quest
@@ -90,6 +94,12 @@ namespace sparat_dungeon
             Console.Write(">> ");
             int input = int.Parse(Console.ReadLine());
         }
+
+        public override void CheckComplete(Player player)
+        {
+            // 플레이어에 킬카운트 만들고 가져와서 충족요건 확인하기
+
+        }
     }
 
     internal class StatusUpQuest : Quest
@@ -113,6 +123,12 @@ namespace sparat_dungeon
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">> ");
             int input = int.Parse(Console.ReadLine());
+        }
+
+        public override void CheckComplete(Player player)
+        {
+            // 플레이어에 킬카운트 만들고 가져와서 충족요건 확인하기
+
         }
     }
 }
