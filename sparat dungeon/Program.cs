@@ -25,8 +25,8 @@ namespace sparat_dungeon
             Console.WriteLine("스파르타 던전 게임에 오신 것을 환영합니다!");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("1.START");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("2.EXIT");
+            Console.WriteLine("2.LOAD");
+            Console.WriteLine("3.EXIT");
             Console.ResetColor();
             string gmaeStart = Console.ReadLine();
             if (gmaeStart == "1")
@@ -35,6 +35,11 @@ namespace sparat_dungeon
 
             }
             else if (gmaeStart == "2")
+            {
+                Console.WriteLine("게임을 로드합니다.");
+                return;
+            }
+            else if (gmaeStart == "3")
             {
                 Console.WriteLine("게임을 종료합니다.");
                 return;
