@@ -315,11 +315,24 @@ namespace sparat_dungeon
                         }
 
                         if (monsters[i].IsDead == true)
-                        {
-                            // 승리시 전투 결과
+                        {// 플레이어 전투 승리시 출력
+                            Console.WriteLine("Victory\n");
+                            Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.\n");
+                            Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName}");
+                            Console.WriteLine($"HP -> {player.PlayerHp}\n");
+                            Console.WriteLine("0. 다음\n");
+                            Console.Write(">> ");
                         }
 
                         // 플레이어 체력 0일 경우 패베 출력
+                        if (player.PlayerHp <= 0)
+                        {
+                            Console.WriteLine("You Lose\n");
+                            Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName}");
+                            Console.WriteLine($"HP -> {player.PlayerHp}\n");
+                            Console.WriteLine("0. 다음\n");
+                            Console.Write(">> ");
+                        }
                     }
                 }
             }
