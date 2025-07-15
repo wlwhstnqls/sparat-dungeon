@@ -98,14 +98,18 @@ namespace sparat_dungeon
         {
             Item itemToAdd = items[itemIndex];
 
-            foreach (KeyValuePair<int, Inventory> entry in inventory)
+            if (itemToAdd.Type != ItemType.장비)
             {
-                if (entry.Value.Item == itemToAdd)
+                foreach (KeyValuePair<int, Inventory> entry in inventory)
                 {
-                    entry.Value.Quantity++;
-                    return;
+                    if (entry.Value.Item == itemToAdd)
+                    {
+                        entry.Value.Quantity++;
+                        return;
+                    }
                 }
             }
+
 
             for (int i = 0; i < MaxInventory; i++)
             {
