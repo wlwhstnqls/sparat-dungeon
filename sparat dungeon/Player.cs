@@ -9,13 +9,16 @@ namespace sparat_dungeon
 {
     internal class Player
     {
-        public int PlayerLevel { get; }
-        public string PlayerName { get; }
-        public string PlayerJob { get; }
-        public int PlayerAtk { get; }
-        public int PlayerDef { get; }
+        public int PlayerLevel { get; set; }
+        public string PlayerName { get; set; }
+        public string PlayerJob { get; set; }
+        public int PlayerAtk { get; set; }
+        public int PlayerDef { get; set; }
         public int PlayerHp { set; get; }
         public int PlayerGold { get; private set; }
+        public int PlayerExp { get; set; }
+
+        List<int> ExpTable = new List<int> { 10, 35, 65, 100 };
 
 
         public static int PlayerExtraAtk { get; set; }
@@ -36,6 +39,7 @@ namespace sparat_dungeon
             if (jobSelect == "1" || jobSelect == "전사")
             {
                 PlayerLevel = 1;
+                PlayerExp = 0;
                 PlayerName = playerName;
                 PlayerJob = "전사";
                 PlayerHp = 100;
@@ -46,6 +50,7 @@ namespace sparat_dungeon
             else if (jobSelect == "2" || jobSelect == "도적")
             {
                 PlayerLevel = 1;
+                PlayerExp = 0;
                 PlayerName = playerName;
                 PlayerJob = "도적";
                 PlayerHp = 80;
@@ -58,12 +63,33 @@ namespace sparat_dungeon
         public void Playerinfo()
         {
             Console.WriteLine($"레벨: {PlayerLevel}");
+            Console.WriteLine($"경험치: {PlayerExp}");
             Console.WriteLine($"이름: {PlayerName}");
             Console.WriteLine($"직업: {PlayerJob}");
             Console.WriteLine(PlayerExtraAtk > 0 ? $"공격력: {PlayerAtk} +{PlayerExtraAtk}" : $"공격력: {PlayerAtk}");
             Console.WriteLine(PlayerExtraDef > 0 ? $"방어력: {PlayerDef} +{PlayerExtraDef}" : $"방어력: {PlayerDef}");
             Console.WriteLine($"체력: {PlayerHp}");
             Console.WriteLine($"골드: {PlayerGold} Gold");
+            
+        }
+
+        public void GainExp(int exp)
+        {
+            PlayerExp += exp;
+            if (PlayerExp >= ExpTable[PlayerLevel - 1])
+            {
+                LevelUp();
+            }
+        }
+
+        public void LevelUp()
+        {
+            PlayerExp -= ExpTable[PlayerLevel - 1];
+            PlayerLevel++;
+            PlayerAtk += 2;
+            PlayerDef += 1;
+            
+            Console.WriteLine($"{PlayerName} 님이 레벨업 하셨습니다! 현재 레벨: {PlayerLevel}");
         }
 
         public static void EquipItem(Item item)

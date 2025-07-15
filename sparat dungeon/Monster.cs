@@ -44,6 +44,10 @@ namespace sparat_dungeon
                 IsDead = true;
             }
         }
+        public int MonsterExp()
+        {
+            return Level;
+        }
 
     }
     internal class Minion : Monster
@@ -78,5 +82,9 @@ namespace sparat_dungeon
             Atk = 8;
             IsDead = false;
         }
+
+       
     }
+
+
 }
