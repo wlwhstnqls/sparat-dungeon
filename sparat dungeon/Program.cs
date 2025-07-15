@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Reflection;
 using System.Threading;
+using static sparat_dungeon.Battle;
 namespace sparat_dungeon
 
 {
     public class Program
     {
+        private static Player player;
+        static List<Monster> monsters;
 
         static void Main(string[] args)
         {
-            Battle.BattleSystem battleSystem = new Battle.BattleSystem();
-         
+            //Battle.BattleSystem battleSystem = new Battle.BattleSystem();
+
             List<Quest> quests = new List<Quest>()
             {
                 new Quest(1, "마을을 위협하는 미니언 처치", false, QuestState.NotStarted),
@@ -28,7 +31,7 @@ namespace sparat_dungeon
             if (gmaeStart == "1")
             {
                 Console.WriteLine("게임을 시작합니다");
-               
+
             }
             else if (gmaeStart == "2")
             {
@@ -48,7 +51,7 @@ namespace sparat_dungeon
             Console.Write("당신의 직업은?(1.전사\n2.도적) : ");
             string jobSelect = Console.ReadLine();
 
-            Player player = new Player(playerName, jobSelect);
+            player = new Player(playerName, jobSelect);
 
             if (jobSelect == "1")
             {
@@ -124,8 +127,8 @@ namespace sparat_dungeon
                 else if (input == "3")
                 {
                     Console.Clear();
-                    battleSystem.StartBattle();
-                    //전투 기능을 여기에 추가
+                    
+                    ShowBattleUI();
                 }
                 else if (input == "4")
                 {
@@ -170,6 +173,174 @@ namespace sparat_dungeon
                     Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
                     Console.Clear();
                 }
+            }
+        }
+        static void ShowBattleUI()
+        {
+            Console.Clear();
+            SpawnMonster();
+            int PlayerEnterHp = player.PlayerHp;
+            Console.WriteLine("Battle!!");
+            Console.WriteLine();
+            for (int i = 0; i < monsters.Count; i++)
+            {
+                if (monsters[i].IsDead == true)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                }
+                Console.WriteLine($"{i + 1} Lv.{monsters[i].Level} {monsters[i].Name} HP {monsters[i].Hp}");
+                Console.ResetColor();
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+
+            // 플레이어 정보 가져오기
+            Console.WriteLine("[내 정보]");
+            Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName} ({player.PlayerJob})");
+            Console.WriteLine($"HP {player.PlayerHp} / 100");
+            Console.WriteLine();
+            Console.WriteLine("0. 취소");
+            Console.WriteLine();
+            Console.WriteLine("대상을 선택해주세요.");
+            Console.WriteLine();
+            Console.Write(">> ");
+
+            int result = CheckInput(0, monsters.Count);
+
+            switch (result)
+            {
+                case 0:
+                // 메인메뉴 이동
+                default:
+                    int monIdx = result - 1;
+                    if (monsters[monIdx].IsDead == false)
+                    {
+                        ShowPlayerAttackUI(monsters[monIdx]);
+                    }
+                    else
+                    {
+                        Console.WriteLine("이미 사망했습니다.");
+                    }
+                    break;
+
+            }
+        }
+        static void SpawnMonster()
+        {
+            Random random = new Random();
+            int spawnNum = random.Next(1, 5);
+            monsters = new List<Monster>();
+
+            for (int i = 0; i < spawnNum; i++)
+            {
+                int monsterSpawn = random.Next(3);
+                switch (monsterSpawn)
+                {
+                    case 0:
+                        monsters.Add(new Minion());
+                        break;
+                    case 1:
+                        monsters.Add(new VoidBug());
+                        break;
+                    case 2:
+                        monsters.Add(new CanonMinion());
+                        break;
+                }
+            }
+        }
+
+        static void ShowPlayerAttackUI(Monster monster)
+        {
+            Console.Clear();
+            Console.WriteLine("Battle!!");
+            Console.WriteLine();
+            Console.WriteLine($"{player.PlayerName} 의 공격!!");
+            Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.PlayerDamageCalc()}]");
+            Console.WriteLine();
+            Console.WriteLine($"Lv.{monster.Level} {monster.Name}");
+            Console.Write($"HP {monster.Hp}  -> ");
+            monster.TakeDamage(player.PlayerDamageCalc());
+            if (monster.IsDead == true)
+            {
+                Console.WriteLine("Dead");
+            }
+            else
+            {
+                Console.WriteLine($"{monster.Hp}");
+            }
+            Console.WriteLine();
+            Console.WriteLine("0. 다음");
+            Console.WriteLine();
+            Console.Write(">> ");
+
+            int input = int.Parse(Console.ReadLine());
+
+            if (input == 0)
+            {
+                ShowMonsterPhaseUI();
+            }
+            else
+            {
+                Console.WriteLine("잘못된 입력입니다.");
+            }
+        }
+
+        static public void ShowMonsterPhaseUI()
+        {
+            for (int i = 0; i < monsters.Count; i++)
+            {
+                Console.Clear();
+                Console.WriteLine("Battle!!");
+                Console.WriteLine();
+
+                if (monsters[i].IsDead == false)
+                {
+                    Console.WriteLine($"Lv.{monsters[i].Level} {monsters[i].Name} 의 공격!!");
+                    Console.WriteLine($"{player.PlayerName}를 맞췄습니다. [데미지 : {monsters[i].DamageCalc()}]");
+
+                    Console.Write($"플레이어HP감소. {player.PlayerHp} -> ");
+                    monsters[i].ApplyDamage(player);
+                    Console.WriteLine($"{player.PlayerHp}");
+                    Console.WriteLine();
+                    Console.WriteLine("0. 다음");
+                    Console.WriteLine();
+                    Console.Write(">> ");
+
+                    int result = CheckInput(0, 0);
+                    if (result == 0)
+                    {
+                        if (i == monsters.Count - 1)
+                        {
+                            ShowBattleUI();
+                        }
+
+                        if (monsters[i].IsDead == true)
+                        {
+                            // 승리시 전투 결과
+                        }
+
+                        // 플레이어 체력 0일 경우 패베 출력
+                    }
+                }
+            }
+        }
+
+        static int CheckInput(int min, int max)
+        {
+            int result;
+
+            while (true)
+            {
+                string input = Console.ReadLine();
+                bool isNumber = int.TryParse(input, out result);
+                if (isNumber)
+                {
+                    if (result >= min && result <= max)
+                    {
+                        return result;
+                    }
+                }
+                Console.WriteLine("잘못된 입력입니다.");
             }
         }
     }
