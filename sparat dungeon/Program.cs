@@ -10,6 +10,7 @@ namespace sparat_dungeon
         private static Player player;
         static List<Monster> monsters;
         public static int playerEnterHp;
+       
         static void Main(string[] args)
         {
             //Battle.BattleSystem battleSystem = new Battle.BattleSystem();
@@ -418,10 +419,24 @@ namespace sparat_dungeon
             if (allDead)
             {
                 int totalExp = 0;
+                int totalGold = 0;
+                List<Item> droppedItems = new List<Item>();
                 int MaxExp = player.GetExpToNextLevel();
                 foreach (var monster in monsters)
                 {
                     totalExp += monster.MonsterExp();
+                    totalGold += monster.DropGold();
+                    player.PlayerGold += monster.DropGold();
+                    
+                    int itemIndex = monster.DropItem();
+                    
+                    if (itemIndex != -1)
+                    {
+                        Item droppedItem = Item.items[itemIndex];  
+                        droppedItems.Add(droppedItem);            
+                        Item.AddItem(itemIndex);                   
+                        Console.WriteLine($"아이템 {droppedItem.Name}을(를) 획득했습니다.");
+                    }
                 }
                 player.GainExp(totalExp);
                 Console.WriteLine("Victory\n");
@@ -429,6 +444,7 @@ namespace sparat_dungeon
                 Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName}");
                 Console.WriteLine($"경험치 {totalExp} / {MaxExp}");
                 Console.WriteLine($"HP {playerEnterHp} -> {player.PlayerHp}\n");
+                Console.WriteLine($"{totalGold}골드를 획득했습니다.\n");
                 Console.WriteLine("0. 다음\n");
                 Console.Write(">> ");
                 Console.ReadLine();
