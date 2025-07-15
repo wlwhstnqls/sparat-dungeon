@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static sparat_dungeon.Item;
 
 namespace sparat_dungeon
 {
@@ -143,18 +144,17 @@ namespace sparat_dungeon
             Console.SetCursorPosition(6, 2);
             Console.WriteLine("\u001b[38;2;135;206;250m[장착 가능 장비]\u001b[38;2;240;248;255m");
             Console.WriteLine("");
-            for (int i = 0; i < Item.inventory.Length; i++)
-            {
-                int idx = Item.inventory[i];
+            for (int i = 0; i < Item.MaxInventory; i++)
 
-                if (idx > 0)
+                if (Item.inventory.ContainsKey(i))
                 {
-                    Item item = Item.items[idx - 1];
+                    Inventory slot = Item.inventory[i];
+                    Item item = slot.Item;
 
                     if (ItemType.장비 == item.Type)
                     {
-                        Item.inventoryE[index] = Item.inventory[i];
-                        index += 1;
+                        Item.inventoryE[index] = i;
+                        index++;
                         if (EquipWepon == item || EquipArmor == item)
                         {
                             str = $"\u001b[\u001b[38;2;65;105;225m[E]\u001b[38;2;240;248;255m {item.Name} ";
@@ -184,8 +184,6 @@ namespace sparat_dungeon
                     }
                 }
 
-
-            }
 
             if (index == 0)
             {
