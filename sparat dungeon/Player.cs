@@ -210,5 +210,56 @@ namespace sparat_dungeon
 
             return damage;
         }
+
+
+        public static void ShowInventoryC()
+        {
+            string str;
+            int index = 0;
+
+            Console.Clear();
+            Console.SetCursorPosition(6, 2);
+            Console.WriteLine("\u001b[38;2;135;206;250m[사용 가능 아이템]\u001b[38;2;240;248;255m");
+            Console.WriteLine("");
+            for (int i = 0; i < Item.MaxInventory; i++)
+
+                if (Item.inventory.ContainsKey(i))
+                {
+                    Inventory slot = Item.inventory[i];
+                    Item item = slot.Item;
+
+                    if (ItemType.소비 == item.Type)
+                    {
+                        Item.inventoryE[index] = i;
+                        index++;
+
+                        str = $"\u001b[38;2;135;206;250m[{index}]\u001b[38;2;240;248;255m {item.Name} ";
+
+                        str = str + $"{Item.FL} {item.Ex}";
+
+                        Console.SetCursorPosition(5, Console.CursorTop);
+                        Console.WriteLine(str);
+                    }
+                }
+
+
+            if (index == 0)
+            {
+                Item.ShowInventory();
+                Console.Write("\x1b[38;2;181;53;53m");
+                Console.Write("[!] 사용 가능한 아이템이 없습니다.");
+            }
+            else
+            {
+                Console.WriteLine("");
+                Console.SetCursorPosition(6, Console.CursorTop);
+                Console.Write($"\x1b[38;2;135;206;250m0.\x1b[38;2;240;248;255m");
+                Console.Write("뒤로가기");
+                Console.WriteLine("", 30, 10);
+                Item.Inven_con(Console.ReadLine(), index);
+            }
+
+
+        }
     }
 }

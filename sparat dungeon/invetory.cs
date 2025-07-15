@@ -78,7 +78,8 @@ namespace sparat_dungeon
             { 2, new Inventory(items[2], 1) },
             { 3, new Inventory(items[3], 1) },
             { 4, new Inventory(items[4], 1) },
-            { 5, new Inventory(items[5], 1) },
+            { 5, new Inventory(items[6], 3) },
+            { 6, new Inventory(items[5], 1) },
         };
 
         public const int MaxInventory = 10;
@@ -96,7 +97,6 @@ namespace sparat_dungeon
         {
             Item itemToAdd = items[itemIndex];
 
-            // 이미 있는 아이템이면 수량 증가
             foreach (KeyValuePair<int, Inventory> entry in inventory)
             {
                 if (entry.Value.Item == itemToAdd)
@@ -106,7 +106,6 @@ namespace sparat_dungeon
                 }
             }
 
-            // 비어있는 슬롯 찾기
             for (int i = 0; i < MaxInventory; i++)
             {
                 if (!inventory.ContainsKey(i))
@@ -198,6 +197,45 @@ namespace sparat_dungeon
                         Console.SetCursorPosition(0, Console.CursorTop - 1);
                         Console.Write("\u001b[38;2;255;200;82m");
                         Console.Write($"[장착 완료] {items[itemIndex].Name}을(를) 장착했습니다!");
+
+                        Thread.Sleep(1000);
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 아이템입니다.");
+                        Item.Inven_eq(Console.ReadLine(), index);
+                    }
+                }
+                else
+                {
+                }
+            }
+        }
+
+        public static void Inven_con(string choice, int index)
+        {
+            int number;
+
+            if (int.TryParse(choice, out number))
+            {
+                if (number > 0 && number <= index)
+                {
+                    int itemIndex = inventoryE[number - 1];
+
+                    if (itemIndex >= 0 && itemIndex < items.Count)
+                    {
+                        Inventory slot = inventory[itemIndex];
+
+                        Console.Write(new string(' ', Console.WindowWidth));
+                        Console.SetCursorPosition(0, Console.CursorTop - 1);
+                        Console.Write("\u001b[38;2;255;200;82m");
+                        Console.Write($"[장착 완료] {items[itemIndex].Name}을(를) 사용했습니다!");
+
+                        slot.Quantity--;
+                        if (slot.Quantity <= 0)
+                        {
+                            inventory.Remove(itemIndex);
+                        }
 
                         Thread.Sleep(1000);
                     }
