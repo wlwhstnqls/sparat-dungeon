@@ -401,6 +401,9 @@ namespace sparat_dungeon
             {
                 if (monsters[i].IsDead == true)
                 {// 플레이어 전투 승리시 출력
+                    int exp = monsters[i].MonsterExp();
+                    player.GainExp(exp);
+
                     Console.WriteLine("Victory\n");
                     Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.\n");
                     Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName}");
