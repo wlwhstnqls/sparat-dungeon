@@ -9,7 +9,6 @@ namespace sparat_dungeon
     {
         private static Player player;
         static List<Monster> monsters;
-
         static void Main(string[] args)
         {
             //Battle.BattleSystem battleSystem = new Battle.BattleSystem();
@@ -86,7 +85,7 @@ namespace sparat_dungeon
                 Console.WriteLine("원하는 행동을 입력해주세요.");
 
                 string input = Console.ReadLine();
-
+                monsters.Clear();
                 if (input == "1")
                 {
                     Console.WriteLine("상태보기\n캐릭터의 정보가 표시됩니다.");
@@ -129,8 +128,23 @@ namespace sparat_dungeon
                 else if (input == "3")
                 {
                     Console.Clear();
-                    
-                    
+                    bool allDead = true;
+                    foreach (var m in monsters)
+                    {
+                        if (!m.IsDead)
+                        {
+                            allDead = false;
+                            break;
+                        }
+                    }
+
+                    // 몬스터가 없거나 전부 죽었을 때만 새로 생성
+                    if (monsters.Count == 0 || allDead)
+                    {
+                        monsters.Clear();  // 안전하게 초기화
+                        SpawnMonster();
+                    }
+
                     ShowBattleUI();
                 }
                 else if (input == "4")
@@ -181,55 +195,59 @@ namespace sparat_dungeon
         static void ShowBattleUI()
         {
             Console.Clear();
-            
-            int PlayerEnterHp = player.PlayerHp;
-            Console.WriteLine("Battle!!");
-            Console.WriteLine();
-            for (int i = 0; i < monsters.Count; i++)
+            while (true)
             {
-                if (monsters[i].IsDead == true)
+                int PlayerEnterHp = player.PlayerHp;
+                Console.WriteLine("Battle!!");
+                Console.WriteLine();
+                for (int i = 0; i < monsters.Count; i++)
                 {
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.WriteLine($"{i + 1} Lv.{monsters[i].Level} {monsters[i].Name} HP 0");
-                }
-                else
-                {
-                    Console.WriteLine($"{i + 1} Lv.{monsters[i].Level} {monsters[i].Name} HP {monsters[i].Hp}");
-                }
-                Console.ResetColor();
-            }
-            Console.WriteLine();
-            Console.WriteLine();
-
-            // 플레이어 정보 가져오기
-            Console.WriteLine("[내 정보]");
-            Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName} ({player.PlayerJob})");
-            Console.WriteLine($"HP {player.PlayerHp} / 100");
-            Console.WriteLine();
-            Console.WriteLine("0. 취소");
-            Console.WriteLine();
-            Console.WriteLine("대상을 선택해주세요.");
-            Console.WriteLine();
-            Console.Write(">> ");
-
-            int result = CheckInput(0, monsters.Count);
-
-            switch (result)
-            {
-                case 0:
-                // 메인메뉴 이동
-                default:
-                    int monIdx = result - 1;
-                    if (monsters[monIdx].IsDead == false)
+                    if (monsters[i].IsDead == true)
                     {
-                        ShowPlayerAttackUI(monsters[monIdx]);
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.WriteLine($"{i + 1} Lv.{monsters[i].Level} {monsters[i].Name} HP 0");
                     }
                     else
                     {
-                        Console.WriteLine("이미 사망했습니다.");
+                        Console.WriteLine($"{i + 1} Lv.{monsters[i].Level} {monsters[i].Name} HP {monsters[i].Hp}");
                     }
-                    break;
+                    Console.ResetColor();
+                }
+                Console.WriteLine();
+                Console.WriteLine();
 
+                // 플레이어 정보 가져오기
+                Console.WriteLine("[내 정보]");
+                Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName} ({player.PlayerJob})");
+                Console.WriteLine($"HP {player.PlayerHp} / {PlayerEnterHp}");
+                Console.WriteLine();
+                Console.WriteLine("0. 취소");
+                Console.WriteLine();
+                Console.WriteLine("대상을 선택해주세요.");
+                Console.WriteLine();
+                Console.Write(">> ");
+
+                int result = CheckInput(0, monsters.Count);
+
+                if (result == 0)
+                {
+                    // 전투 취소
+                    return;
+                }
+
+                int monIdx = result - 1;
+                if (!monsters[monIdx].IsDead)
+                {
+                    ShowPlayerAttackUI(monsters[monIdx]);
+                    // 정상 공격 후 빠져나가기
+                }
+                else
+                {
+                    Console.WriteLine("이미 사망했습니다.");
+                    Console.WriteLine("0. 다시 선택");
+                    Console.Write(">> ");
+                    Console.ReadLine(); // 사용자 확인 기다렸다가 다시 반복
+                }
             }
         }
         static void SpawnMonster()
@@ -285,6 +303,7 @@ namespace sparat_dungeon
             if (input == 0)
             {
                 ShowMonsterPhaseUI();
+                return;
             }
             else
             {
@@ -294,8 +313,10 @@ namespace sparat_dungeon
 
         static public void ShowMonsterPhaseUI()
         {
+
             for (int i = 0; i < monsters.Count; i++)
             {
+                int playerEnterHp = player.PlayerHp;
                 Console.Clear();
                 Console.WriteLine("Battle!!");
                 Console.WriteLine();
@@ -305,47 +326,86 @@ namespace sparat_dungeon
                     Console.WriteLine($"Lv.{monsters[i].Level} {monsters[i].Name} 의 공격!!");
                     Console.WriteLine($"{player.PlayerName}를 맞췄습니다. [데미지 : {monsters[i].DamageCalc()}]");
 
-                    Console.Write($"플레이어HP감소. {player.PlayerHp} -> ");
+                    Console.Write($"플레이어HP감소. {playerEnterHp} -> ");
                     monsters[i].ApplyDamage(player);
-                    Console.WriteLine($"{player.PlayerHp}");
+                    if(player.PlayerHp <= 0)
+                    {
+                        Console.WriteLine($"Dead");
+                    }
                     Console.WriteLine();
                     Console.WriteLine("0. 다음");
                     Console.WriteLine();
                     Console.Write(">> ");
 
                     int result = CheckInput(0, 0);
+
+
                     if (result == 0)
                     {
-                        if (i == monsters.Count - 1)
-                        {
-                            ShowBattleUI();
-                        }
-
-                        if (monsters[i].IsDead == true)
-                        {// 플레이어 전투 승리시 출력
-                            int exp = monsters[i].MonsterExp();
-                            player.GainExp(exp);
-                            Console.WriteLine("Victory\n");
-                            Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.\n");
-                            Console.WriteLine($"획득 경험치: {exp}");
-                            Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName}");
-                            Console.WriteLine($"HP -> {player.PlayerHp}\n");
-                            Console.WriteLine("0. 다음\n");
-                            Console.Write(">> ");
-                        }
-
-                        // 플레이어 체력 0일 경우 패베 출력
                         if (player.PlayerHp <= 0)
                         {
-                            Console.WriteLine("You Lose\n");
-                            Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName}");
-                            Console.WriteLine($"HP -> {player.PlayerHp}\n");
-                            Console.WriteLine("0. 다음\n");
-                            Console.Write(">> ");
+                            ShowResultUI();  // 패배
+                            return;
+                        }
+
+                        if (i == monsters.Count - 1)
+                        {
+                            //ShowBattleUI();  // 다시 공격 선택으로
+                            return;
+                        }
+                        else
+                        {
+                            continue;
                         }
                     }
+                    else
+                    {
+                        Console.WriteLine("잘못된 입력입니다.");
+                    }                   
                 }
             }
+
+            bool allDead = true;
+            foreach (var m in monsters)
+            {
+                if (!m.IsDead)
+                {
+                    allDead = false;
+                    break;
+                }
+            }
+
+            if (player.PlayerHp > 0 && allDead)
+            {
+                ShowResultUI(); // 승리
+            }
+        }
+
+        static void ShowResultUI()
+        {
+            Console.Clear();
+            if (player.PlayerHp <= 0)
+            {
+                Console.WriteLine("You Lose\n");
+                Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName}");
+                Console.WriteLine($"HP -> {player.PlayerHp}\n");
+                Console.WriteLine("0. 다음\n");
+                Console.Write(">> ");
+            }
+
+            for (int i = 0; i < monsters.Count; i++)
+            {
+                if (monsters[i].IsDead == true)
+                {// 플레이어 전투 승리시 출력
+                    Console.WriteLine("Victory\n");
+                    Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.\n");
+                    Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName}");
+                    Console.WriteLine($"HP -> {player.PlayerHp}\n");
+                    Console.WriteLine("0. 다음\n");
+                    Console.Write(">> ");
+                }
+            }
+            // 플레이어 체력 0일 경우 패베 출력
         }
 
         static int CheckInput(int min, int max)
