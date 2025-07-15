@@ -227,7 +227,7 @@ namespace sparat_dungeon
                     Thread.Sleep(1000);
                     Console.Clear();
                 }
-                else if (input == "5")
+                else if (input == "6")
                 {
                     // 휴식 메서드 작동
                     if (player.PlayerHp < 100)
