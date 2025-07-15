@@ -49,6 +49,23 @@ namespace sparat_dungeon
             return Level;
         }
 
+        public int DropGold()
+        {
+            Random random = new Random();
+            return random.Next(10, 50);
+        }
+
+        public int DropItem()
+        {
+            Random random = new Random();
+            int dropChance = random.Next(1, 101);
+            if (dropChance <= 100)
+            {
+                return random.Next(0, Item.items.Count);
+            }
+            return -1; 
+        }
+
     }
     internal class Minion : Monster
     {
@@ -84,7 +101,10 @@ namespace sparat_dungeon
         }
 
        
+
     }
+
+   
 
 
 }
