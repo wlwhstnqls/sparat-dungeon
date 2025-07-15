@@ -12,7 +12,7 @@ namespace sparat_dungeon
         public int PlayerLevel { get; }
         public string PlayerName { get; }
         public string PlayerJob { get; }
-        public float PlayerAtk { get; }
+        public int PlayerAtk { get; }
         public int PlayerDef { get; }
         public int PlayerHp { set; get; }
         public int PlayerGold { get; private set; }
@@ -185,7 +185,7 @@ namespace sparat_dungeon
 
         public int PlayerDamageCalc()
         {
-            int damage = random.Next(PlayerAtk - (int)Math.Ceiling((PlayerAtk * 0.1)), (int)Math.Ceiling(PlayerAtk + (PlayerAtk * 0.1)));
+            int damage = random.Next (PlayerAtk - (int)Math.Ceiling((PlayerAtk * 0.1)), (int)Math.Ceiling(PlayerAtk + (PlayerAtk * 0.1)));
 
             return damage;
         }
