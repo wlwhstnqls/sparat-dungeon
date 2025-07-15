@@ -16,7 +16,7 @@ namespace sparat_dungeon
         public int PlayerAtk { get; set; }
         public int PlayerDef { get; set; }
         public int PlayerHp { set; get; }
-        public int PlayerGold { get; private set; }
+        public int PlayerGold { get; set; }
         public int PlayerExp { get; set; }
 
         List<int> ExpTable = new List<int> { 10, 35, 65, 100 };
@@ -74,6 +74,11 @@ namespace sparat_dungeon
             
         }
 
+        public void GainHp(int healing)
+        {
+            PlayerHp += healing;
+        }
+
         public void GainExp(int exp)
         {
             PlayerExp += exp;
@@ -81,6 +86,15 @@ namespace sparat_dungeon
             {
                 LevelUp();
             }
+        }
+
+        public int GetExpToNextLevel()
+        {
+            if (PlayerLevel - 1 < ExpTable.Count)
+                return ExpTable[PlayerLevel - 1];
+            else
+                return -1; 
+
         }
 
         public void LevelUp()

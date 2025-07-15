@@ -455,7 +455,8 @@ namespace sparat_dungeon
                 Console.WriteLine("0. 다음\n");
                 Console.Write(">> ");
                 Console.ReadLine();
-            }            
+            }
+            hiredMercenary = null;
         }
 
         static int CheckInput(int min, int max)
