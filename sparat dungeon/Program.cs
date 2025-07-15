@@ -71,6 +71,7 @@ namespace sparat_dungeon
 
             while (true)
             {
+                Console.Clear();
                 SpawnMonster();
                 Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n이제 전투를 시작할 수 있습니다.");
                 Console.WriteLine("");
@@ -411,9 +412,17 @@ namespace sparat_dungeon
 
             if (allDead)
             {
+                int totalExp = 0;
+                int MaxExp = player.GetExpToNextLevel();
+                foreach (var monster in monsters)
+                {
+                    totalExp += monster.MonsterExp();
+                }
+                player.GainExp(totalExp);
                 Console.WriteLine("Victory\n");
                 Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.\n");
                 Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName}");
+                Console.WriteLine($"경험치 {totalExp} / {MaxExp}");
                 Console.WriteLine($"HP {playerEnterHp} -> {player.PlayerHp}\n");
                 Console.WriteLine("0. 다음\n");
                 Console.Write(">> ");

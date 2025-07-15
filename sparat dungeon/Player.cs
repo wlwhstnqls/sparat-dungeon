@@ -83,6 +83,15 @@ namespace sparat_dungeon
             }
         }
 
+        public int GetExpToNextLevel()
+        {
+            if (PlayerLevel - 1 < ExpTable.Count)
+                return ExpTable[PlayerLevel - 1];
+            else
+                return -1; 
+
+        }
+
         public void LevelUp()
         {
             PlayerExp -= ExpTable[PlayerLevel - 1];
