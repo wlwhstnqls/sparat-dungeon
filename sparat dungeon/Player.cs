@@ -12,10 +12,13 @@ namespace sparat_dungeon
         public int PlayerLevel { get; }
         public string PlayerName { get; }
         public string PlayerJob { get; }
-        public int PlayerAtk { get; }
+        public float PlayerAtk { get; }
         public int PlayerDef { get; }
         public int PlayerHp { set; get; }
         public int PlayerGold { get; private set; }
+        public int PlayerExp {get;}
+
+        
 
 
         public static int PlayerExtraAtk { get; set; }
@@ -38,6 +41,7 @@ namespace sparat_dungeon
                 PlayerAtk = 10;
                 PlayerDef = 5;
                 PlayerGold = 1500;
+                
             }
             else if (jobSelect == "2" || jobSelect == "도적")
             {
@@ -48,6 +52,7 @@ namespace sparat_dungeon
                 PlayerAtk = 8;
                 PlayerDef = 3;
                 PlayerGold = 1500;
+                
             }
         }
 
@@ -60,6 +65,7 @@ namespace sparat_dungeon
             Console.WriteLine(PlayerExtraDef > 0 ? $"방어력: {PlayerDef} +{PlayerExtraDef}" : $"방어력: {PlayerDef}");
             Console.WriteLine($"체력: {PlayerHp}");
             Console.WriteLine($"골드: {PlayerGold} Gold");
+           
         }
 
         public static void EquipItem(Item item)
