@@ -9,6 +9,7 @@ namespace sparat_dungeon
     {
         private static Player player;
         static List<Monster> monsters;
+        public static int playerEnterHp;
         static void Main(string[] args)
         {
             //Battle.BattleSystem battleSystem = new Battle.BattleSystem();
@@ -148,7 +149,7 @@ namespace sparat_dungeon
                         monsters.Clear();  // 안전하게 초기화
                         SpawnMonster();
                     }
-
+                    playerEnterHp = player.PlayerHp;
                     ShowBattleUI();
                 }
                 else if (input == "4")
@@ -201,7 +202,6 @@ namespace sparat_dungeon
             Console.Clear();
             while (true)
             {
-                int PlayerEnterHp = player.PlayerHp;
                 Console.WriteLine("Battle!!");
                 Console.WriteLine();
                 for (int i = 0; i < monsters.Count; i++)
@@ -223,7 +223,7 @@ namespace sparat_dungeon
                 // 플레이어 정보 가져오기
                 Console.WriteLine("[내 정보]");
                 Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName} ({player.PlayerJob})");
-                Console.WriteLine($"HP {player.PlayerHp} / {PlayerEnterHp}");
+                Console.WriteLine($"HP {player.PlayerHp} / 100");
                 Console.WriteLine();
                 Console.WriteLine("0. 취소");
                 Console.WriteLine();
@@ -330,12 +330,10 @@ namespace sparat_dungeon
                     Console.WriteLine($"Lv.{monsters[i].Level} {monsters[i].Name} 의 공격!!");
                     Console.WriteLine($"{player.PlayerName}를 맞췄습니다. [데미지 : {monsters[i].DamageCalc()}]");
 
-                    Console.Write($"플레이어HP감소. {playerEnterHp} -> ");
+                    Console.Write($"HP {playerEnterHp} -> ");
                     monsters[i].ApplyDamage(player);
-                    if(player.PlayerHp <= 0)
-                    {
-                        Console.WriteLine($"Dead");
-                    }
+                    Console.WriteLine(player.PlayerHp <= 0 ? "Dead" : $"{player.PlayerHp}");
+                    
                     Console.WriteLine();
                     Console.WriteLine("0. 다음");
                     Console.WriteLine();
@@ -388,28 +386,38 @@ namespace sparat_dungeon
         static void ShowResultUI()
         {
             Console.Clear();
+            // 플레이어 체력 0일 경우 패베 출력
             if (player.PlayerHp <= 0)
             {
                 Console.WriteLine("You Lose\n");
                 Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName}");
-                Console.WriteLine($"HP -> {player.PlayerHp}\n");
+                Console.WriteLine($"HP {playerEnterHp} -> 0\n");
                 Console.WriteLine("0. 다음\n");
                 Console.Write(">> ");
+                Console.ReadLine();
+                // 게임 종료?
             }
 
-            for (int i = 0; i < monsters.Count; i++)
+            bool allDead = true;
+            foreach (Monster monster in monsters)
             {
-                if (monsters[i].IsDead == true)
-                {// 플레이어 전투 승리시 출력
-                    Console.WriteLine("Victory\n");
-                    Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.\n");
-                    Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName}");
-                    Console.WriteLine($"HP -> {player.PlayerHp}\n");
-                    Console.WriteLine("0. 다음\n");
-                    Console.Write(">> ");
+                if (!monster.IsDead)
+                {
+                    allDead = false;
+                    break;
                 }
             }
-            // 플레이어 체력 0일 경우 패베 출력
+
+            if (allDead)
+            {
+                Console.WriteLine("Victory\n");
+                Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.\n");
+                Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName}");
+                Console.WriteLine($"HP {playerEnterHp} -> {player.PlayerHp}\n");
+                Console.WriteLine("0. 다음\n");
+                Console.Write(">> ");
+                Console.ReadLine();
+            }            
         }
 
         static int CheckInput(int min, int max)
