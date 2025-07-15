@@ -89,6 +89,8 @@ namespace sparat_dungeon
                 Console.WriteLine("3. 전투 시작");
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine("4. 퀘스트");
+                Console.ForegroundColor = ConsoleColor.Blue; //////////////////////////////////////////////////////
+                Console.WriteLine("5. 휴식");                //////////////////////////////////////////////////////
                 Console.ResetColor();
                 Console.WriteLine("");
                 Console.WriteLine("원하는 행동을 입력해주세요.");
@@ -197,6 +199,27 @@ namespace sparat_dungeon
                             Console.WriteLine("잘못된 입력입니다.");
                             break;
                     }
+                }
+                else if (input == "5")
+                {
+                    // 휴식 메서드 작동
+                    if (player.PlayerHp < 100)
+                    {
+                        player.PlayerHp = 100;
+                    }
+                    else Console.WriteLine("\n당신은 휴식이 필요하지 않습니다.");
+                    Console.WriteLine($"\n현재체력 : {player.PlayerHp}");
+
+                    string restout = Console.ReadLine();
+                    if (restout == "0")
+                    {
+                        Console.WriteLine("상태보기를 종료합니다.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 입력입니다. 상태보기를 종료합니다.");
+                    }
+                    Console.Clear();
                 }
                 else
                 {
