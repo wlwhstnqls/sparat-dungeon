@@ -151,23 +151,48 @@ namespace sparat_dungeon
                         str = $"\u001b[38;2;135;206;250m-\u001b[38;2;240;248;255m {item.Name} ";
                     }
 
+                    Console.SetCursorPosition(5, Console.CursorTop);
+                    Console.Write(str);
+
                     if (item.DMG > 0)
                     {
-                        str = str + $"{FL} 공격력 +{item.DMG} ";
+                        str = $"{FL} 공격력 +{item.DMG} ";
                     }
                     if (item.DF > 0)
                     {
-                        str = str + $"{FL} 방어력 +{item.DF} ";
+                        str = $"{FL} 방어력 +{item.DF} ";
                     }
                     if (item.HP > 0)
                     {
-                        str = str + $"{FL} 최대 체력 +{item.DMG} ";
+                        str = $"{FL} 최대 체력 +{item.DMG} ";
+                    }
+                    if (item.Name == "힐링 포션")
+                    {
+                        str = $"{FL} 체력회복 +30 ";
                     }
 
-                    str = str + $"{FL} {item.Ex}";
+                    Console.SetCursorPosition(25, Console.CursorTop);
+                    Console.Write(str);
 
-                    Console.SetCursorPosition(5, Console.CursorTop);
-                    Console.WriteLine(str);
+                    str = $"{FL} {item.Ex}";
+
+                    Console.SetCursorPosition(42, Console.CursorTop);
+                    Console.Write(str);
+
+                    if (item.Type == ItemType.소비)
+                    {
+                        Console.SetCursorPosition(102, Console.CursorTop);
+                        Console.Write($"{FL} {slot.Quantity}개");
+                    }
+                    else
+                    {
+                        Console.SetCursorPosition(102, Console.CursorTop);
+                        Console.Write($"{FL}");
+                    }
+                    Console.SetCursorPosition(112, Console.CursorTop);
+                    Console.Write($"{FL}");
+                    Console.WriteLine();
+
                 }
             }
             Console.WriteLine("");
