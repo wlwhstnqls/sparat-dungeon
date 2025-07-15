@@ -111,7 +111,11 @@ namespace sparat_dungeon
                     //인벤토리
                     Item.ShowInventory();
                     string inventoryout = Console.ReadLine();
-                    if (inventoryout == "1")
+                    if (inventoryout == "2")
+                    {
+                        Player.ShowInventoryC();
+                    }
+                    else if (inventoryout == "1")
                     {
                         Player.ShowInventoryE();
                     }

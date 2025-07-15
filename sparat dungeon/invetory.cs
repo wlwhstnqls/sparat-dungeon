@@ -191,12 +191,13 @@ namespace sparat_dungeon
 
                     if (itemIndex >= 0 && itemIndex < items.Count)
                     {
-                        Player.EquipItem(items[itemIndex]);
+                        Item item = inventory[itemIndex].Item;
+                        Player.EquipItem(item);
 
                         Console.Write(new string(' ', Console.WindowWidth));
                         Console.SetCursorPosition(0, Console.CursorTop - 1);
                         Console.Write("\u001b[38;2;255;200;82m");
-                        Console.Write($"[장착 완료] {items[itemIndex].Name}을(를) 장착했습니다!");
+                        Console.Write($"[장착 완료] {item.Name}을(를) 장착했습니다!");
 
                         Thread.Sleep(1000);
                     }
@@ -225,11 +226,13 @@ namespace sparat_dungeon
                     if (itemIndex >= 0 && itemIndex < items.Count)
                     {
                         Inventory slot = inventory[itemIndex];
+                        Item item = slot.Item;
+
 
                         Console.Write(new string(' ', Console.WindowWidth));
                         Console.SetCursorPosition(0, Console.CursorTop - 1);
                         Console.Write("\u001b[38;2;255;200;82m");
-                        Console.Write($"[장착 완료] {items[itemIndex].Name}을(를) 사용했습니다!");
+                        Console.Write($"[아이템 사용] {item.Name}을(를) 사용했습니다!");
 
                         slot.Quantity--;
                         if (slot.Quantity <= 0)
