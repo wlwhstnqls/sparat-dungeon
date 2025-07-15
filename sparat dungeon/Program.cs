@@ -288,23 +288,67 @@ namespace sparat_dungeon
 
         static void ShowPlayerAttackUI(Monster monster)
         {
+            Random rand = new Random();
+
             Console.Clear();
             Console.WriteLine("Battle!!");
             Console.WriteLine();
             Console.WriteLine($"{player.PlayerName} 의 공격!!");
-            Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.PlayerDamageCalc()}]");
-            Console.WriteLine();
-            Console.WriteLine($"Lv.{monster.Level} {monster.Name}");
-            Console.Write($"HP {monster.Hp}  -> ");
-            monster.TakeDamage(player.PlayerDamageCalc());
-            if (monster.IsDead == true)
+            int damage = player.PlayerDamageCalc();
+            int avoid = rand.Next(1, 101);
+            if (avoid < 11)
             {
-                Console.WriteLine("Dead");
+                Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 공격했지만 아무일도 일어나지 않았습니다.");
             }
             else
             {
-                Console.WriteLine($"{monster.Hp}");
+                int critical = rand.Next(1, 101);
+                if(critical < 16)
+                {
+                    damage = (int)(damage * 1.6f);
+                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {damage}] - 치명타 공격!!");
+                    Console.WriteLine();
+                    Console.WriteLine($"Lv.{monster.Level} {monster.Name}");
+                    Console.Write($"HP {monster.Hp}  -> ");
+                    monster.TakeDamage(damage);
+                    if (monster.IsDead == true)
+                    {
+                        Console.WriteLine("Dead");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{monster.Hp}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {damage}]");
+                    Console.WriteLine();
+                    Console.WriteLine($"Lv.{monster.Level} {monster.Name}");
+                    Console.Write($"HP {monster.Hp}  -> ");
+                    monster.TakeDamage(damage);
+                    if (monster.IsDead == true)
+                    {
+                        Console.WriteLine("Dead");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{monster.Hp}");
+                    }
+                }
             }
+            //Console.WriteLine();
+            //Console.WriteLine($"Lv.{monster.Level} {monster.Name}");
+            //Console.Write($"HP {monster.Hp}  -> ");
+            //monster.TakeDamage(damage);
+            //if (monster.IsDead == true)
+            //{
+            //    Console.WriteLine("Dead");
+            //}
+            //else
+            //{
+            //    Console.WriteLine($"{monster.Hp}");
+            //}
             Console.WriteLine();
             Console.WriteLine("0. 다음");
             Console.WriteLine();
@@ -397,7 +441,7 @@ namespace sparat_dungeon
             // 플레이어 체력 0일 경우 패베 출력
             if (player.PlayerHp <= 0)
             {
-                Console.WriteLine("You Lose\n");
+                Console.WriteLine("You Lose - Result\n");
                 Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName}");
                 Console.WriteLine($"HP {playerEnterHp} -> 0\n");
                 Console.WriteLine("0. 다음\n");
@@ -439,7 +483,7 @@ namespace sparat_dungeon
                     }
                 }
                 player.GainExp(totalExp);
-                Console.WriteLine("Victory\n");
+                Console.WriteLine("Victory - Result\n");
                 Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.\n");
                 Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName}");
                 Console.WriteLine($"경험치 {totalExp} / {MaxExp}");
