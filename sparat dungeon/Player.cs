@@ -16,7 +16,7 @@ namespace sparat_dungeon
         public int PlayerAtk { get; set; }
         public int PlayerDef { get; set; }
         public int PlayerHp { set; get; }
-        public int PlayerGold { get; private set; }
+        public int PlayerGold { get; set; }
         public int PlayerExp { get; set; }
 
         List<int> ExpTable = new List<int> { 10, 35, 65, 100 };
