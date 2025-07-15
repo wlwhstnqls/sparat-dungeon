@@ -23,6 +23,8 @@ namespace sparat_dungeon
 
         public static int PlayerExtraAtk { get; set; }
         public static int PlayerExtraDef { get; set; }
+        public int TotalAtk => PlayerAtk + PlayerExtraAtk;
+        public int TotalDef => PlayerDef + PlayerExtraDef;
 
 
         public static Item EquipWepon { get; set; }
@@ -93,19 +95,20 @@ namespace sparat_dungeon
                     PlayerExtraAtk = PlayerExtraAtk + EquipWepon.DMG;
                 }
 
+
             }
             else if (item.Slot == SlotType.방어구)
             {
                 if (EquipArmor == null)
                 {
                     EquipArmor = item;
-                    PlayerExtraDef = PlayerExtraAtk + EquipArmor.DF;
+                    PlayerExtraDef = PlayerExtraDef + EquipArmor.DF;
                 }
                 else
                 {
-                    PlayerExtraDef = PlayerExtraAtk - EquipArmor.DF;
+                    PlayerExtraDef = PlayerExtraDef - EquipArmor.DF;
                     EquipArmor = item;
-                    PlayerExtraDef = PlayerExtraAtk + EquipArmor.DF;
+                    PlayerExtraDef = PlayerExtraDef + EquipArmor.DF;
                 }
             }
 
