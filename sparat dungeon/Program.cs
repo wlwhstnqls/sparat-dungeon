@@ -205,9 +205,9 @@ namespace sparat_dungeon
                    string shopInput = Console.ReadLine();
                     if (shopInput == "1")
                     {
-                        if (player.PlayerGold >= 100)
+                        if (PlayerGold >= 100)
                         {
-                            player.PlayerGold -= 100;
+                            PlayerGold -= 100;
                             hiredMercenary = new Mercenary("칼잡이 존", 15);
                             Console.WriteLine("용병 '칼잡이 존' 을 고용했습니다! (전투 1회용)");
                         }
