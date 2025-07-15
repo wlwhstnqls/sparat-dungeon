@@ -10,6 +10,7 @@ namespace sparat_dungeon
         private static Player player;
         static List<Monster> monsters;
         public static int playerEnterHp;
+        static Mercenary hiredMercenary = null;
         static void Main(string[] args)
         {
             //Battle.BattleSystem battleSystem = new Battle.BattleSystem();
@@ -81,6 +82,8 @@ namespace sparat_dungeon
                 Console.WriteLine("3. 전투 시작");
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine("4. 퀘스트");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("5. 상점");                
                 Console.ResetColor();
                 Console.WriteLine("");
                 Console.WriteLine("원하는 행동을 입력해주세요.");
@@ -188,7 +191,38 @@ namespace sparat_dungeon
                         default:
                             Console.WriteLine("잘못된 입력입니다.");
                             break;
+                    }                    
+                }
+                else if (input == "5")
+                {
+                  console.clear();
+                  console.WriteLine("상점에 오신것을 환영합니다.");
+                  console.WriteLine("1. 용병");
+                  console.WriteLine("0. 상점에서 나갑니다.")
+                   string shopInput = Console.ReadLine();
+                    if (shopInput == "1")
+                    {
+                        if (player.Gold >= 100)
+                        {
+                            player.Gold -= 100;
+                            hiredMercenary = new Mercenary("칼잡이 존", 15);
+                            Console.WriteLine("용병 '칼잡이 존' 을 고용했습니다! (전투 1회용)");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Gold가 부족합니다.");
+                        }
                     }
+                    else if (shopInput == "0")
+                    {
+                        Console.WriteLine("상점을 나갑니다.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 입력입니다. 상점을 종료합니다.");
+                    }
+                    Thread.Sleep(1000);
+                    Console.Clear();
                 }
                 else
                 {
@@ -289,6 +323,10 @@ namespace sparat_dungeon
             Console.WriteLine($"Lv.{monster.Level} {monster.Name}");
             Console.Write($"HP {monster.Hp}  -> ");
             monster.TakeDamage(player.PlayerDamageCalc());
+            if (hiredMercenary != null && !monster.IsDead)
+            {
+                hiredMercenary.Attack(monster);
+            }
             if (monster.IsDead == true)
             {
                 Console.WriteLine("Dead");
