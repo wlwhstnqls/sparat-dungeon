@@ -28,6 +28,8 @@ namespace sparat_dungeon
         public static Item EquipWepon { get; set; }
         public static Item EquipArmor { get; set; }
 
+        public Random random = new Random();
+
         public Player(string playerName, string jobSelect)
         {
             
@@ -181,6 +183,11 @@ namespace sparat_dungeon
 
         }
 
+        public int PlayerDamageCalc()
+        {
+            int damage = random.Next(PlayerAtk - (int)Math.Ceiling((PlayerAtk * 0.1)), (int)Math.Ceiling(PlayerAtk + (PlayerAtk * 0.1)));
 
+            return damage;
+        }
     }
 }
