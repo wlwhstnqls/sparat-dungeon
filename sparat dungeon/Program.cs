@@ -52,7 +52,6 @@ namespace sparat_dungeon
             Console.Write("당신의 직업은?(1.전사\n2.도적) : ");
             string jobSelect = Console.ReadLine();
 
-            player = new Player(playerName, jobSelect);
 
             if (jobSelect == "1")
             {
@@ -67,6 +66,8 @@ namespace sparat_dungeon
                 Console.WriteLine("잘못된 직업입니다. 전사로 설정합니다.");
                 jobSelect = "1";
             }
+
+            player = new Player(playerName, jobSelect);
 
             while (true)
             {
