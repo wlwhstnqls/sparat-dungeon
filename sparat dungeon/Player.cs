@@ -76,7 +76,7 @@ namespace sparat_dungeon
         public void GainExp(int exp)
         {
             PlayerExp += exp;
-            if (PlayerExp >= ExpTable[PlayerLevel - 1])
+            while (PlayerLevel - 1 < ExpTable.Count && PlayerExp >= ExpTable[PlayerLevel - 1])
             {
                 LevelUp();
             }
