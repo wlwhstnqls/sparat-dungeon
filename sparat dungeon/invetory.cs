@@ -56,6 +56,7 @@ namespace sparat_dungeon
             new Item("낡은 검", "쉽게 볼 수 있는 낡은 검 입니다.", 2, 0, 0, 600, ItemType.장비, SlotType.무기),
             new Item("청동 도끼", "어디선가 사용됐던거 같은 도끼입니다.", 5, 0, 0, 1500, ItemType.장비, SlotType.무기),
             new Item("스파르타의 창", "스파르타의 전사들이 사용했다는 전설의 창입니다.", 7, 0, 0, 2500, ItemType.장비, SlotType.무기),
+            new Item("힐링 포션", "소량의 체력을 회복시켜줍니다.", 0, 0, 0, 100, ItemType.소비, SlotType.없음),
         };
 
         //인벤 아이템 배열
