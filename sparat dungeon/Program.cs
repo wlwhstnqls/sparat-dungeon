@@ -10,6 +10,7 @@ namespace sparat_dungeon
         private static Player player;
         static List<Monster> monsters;
         public static int playerEnterHp;
+
         static Mercenary hiredMercenary = null;
         static void Main(string[] args)
         {
@@ -195,16 +196,16 @@ namespace sparat_dungeon
                 }
                 else if (input == "5")
                 {
-                  console.clear();
-                  console.WriteLine("상점에 오신것을 환영합니다.");
-                  console.WriteLine("1. 용병");
-                  console.WriteLine("0. 상점에서 나갑니다.")
+                  Console.Clear();
+                  Console.WriteLine("상점에 오신것을 환영합니다.");
+                  Console.WriteLine("1. 용병");
+                  Console.WriteLine("0. 상점에서 나갑니다.");
                    string shopInput = Console.ReadLine();
                     if (shopInput == "1")
                     {
-                        if (player.Gold >= 100)
+                        if (player.PlayerGold >= 100)
                         {
-                            player.Gold -= 100;
+                            player.PlayerGold -= 100;
                             hiredMercenary = new Mercenary("칼잡이 존", 15);
                             Console.WriteLine("용병 '칼잡이 존' 을 고용했습니다! (전투 1회용)");
                         }
