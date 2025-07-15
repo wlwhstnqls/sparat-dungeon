@@ -74,6 +74,11 @@ namespace sparat_dungeon
             
         }
 
+        public void GainHp(int healing)
+        {
+            PlayerHp += healing;
+        }
+
         public void GainExp(int exp)
         {
             PlayerExp += exp;

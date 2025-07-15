@@ -10,7 +10,7 @@ namespace sparat_dungeon
         private static Player player;
         static List<Monster> monsters;
         public static int playerEnterHp;
-       
+        static Mercenary hiredMercenary = null;
         static void Main(string[] args)
         {
             //Battle.BattleSystem battleSystem = new Battle.BattleSystem();
@@ -26,8 +26,8 @@ namespace sparat_dungeon
             Console.WriteLine("스파르타 던전 게임에 오신 것을 환영합니다!");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("1.START");
-            Console.WriteLine("2.LOAD");
-            Console.WriteLine("3.EXIT");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("2.EXIT");
             Console.ResetColor();
             string gmaeStart = Console.ReadLine();
             if (gmaeStart == "1")
@@ -36,11 +36,6 @@ namespace sparat_dungeon
 
             }
             else if (gmaeStart == "2")
-            {
-                Console.WriteLine("게임을 로드합니다.");
-                return;
-            }
-            else if (gmaeStart == "3")
             {
                 Console.WriteLine("게임을 종료합니다.");
                 return;
@@ -58,6 +53,7 @@ namespace sparat_dungeon
             Console.Write("당신의 직업은?(1.전사\n2.도적) : ");
             string jobSelect = Console.ReadLine();
 
+            player = new Player(playerName, jobSelect);
 
             if (jobSelect == "1")
             {
@@ -73,11 +69,8 @@ namespace sparat_dungeon
                 jobSelect = "1";
             }
 
-            player = new Player(playerName, jobSelect);
-
             while (true)
             {
-                Console.Clear();
                 SpawnMonster();
                 Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n이제 전투를 시작할 수 있습니다.");
                 Console.WriteLine("");
@@ -89,6 +82,8 @@ namespace sparat_dungeon
                 Console.WriteLine("3. 전투 시작");
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine("4. 퀘스트");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("5. 상점");                
                 Console.ResetColor();
                 Console.WriteLine("");
                 Console.WriteLine("원하는 행동을 입력해주세요.");
@@ -196,7 +191,38 @@ namespace sparat_dungeon
                         default:
                             Console.WriteLine("잘못된 입력입니다.");
                             break;
+                    }                    
+                }
+                else if (input == "5")
+                {
+                  console.clear();
+                  console.WriteLine("상점에 오신것을 환영합니다.");
+                  console.WriteLine("1. 용병");
+                  console.WriteLine("0. 상점에서 나갑니다.")
+                   string shopInput = Console.ReadLine();
+                    if (shopInput == "1")
+                    {
+                        if (player.Gold >= 100)
+                        {
+                            player.Gold -= 100;
+                            hiredMercenary = new Mercenary("칼잡이 존", 15);
+                            Console.WriteLine("용병 '칼잡이 존' 을 고용했습니다! (전투 1회용)");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Gold가 부족합니다.");
+                        }
                     }
+                    else if (shopInput == "0")
+                    {
+                        Console.WriteLine("상점을 나갑니다.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 입력입니다. 상점을 종료합니다.");
+                    }
+                    Thread.Sleep(1000);
+                    Console.Clear();
                 }
                 else
                 {
@@ -297,6 +323,10 @@ namespace sparat_dungeon
             Console.WriteLine($"Lv.{monster.Level} {monster.Name}");
             Console.Write($"HP {monster.Hp}  -> ");
             monster.TakeDamage(player.PlayerDamageCalc());
+            if (hiredMercenary != null && !monster.IsDead)
+            {
+                hiredMercenary.Attack(monster);
+            }
             if (monster.IsDead == true)
             {
                 Console.WriteLine("Dead");
@@ -418,37 +448,15 @@ namespace sparat_dungeon
 
             if (allDead)
             {
-                int totalExp = 0;
-                int totalGold = 0;
-                List<Item> droppedItems = new List<Item>();
-                int MaxExp = player.GetExpToNextLevel();
-                foreach (var monster in monsters)
-                {
-                    totalExp += monster.MonsterExp();
-                    totalGold += monster.DropGold();
-                    player.PlayerGold += monster.DropGold();
-                    
-                    int itemIndex = monster.DropItem();
-                    
-                    if (itemIndex != -1)
-                    {
-                        Item droppedItem = Item.items[itemIndex];  
-                        droppedItems.Add(droppedItem);            
-                        Item.AddItem(itemIndex);                   
-                        Console.WriteLine($"아이템 {droppedItem.Name}을(를) 획득했습니다.");
-                    }
-                }
-                player.GainExp(totalExp);
                 Console.WriteLine("Victory\n");
                 Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.\n");
                 Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName}");
-                Console.WriteLine($"경험치 {totalExp} / {MaxExp}");
                 Console.WriteLine($"HP {playerEnterHp} -> {player.PlayerHp}\n");
-                Console.WriteLine($"{totalGold}골드를 획득했습니다.\n");
                 Console.WriteLine("0. 다음\n");
                 Console.Write(">> ");
                 Console.ReadLine();
-            }            
+            }
+            hiredMercenary = null;
         }
 
         static int CheckInput(int min, int max)
