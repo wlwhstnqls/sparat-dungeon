@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Threading;
 using static sparat_dungeon.Battle;
 using static sparat_dungeon.util;
+using static System.Formats.Asn1.AsnWriter;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace sparat_dungeon
 
@@ -10,8 +11,8 @@ namespace sparat_dungeon
     public class Program
     {
         public static int state;
-        public static int map = 0;
-        public static int map_r = 0;
+        public static int scene = 0;
+        public static int scene_re = 0;
         public static Action mapFunc;
 
         private static Player player;
@@ -31,251 +32,13 @@ namespace sparat_dungeon
                 //new Quest(3, "더욱 더 강해지기", false, QuestState.NotStarted)
             };
 
+            Title();
+            LoopChoice();
 
-            Console.WriteLine("스파르타 던전 게임에 오신 것을 환영합니다!");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("1.START");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("2.EXIT");
-            Console.ResetColor();
-            string gmaeStart = Console.ReadLine();
-            if (gmaeStart == "1")
-            {
-                Console.WriteLine("게임을 시작합니다");
-
-            }
-            else if (gmaeStart == "2")
-            {
-                Console.WriteLine("게임을 종료합니다.");
-                return;
-            }
-            else
-            {
-                Console.WriteLine("잘못된 입력입니다. 게임을 종료합니다.");
-                return;
-            }
-            Thread.Sleep(1000);
-            Console.Clear();
-
-            Console.Write("당신의 이름은? : ");
-            string playerName = Console.ReadLine();
-            Console.Write("당신의 직업은?(1.전사\n2.도적) : ");
-            string jobSelect = Console.ReadLine();
-
-            player = new Player(playerName, jobSelect);
-
-            if (jobSelect == "1")
-            {
-                Console.WriteLine("전사를 선택하셨습니다.");
-            }
-            else if (jobSelect == "2")
-            {
-                Console.WriteLine("도적을 선택하셨습니다.");
-            }
-            else
-            {
-                Console.WriteLine("잘못된 직업입니다. 전사로 설정합니다.");
-                jobSelect = "1";
-            }
-
-            while (true)
-            {
-                SpawnMonster();
-                Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n이제 전투를 시작할 수 있습니다.");
-                Console.WriteLine("");
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("1. 상태 보기");
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("2. 인벤토리");
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("3. 전투 시작");
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine("4. 퀘스트");
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("5. 상점");                
-                Console.ForegroundColor = ConsoleColor.Blue; 
-                Console.WriteLine("6. 휴식");   
-                Console.ResetColor();
-                Console.WriteLine("");
-                Console.WriteLine("원하는 행동을 입력해주세요.");
-
-                string input = Console.ReadLine();
-                monsters.Clear();
-                if (input == "1")
-                {
-                    Console.WriteLine("상태보기\n캐릭터의 정보가 표시됩니다.");
-                    Console.WriteLine("");
-                    player.Playerinfo();
-                    Console.WriteLine("");
-                    //플레이어 상태를 여기에 추가
-                    Console.WriteLine("상태보기에서 나가려면 0 키를 누르세요.");
-                    string statusout = Console.ReadLine();
-                    if (statusout == "0")
-                    {
-                        Console.WriteLine("상태보기를 종료합니다.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("잘못된 입력입니다. 상태보기를 종료합니다.");
-                    }
-                    Console.Clear();
-                }
-                else if (input == "2")
-                {
-
-                    //인벤토리
-                    Item.ShowInventory();
-                    string inventoryout = Console.ReadLine();
-                    if (inventoryout == "2")
-                    {
-                        Player.ShowInventoryC();
-                    }
-                    else if (inventoryout == "1")
-                    {
-                        Player.ShowInventoryE();
-                    }
-                    if (inventoryout == "0")
-                    {
-                        Console.WriteLine("인벤토리를 종료합니다.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("잘못된 입력입니다. 인벤토리를 종료합니다.");
-                    }
-                    Console.Clear();
-                }
-                else if (input == "3")
-                {
-                    Console.Clear();
-                    bool allDead = true;
-                    foreach (var m in monsters)
-                    {
-                        if (!m.IsDead)
-                        {
-                            allDead = false;
-                            break;
-                        }
-                    }
-
-                    // 몬스터가 없거나 전부 죽었을 때만 새로 생성
-                    if (monsters.Count == 0 || allDead)
-                    {
-                        monsters.Clear();  // 안전하게 초기화
-                        SpawnMonster();
-                    }
-                    playerEnterHp = player.PlayerHp;
-                    ShowBattleUI();
-                }
-                else if (input == "4")
-                {
-                    Console.Clear();
-                    Console.WriteLine("Quest!!");
-                    Console.WriteLine("");
-                    Console.WriteLine("1. 마을을 위협하는 미니언 처치");
-                    Console.WriteLine("2. 장비를 장착해보자");
-                    Console.WriteLine("3. 더욱 더 강해지기");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-                    Console.WriteLine("원하시는 퀘스트를 선택해주세요.");
-                    Console.WriteLine("뒤로 가시려면 0을 입력해주세요.");
-                    Console.Write(">> ");
-
-                    int questinput = int.Parse(Console.ReadLine());
-
-                    switch (questinput)
-                    {
-                        case 0:
-                            // 메인 화면으로 이동
-                            break;
-                        case 1:
-                            // 1번 퀘스트 출력
-                            //quests[0].ShowQuestUI(1);
-                            break;
-                        case 2:
-                            // 2번 퀘스트 출력
-                            //quests[1].ShowQuestUI(2);
-                            break;
-                        case 3:
-                            // 3번 퀘스트 출력
-                            //quests[2].ShowQuestUI(3);
-                            break;
-                        default:
-                            Console.WriteLine("잘못된 입력입니다.");
-                            break;
-                    }                    
-                }
-                else if (input == "5")
-                {
-                  Console.Clear();
-                  Console.WriteLine("상점에 오신것을 환영합니다.");
-                  Console.WriteLine("1. 용병");
-                  Console.WriteLine("0. 상점에서 나갑니다.");
-                   string shopInput = Console.ReadLine();
-                    if (shopInput == "1")
-                    {
-                        if (player.PlayerGold >= 100)
-                        {
-                            player.PlayerGold -= 100;
-                            hiredMercenary = new Mercenary("칼잡이 존", 15);
-                            Console.WriteLine("용병 '칼잡이 존' 을 고용했습니다! (전투 1회용)");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Gold가 부족합니다.");
-                        }
-                    }
-                    else if (shopInput == "0")
-                    {
-                        Console.WriteLine("상점을 나갑니다.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("잘못된 입력입니다. 상점을 종료합니다.");
-                    }
-                    Thread.Sleep(1000);
-                    Console.Clear();
-                }
-                else if (input == "6")
-                {
-                    // 휴식 메서드 작동
-                    if (player.PlayerHp < 100)
-                    {
-                        player.PlayerHp = 100;
-                    }
-                    else Console.WriteLine("\n당신은 휴식이 필요하지 않습니다.");
-                    Console.WriteLine($"\n현재체력 : {player.PlayerHp}");
-
-                    string restout = Console.ReadLine();
-                    if (restout == "0")
-                    {
-                        Console.WriteLine("상태보기를 종료합니다.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("잘못된 입력입니다. 상태보기를 종료합니다.");
-                    }
-                    Console.Clear();
-                }
-                else
-                {
-                    Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
-                    Console.Clear();
-                }
-            }
         }
 
-        public string PlayerInput()
-        {
-            while (Console.KeyAvailable) // 출력되는동안 텍스트 여러번 눌린거 초기화
-            {
-                Console.ReadKey(true);
-            }
-            Console.WriteLine();
-            Console.Write(": ");
-            return Console.ReadLine();
-        }
 
-        private void LoopInput()
+        static void LoopChoice()
         {
             while (true)
             {
@@ -283,14 +46,14 @@ namespace sparat_dungeon
 
                 if (state == 0)
                 {
-                    switch (map)
+                    switch (scene)
                     {
                         case 0:
-
+                            Title_choice(choice);
                             break;
 
                         case 1:
-
+                            MainScene_choice(choice);
                             break;
 
                         case 2:
@@ -326,6 +89,260 @@ namespace sparat_dungeon
                 }
             }
         }
+
+        static string PlayerInput()
+        {
+            while (Console.KeyAvailable) // 출력되는동안 텍스트 여러번 눌린거 초기화
+            {
+                Console.ReadKey(true);
+            }
+            Console.WriteLine();
+            Console.Write(": ");
+            return Console.ReadLine();
+        }
+
+        static void Title()
+        {
+            Console.WriteLine("스파르타 던전 게임에 오신 것을 환영합니다!");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("1.START");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("2.EXIT");
+            Console.ResetColor();
+        }
+
+        static void Title_choice(string choice)
+        {
+            if (choice == "1")
+            {
+                Console.WriteLine("게임을 시작합니다");
+
+            }
+            else if (choice == "2")
+            {
+                Console.WriteLine("게임을 종료합니다.");
+            }
+            else
+            {
+                Console.WriteLine("잘못된 입력입니다. 게임을 종료합니다.");
+            }
+
+            Console.Write("당신의 이름은? : ");
+            string playerName = Console.ReadLine();
+
+            Console.WriteLine("당신의 직업은?");
+            Console.WriteLine("1. 전사");
+            Console.WriteLine("2. 도적");
+            string jobSelect = Console.ReadLine();
+
+            if (jobSelect == "1")
+            {
+                Console.WriteLine("전사를 선택하셨습니다.");
+            }
+            else if (jobSelect == "2")
+            {
+                Console.WriteLine("도적을 선택하셨습니다.");
+            }
+            else
+            {
+                Console.WriteLine("잘못된 직업입니다. 전사로 설정합니다.");
+                jobSelect = "1";
+            }
+
+            player = new Player(playerName, jobSelect);
+
+            MainScene();
+            scene = 1;
+        }
+
+        static void MainScene()
+        {
+            SpawnMonster();
+            Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n이제 전투를 시작할 수 있습니다.");
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("1. 상태 보기");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("2. 인벤토리");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("3. 전투 시작");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("4. 퀘스트");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("5. 상점");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("6. 휴식");
+            Console.ResetColor();
+            Console.WriteLine("");
+            Console.WriteLine("원하는 행동을 입력해주세요.");
+            monsters.Clear();
+        }
+
+        static void MainScene_choice(string choice)
+        {
+            if (choice == "1")
+            {
+                Console.WriteLine("상태보기\n캐릭터의 정보가 표시됩니다.");
+                Console.WriteLine("");
+                player.Playerinfo();
+                Console.WriteLine("");
+                //플레이어 상태를 여기에 추가
+                Console.WriteLine("상태보기에서 나가려면 0 키를 누르세요.");
+                string statusout = Console.ReadLine();
+                if (statusout == "0")
+                {
+                    Console.WriteLine("상태보기를 종료합니다.");
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다. 상태보기를 종료합니다.");
+                }
+                Console.Clear();
+            }
+            else if (choice == "2")
+            {
+
+                //인벤토리
+                Item.ShowInventory();
+                string inventoryout = Console.ReadLine();
+                if (inventoryout == "2")
+                {
+                    Player.ShowInventoryC();
+                }
+                else if (inventoryout == "1")
+                {
+                    Player.ShowInventoryE();
+                }
+                if (inventoryout == "0")
+                {
+                    Console.WriteLine("인벤토리를 종료합니다.");
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다. 인벤토리를 종료합니다.");
+                }
+                Console.Clear();
+            }
+            else if (choice == "3")
+            {
+                Console.Clear();
+                bool allDead = true;
+                foreach (var m in monsters)
+                {
+                    if (!m.IsDead)
+                    {
+                        allDead = false;
+                        break;
+                    }
+                }
+
+                // 몬스터가 없거나 전부 죽었을 때만 새로 생성
+                if (monsters.Count == 0 || allDead)
+                {
+                    monsters.Clear();  // 안전하게 초기화
+                    SpawnMonster();
+                }
+                playerEnterHp = player.PlayerHp;
+                ShowBattleUI();
+            }
+            else if (choice == "4")
+            {
+                Console.Clear();
+                Console.WriteLine("Quest!!");
+                Console.WriteLine("");
+                Console.WriteLine("1. 마을을 위협하는 미니언 처치");
+                Console.WriteLine("2. 장비를 장착해보자");
+                Console.WriteLine("3. 더욱 더 강해지기");
+                Console.WriteLine("");
+                Console.WriteLine("");
+                Console.WriteLine("원하시는 퀘스트를 선택해주세요.");
+                Console.WriteLine("뒤로 가시려면 0을 입력해주세요.");
+                Console.Write(">> ");
+
+                int questinput = int.Parse(Console.ReadLine());
+
+                switch (questinput)
+                {
+                    case 0:
+                        // 메인 화면으로 이동
+                        break;
+                    case 1:
+                        // 1번 퀘스트 출력
+                        //quests[0].ShowQuestUI(1);
+                        break;
+                    case 2:
+                        // 2번 퀘스트 출력
+                        //quests[1].ShowQuestUI(2);
+                        break;
+                    case 3:
+                        // 3번 퀘스트 출력
+                        //quests[2].ShowQuestUI(3);
+                        break;
+                    default:
+                        Console.WriteLine("잘못된 입력입니다.");
+                        break;
+                }
+            }
+            else if (choice == "5")
+            {
+                Console.Clear();
+                Console.WriteLine("상점에 오신것을 환영합니다.");
+                Console.WriteLine("1. 용병");
+                Console.WriteLine("0. 상점에서 나갑니다.");
+                string shopInput = Console.ReadLine();
+                if (shopInput == "1")
+                {
+                    if (player.PlayerGold >= 100)
+                    {
+                        player.PlayerGold -= 100;
+                        hiredMercenary = new Mercenary("칼잡이 존", 15);
+                        Console.WriteLine("용병 '칼잡이 존' 을 고용했습니다! (전투 1회용)");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Gold가 부족합니다.");
+                    }
+                }
+                else if (shopInput == "0")
+                {
+                    Console.WriteLine("상점을 나갑니다.");
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다. 상점을 종료합니다.");
+                }
+                Thread.Sleep(1000);
+                Console.Clear();
+            }
+            else if (choice == "6")
+            {
+                // 휴식 메서드 작동
+                if (player.PlayerHp < 100)
+                {
+                    player.PlayerHp = 100;
+                }
+                else Console.WriteLine("\n당신은 휴식이 필요하지 않습니다.");
+                Console.WriteLine($"\n현재체력 : {player.PlayerHp}");
+
+                string restout = Console.ReadLine();
+                if (restout == "0")
+                {
+                    Console.WriteLine("상태보기를 종료합니다.");
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다. 상태보기를 종료합니다.");
+                }
+                Console.Clear();
+            }
+            else
+            {
+                Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
+                Console.Clear();
+            }
+        }
+
+
         static void ShowBattleUI()
         {
             Console.Clear();

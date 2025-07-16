@@ -74,13 +74,13 @@ namespace sparat_dungeon
 
         public static Dictionary<int, Inventory> inventory = new Dictionary<int, Inventory>
         {
-            { 0, new Inventory(items[0], 1) },
-            { 1, new Inventory(items[1], 1) },
-            { 2, new Inventory(items[2], 1) },
-            { 3, new Inventory(items[3], 1) },
-            { 4, new Inventory(items[4], 1) },
-            { 5, new Inventory(items[6], 3) },
-            { 6, new Inventory(items[5], 1) },
+            //{ 0, new Inventory(items[0], 1) },
+            //{ 1, new Inventory(items[1], 1) },
+            //{ 2, new Inventory(items[2], 1) },
+            //{ 3, new Inventory(items[3], 1) },
+            //{ 4, new Inventory(items[4], 1) },
+            //{ 5, new Inventory(items[6], 3) },
+            //{ 6, new Inventory(items[5], 1) },
         };
 
         public const int MaxInventory = 10;
