@@ -33,31 +33,25 @@ namespace sparat_dungeon
                 Console.SetCursorPosition(index, Console.CursorTop);
 
                 int colori = 50;
-
+                int top = Console.CursorTop;
                 for (int i = 0; i < colori; i++)
                 {
                     int bright = 20 + (int)((235.0 / (colori - 1)) * i);
                     string color = $"\u001b[38;2;{bright};{bright};{bright}m";
-
-                    Console.SetCursorPosition(index, Console.CursorTop);
+                    Console.SetCursorPosition(index, top);
                     Console.Write(color + text + "\u001b[0m");
                     Thread.Sleep(delay);
                 }
                 Console.WriteLine();
             }
 
+            public static void SetColor(int r, int g, int b)
+            {
+                Console.Write($"\x1b[38;2;{r};{g};{b}m");
+            }
 
         }
 
-        public static void Set(int r, int g, int b)
-        {
-            Console.Write($"\x1b[38;2;{r};{g};{b}m");
-        }
-
-        public static void Reset()
-        {
-            Console.Write("\x1b[0m");
-        }
 
     }
 }

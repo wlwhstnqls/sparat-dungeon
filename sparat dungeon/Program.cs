@@ -16,8 +16,11 @@ namespace sparat_dungeon
         public static Action mapFunc;
 
         private static Player player;
+        private static int delay = 30;
         static List<Monster> monsters;
         public static int playerEnterHp;
+
+        static int index_c;
 
         static Mercenary hiredMercenary = null;
         static void Main(string[] args)
@@ -88,18 +91,32 @@ namespace sparat_dungeon
                 Console.ReadKey(true);
             }
             Console.WriteLine();
+            Console.SetCursorPosition(6, Console.CursorTop);
             Console.Write(": ");
             return Console.ReadLine();
         }
 
+        public static void index_count()
+        {
+            index_c++;
+            Console.SetCursorPosition(12, Console.CursorTop);
+            Console.Write($"\u001b[38;2;255;194;89m{index_c}.\u001b[38;2;224;192;128m");
+        }
+
         static void Title()
         {
+            Console.CursorVisible = false;
+            Console.WriteLine();
+            Console.WriteLine();
             Util.Textcolor("검으로 선택지를 베어버렸다.",25,5);
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("1.START");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("2.EXIT");
+            Console.WriteLine();
+            Console.WriteLine();
+            Thread.Sleep(500);
+            Util.Textcolor("1.【입문하기 】", 10, 10);
+            Util.Textcolor("2.【하산하기 】", 10, 10);
+            Thread.Sleep(500);
             Console.ResetColor();
+            Console.CursorVisible = true;
         }
 
         static void Title_choice(string choice)
@@ -117,29 +134,66 @@ namespace sparat_dungeon
                 Console.WriteLine("잘못된 입력입니다. 게임을 종료합니다.");
             }
 
-            Console.Write("당신의 이름은? : ");
+            Console.Clear();
+            Console.CursorVisible = false;
+            Console.WriteLine();
+            Console.WriteLine();
+            Util.Textcolor("당신의 이름을 알려주십시오, 협객이여.", 25, 5);
+            Console.WriteLine();
+            Thread.Sleep(500);
+            Console.SetCursorPosition(6, Console.CursorTop);
+            Console.Write(": ");
+            Console.CursorVisible = true;
             string playerName = Console.ReadLine();
 
-            Console.WriteLine("당신의 직업은?");
-            Console.WriteLine("1. 전사");
-            Console.WriteLine("2. 도적");
+            Console.Clear();
+            Console.CursorVisible = false;
+            Console.WriteLine();
+            Console.WriteLine();
+            Util.Textcolor($"[{playerName}]…강호의 길에 들어선 당신.", 25, 5);
+            Util.Textcolor("수련한 무공을 고르십시오.", 25, 5);
+            Console.WriteLine();
+            Thread.Sleep(500);
+            Util.Textcolor("1.【검사 】", 10, 11);
+            Util.Textcolor("2.【무승 】", 10, 11);
+            Util.Textcolor("3.【기공사 】", 10, 11);
+            Console.WriteLine();
+            Thread.Sleep(500);
+            Console.SetCursorPosition(6, Console.CursorTop);
+            Console.Write(": ");
+            Console.CursorVisible = true;
             string jobSelect = Console.ReadLine();
+            string jobSelect_str = "검사";
+
+            player = new Player(playerName, jobSelect);
 
             if (jobSelect == "1")
             {
-                Console.WriteLine("전사를 선택하셨습니다.");
+                jobSelect_str = "검사";
             }
             else if (jobSelect == "2")
             {
-                Console.WriteLine("도적을 선택하셨습니다.");
+                jobSelect_str = "무승";
+            }
+            else if (jobSelect == "3")
+            {
+                jobSelect_str = "기공사";
             }
             else
             {
-                Console.WriteLine("잘못된 직업입니다. 전사로 설정합니다.");
                 jobSelect = "1";
             }
+            Console.Clear();
+            Console.CursorVisible = false;
+            Console.WriteLine();
+            Console.WriteLine();
+            Util.Textcolor($"이름: {playerName}", 10, 5);
+            Util.Textcolor($"직업: {jobSelect_str}", 10, 5);
+            Console.WriteLine();
+            Util.Textcolor($"[{playerName}] 님, [{jobSelect_str}]의 길을 걷게 되었습니다.", 30, 5);
+            Util.Textcolor($"강호의 운명이 당신을 기다리고 있습니다...", 30, 5);
+            Thread.Sleep(1000);
 
-            player = new Player(playerName, jobSelect);
 
             scene = 1;
             MainScene();
@@ -148,25 +202,33 @@ namespace sparat_dungeon
         static void MainScene()
         {
             Console.Clear();
+            index_c = 0;
             state = 0;
             SpawnMonster();
-            Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n이제 전투를 시작할 수 있습니다.");
-            Console.WriteLine("");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("1. 상태 보기");
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("2. 인벤토리");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("3. 전투 시작");
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("4. 퀘스트");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("5. 상점");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("6. 휴식");
+            Console.WriteLine();
+            Console.WriteLine();
+            Util.SetColor(224, 192, 128);
+            Util.Write("스파르타 던전에 오신 여러분 환영합니다.",delay, 5);
+            Util.Write("이제 전투를 시작할 수 있습니다.", delay, 5);
+            Console.WriteLine();
+            index_count();
+            Util.Write("【상태 보기 】", delay, 15);
+            index_count();
+            Util.Write("【소지품 확인 】", delay, 15);
+            index_count();
+            Util.Write("【전투 시작 】", delay, 15);
+            index_count();
+            Util.Write("【퀘스트 】", delay, 15);
+            index_count();
+            Util.Write("【상점 】", delay, 15);
+            index_count();
+            Util.Write("【휴식 】", delay, 15);
+            //Console.WriteLine("3. 전투 시작");
+            //Console.WriteLine("4. 퀘스트"); // 촌장
+            //Console.WriteLine("5. 상점"); // 용병
+            //Console.WriteLine("6. 휴식"); // 객잔? 숙소? 여관?
             Console.ResetColor();
             Console.WriteLine("");
-            Console.WriteLine("원하는 행동을 입력해주세요.");
             monsters.Clear();
         }
 
@@ -495,7 +557,7 @@ namespace sparat_dungeon
             
             Console.WriteLine();
 
-            Console.WriteLine("x. 다음");
+            Console.WriteLine("X. 다음");
             Console.WriteLine();
             Console.Write(">> ");
 
@@ -538,7 +600,7 @@ namespace sparat_dungeon
                     }
                 }
                 Console.WriteLine();
-                Console.WriteLine("x. 다음");
+                Console.WriteLine("X. 다음");
                 Console.WriteLine();
                 Console.Write(">> ");
 
