@@ -16,11 +16,17 @@ namespace sparat_dungeon
         public int PlayerAtk { get; set; }
         public int PlayerDef { get; set; }
         public int PlayerHp { set; get; }
+        public int PlayerMp { get; set; }  
         public int PlayerGold { get; set; }
         public int PlayerExp { get; set; }
 
         List<int> ExpTable = new List<int> { 10, 35, 65, 100 };
 
+        public List<Skill> Skills { get; set; } = new List<Skill>
+        {
+            new Skill("1000포인트 주세요", 20, 10), 
+            new Skill("탈것갖고싶어요", 15, 5)
+        };
 
         public static int PlayerExtraAtk { get; set; }
         public static int PlayerExtraDef { get; set; }
@@ -44,6 +50,7 @@ namespace sparat_dungeon
                 PlayerName = playerName;
                 PlayerJob = "전사";
                 PlayerHp = 100;
+                PlayerMp = 50;
                 PlayerAtk = 10;
                 PlayerDef = 5;
                 PlayerGold = 1500;
@@ -55,6 +62,7 @@ namespace sparat_dungeon
                 PlayerName = playerName;
                 PlayerJob = "도적";
                 PlayerHp = 80;
+                PlayerMp = 50;
                 PlayerAtk = 8;
                 PlayerDef = 3;
                 PlayerGold = 1500;
@@ -70,6 +78,7 @@ namespace sparat_dungeon
             Console.WriteLine(PlayerExtraAtk > 0 ? $"공격력: {PlayerAtk} +{PlayerExtraAtk}" : $"공격력: {PlayerAtk}");
             Console.WriteLine(PlayerExtraDef > 0 ? $"방어력: {PlayerDef} +{PlayerExtraDef}" : $"방어력: {PlayerDef}");
             Console.WriteLine($"체력: {PlayerHp}");
+            Console.WriteLine($"마나: {PlayerMp}");
             Console.WriteLine($"골드: {PlayerGold} Gold");
             
         }
@@ -106,6 +115,17 @@ namespace sparat_dungeon
             
             Console.WriteLine($"{PlayerName} 님이 레벨업 하셨습니다! 현재 레벨: {PlayerLevel}");
         }
+
+        public void UseSkill(int skillIndex, Monster target)
+        {
+            if (skillIndex < 0 || skillIndex >= Skills.Count)
+            {
+                Console.WriteLine("잘못된 스킬 선택입니다.");
+                return;
+            }
+            Skills[skillIndex].UseSkill(this, target);
+        }
+
 
         public static void EquipItem(Item item)
         {
