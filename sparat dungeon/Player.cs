@@ -39,6 +39,8 @@ namespace sparat_dungeon
 
         public Random random = new Random();
 
+        public List<Quest> Quests { get; private set; }
+
         public Player(string playerName, string jobSelect)
         {
             
@@ -54,6 +56,7 @@ namespace sparat_dungeon
                 PlayerAtk = 10;
                 PlayerDef = 5;
                 PlayerGold = 1500;
+                Quests = new List<Quest>();
             }
             else if (jobSelect == "2" || jobSelect == "도적")
             {
@@ -66,6 +69,7 @@ namespace sparat_dungeon
                 PlayerAtk = 8;
                 PlayerDef = 3;
                 PlayerGold = 1500;
+                Quests = new List<Quest>();
             }
         }
 

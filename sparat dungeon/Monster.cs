@@ -67,34 +67,45 @@ namespace sparat_dungeon
         }
 
     }
-    internal class Minion : Monster
+    public class Minion : Monster
     {
+        public int DeathCount { get; private set; }
+
         public Minion()
         {
             Level = 2;
-            Name = "미니언";
+            Name = "도적";
             Hp = 15;
             Atk = 5;
             IsDead = false;
+            DeathCount = 0;
+        }
+        public void OnDie()
+        {
+            if (Hp <= 0)
+            {
+                IsDead = true;
+                DeathCount++;
+            }
         }
     }
-    internal class VoidBug : Monster
+    public class VoidBug : Monster
     {
         public VoidBug()
         {
             Level = 3;
-            Name = "공허충";
+            Name = "녹림채 잔당";
             Hp = 10;
             Atk = 9;
             IsDead = false;
         }
     }
-    internal class CanonMinion : Monster
+    public class CanonMinion : Monster
     {
         public CanonMinion()
         {
             Level = 5;
-            Name = "대포미니언";
+            Name = "살인광 낭인";
             Hp = 25;
             Atk = 8;
             IsDead = false;

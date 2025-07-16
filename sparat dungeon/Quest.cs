@@ -6,7 +6,34 @@ using System.Threading.Tasks;
 
 namespace sparat_dungeon
 {
-    internal abstract class Quest
+    // 퀘스트를 추상클래스
+    // 상속받은 3가지 퀘스트
+    // 스크립트를 출력해주는 메서드
+    // 달성 조건을 검사해주는 메서드가 있어 
+    // 메인에서 퀘스트List에 인스턴스해서 추가해줌
+    //   =========================================
+    // 퀘스트 장면에서 출력
+    // 퀘스트를 수락하면 IsAccept true로
+    // 달성 조건에 값 감시
+    // 달성시에 달성조건을 검사해서 달성조건 메서드 안에서 직접적으로 보상 수여
+    // 플레이어에게 퀘스트 리스트 만들어주고
+    // 퀘스트를 수락하면 추가 -> IsAccept같은 변수를 true
+    // 플레이어에서 KillCount변수를 만들고 감시
+    // 능력치나 장비는 get으로 다 받아와서 검사
+    // 퀘스트를 완료하면 Completed 변수를 또 true로 만들고 보상 수여
+    // IsAccept변수와 Completed변수가
+    // 둘다 true면 다시 퀘스트 수주를 할 수 없게 막으면 되고 ㅇㅈ? 어 ㅇㅈ
+    // 퀘스트 이름
+    // 퀘스트 아이디
+    // 수락 했는지
+    // 완료했는지
+
+    // 결론 메서드 3가지
+    // 퀘스트 스크립트 출력 메서드
+    // 완료 조건 감시 메서드
+    // 보상 주는 메서드 (완료조건 감시 안에 존재)
+
+    public class Quest
     {
         // 퀘스트 이름
         // 퀘스트 설명
@@ -15,56 +42,102 @@ namespace sparat_dungeon
 
         public int Id;
         public string Title;
+        public bool IsAccept;
         public bool IsComplited;
 
-        public abstract void ShowQuestUI();
+        public virtual void ShowQuestUI() { }
 
-        public abstract void CheckComplete(Player player);
+        public virtual void AcceptQuest()
+        {
+            IsAccept = true;
+        }
+
+        public virtual void CheckComplete() { }
+        public virtual void CheckComplete(Player player) { }
+        public virtual void CheckComplete(Minion minion) { }
+
+        public virtual void GiveReward(Player player) { }
     }
 
-    internal class KillQuest : Quest
+    public class KillQuest : Quest
     {
+        public KillQuest()
+        {
+            Id = 0;
+            Title = "도적 처치하기";
+            IsAccept = false;
+            IsComplited = false;
+        }
+
         public override void ShowQuestUI()
         {
             Console.Clear();
             Console.WriteLine(Title);
             Console.WriteLine();
-            Console.WriteLine("이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?");
-            Console.WriteLine("마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!");
-            Console.WriteLine("모험가인 자네가 좀 처치해주게!");
+            Console.WriteLine("소협! 이 설명촌 주변에 도적들이 많소");
+            Console.WriteLine("우리 마을에 젊은 장정들과 아녀자들이 잡혀가고 상인들도 털리오..");
+            Console.WriteLine("지푸라기라도 잡는 심정으로 청하오.");
+            Console.WriteLine("도적 뗴로부터 이 설명촌을 구해주시오!");
             Console.WriteLine();
-            Console.WriteLine($"- 미니언 5마리 처치"); // 조건 달기 (미니언 죽을때마다 숫자 올려주기)
+            Console.WriteLine($"- 도적 5명 처치"); // 조건 달기 (미니언 죽을때마다 숫자 올려주기)
             Console.WriteLine();
             Console.WriteLine("-보상-");
-            Console.WriteLine("쓸만한 방패 x 1");
-            Console.WriteLine("5 G");
+            Console.WriteLine("??"); // 괜찮은 걸로 설정 하기
+            Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("1. 수락");
             Console.WriteLine("2. 거절");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">> ");
-            int input = int.Parse(Console.ReadLine());
 
+            string input = Console.ReadLine();
+            if(input == "1")
+            {
+                // 퀘스트 수락 로직
+                AcceptQuest();
+            }
+            else if(input == "2")
+            {
+                // 뒤로 가기
+            }
+            else
+            {
+                Console.WriteLine("없는 선택이오..");
+            }
         }
-
-        public override void CheckComplete(Player player)
+        public override void CheckComplete(Minion minion)
         {
             // 플레이어에 킬카운트 만들고 가져와서 충족요건 확인하기
+            if(minion.DeathCount >= 5)
+            {
+                IsComplited = true;
+            }
+        }
 
+        public override void GiveReward(Player player)
+        {
         }
     }
 
-    internal class EquipQuest : Quest
+    public class EquipQuest : Quest
     {
+        public EquipQuest()
+        {
+            Id = 1;
+            Title = "장비 장착 해보기";
+            IsAccept = false;
+            IsComplited = false;
+        }
+
         public override void ShowQuestUI()
         {
             Console.Clear();
             Console.WriteLine(Title);
             Console.WriteLine();
-            Console.WriteLine("강해질 필요를 느끼지 않나?");
-            Console.WriteLine("장비를 장착하면 좀 더 강해질 수 있을걸세!");
-            Console.WriteLine("한번 시도 해보시게나!");
+            Console.WriteLine("더 강해지고 싶지 않소?");
+            Console.WriteLine("대장간에서 장비를 구해 장착하면 더 강해질 수 있을거요.");
+            Console.WriteLine("한번 시도 해보시오. 후회하지 않을거요.");
+            Console.WriteLine();
             Console.WriteLine($"- 무기, 방어구 둘 다 장착하기"); // 조건 달기 (장착 관리에서 데이터 받기)
             Console.WriteLine();
             Console.WriteLine("-보상-");
@@ -74,28 +147,44 @@ namespace sparat_dungeon
             Console.WriteLine("2. 거절");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">> ");
-            int input = int.Parse(Console.ReadLine());
         }
 
-        public override void CheckComplete(Player player)
+        public override void CheckComplete()
         {
             // 장비 장착 중인지 확인
+            if(Player.EquipWepon != null && Player.EquipArmor != null)
+            {
+                IsComplited = true;
+            }
 
+        }
 
+        public override void GiveReward(Player player)
+        {
+            
         }
     }
 
-    internal class StatusUpQuest : Quest
+    public class StatusUpQuest : Quest
     {
+        public StatusUpQuest()
+        {
+            Id = 2;
+            Title = "능력치 올려 보기";
+            IsAccept = false;
+            IsComplited = false;
+        }
         public override void ShowQuestUI()
         {
             Console.Clear();
             Console.WriteLine(Title);
             Console.WriteLine();
-            Console.WriteLine("이제 모험가의 태가 제법 나오는 구만");
-            Console.WriteLine("더욱 더 강해지기 위해서는 레벨업을 해 능력치를 올려야 하네!");
-            Console.WriteLine("더 강해지기 위해 노력해 보시게나!");
+            Console.WriteLine("제법 무림인 같소. 태가 나오!");
+            Console.WriteLine("더욱 강해지기 위해서는 공력을 올려야 한다고 들었소.");
+            Console.WriteLine("공력를 올리기 위해서는 실전을 통해 수련해야 하지 않겠소?");
+            Console.WriteLine("공력을 올려서 강해져보시오!");
+            Console.WriteLine();
+            Console.WriteLine("여러 전투를 통해서 공력 올릴 수 있습니다.");
             Console.WriteLine($"- 공격력 ?? , 방어력 ?? 달성하기"); // 조건 달기(+된 공격력 방어력 받아오기)
             Console.WriteLine();
             Console.WriteLine("-보상-");
@@ -105,13 +194,21 @@ namespace sparat_dungeon
             Console.WriteLine("2. 거절");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">> ");
-            int input = int.Parse(Console.ReadLine());
         }
 
         public override void CheckComplete(Player player)
         {
             // 현재 공격력 몇인지 체크 
+            //player.PlayerAtk
+
+            if(player.PlayerAtk > 20 && player.PlayerDef > 20)
+            {
+                IsComplited = true;
+            }
+        }
+
+        public override void GiveReward(Player player)
+        {
 
         }
     }

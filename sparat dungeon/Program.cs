@@ -18,7 +18,8 @@ namespace sparat_dungeon
 
         private static Player player;
         private static int delay = 30;
-        static List<Monster> monsters;
+        static List<Monster> monsters = new List<Monster>();
+        static List<Quest> quests = new List<Quest>();
         public static int playerEnterHp;
 
         static int index_c;
@@ -27,15 +28,9 @@ namespace sparat_dungeon
         static void Main(string[] args)
         {
             //Battle.BattleSystem battleSystem = new Battle.BattleSystem();
-            monsters = new List<Monster>();
+            
 
-            List<Quest> quests = new List<Quest>()
-            {
-                //new Quest(1, "마을을 위협하는 미니언 처치", false, QuestState.NotStarted),
-                //new Quest(2, "장비를 장착해보자", false, QuestState.NotStarted),
-                //new Quest(3, "더욱 더 강해지기", false, QuestState.NotStarted)
-            };
-
+            SetQuest();
             Title();
             LoopChoice();
 
@@ -66,6 +61,11 @@ namespace sparat_dungeon
 
                         case 3:
 
+                            break;
+                        case 4:
+                            QuestScene();
+                            choice = PlayerInput();
+                            QuestScene_choice(choice);
                             break;
 
                     }
@@ -271,42 +271,7 @@ namespace sparat_dungeon
             }
             else if (choice == "4")
             {
-                Console.Clear();
-                Console.WriteLine("Quest!!");
-                Console.WriteLine("");
-                Console.WriteLine("1. 마을을 위협하는 미니언 처치");
-                Console.WriteLine("2. 장비를 장착해보자");
-                Console.WriteLine("3. 더욱 더 강해지기");
-                Console.WriteLine("");
-                Console.WriteLine("");
-                Console.WriteLine("원하시는 퀘스트를 선택해주세요.");
-                Console.WriteLine("뒤로 가시려면 0을 입력해주세요.");
-                Console.Write(">> ");
-
-                int questinput = int.Parse(Console.ReadLine());
-
-                switch (questinput)
-                {
-                    case 0:
-                        // 메인 화면으로 이동
-                        break;
-                    case 1:
-                        // 1번 퀘스트 출력
-                        //quests[0].ShowQuestUI(1);
-                        break;
-                    case 2:
-                        // 2번 퀘스트 출력
-                        //quests[1].ShowQuestUI(2);
-                        break;
-                    case 3:
-                        // 3번 퀘스트 출력
-                        //quests[2].ShowQuestUI(3);
-                        break;
-                    default:
-                        Console.WriteLine("잘못된 입력입니다.");
-                        break;
-                }
-                MainScene();
+                QuestScene();
             }
             else if (choice == "5")
             {
@@ -426,7 +391,7 @@ namespace sparat_dungeon
             Player.ShowInventoryC();
         }
 
-
+         
 
 
         static void ShowBattleUI()
@@ -694,6 +659,46 @@ namespace sparat_dungeon
                 Console.ReadLine();
             }
             hiredMercenary = null;
+        }
+
+        static void QuestScene()
+        {
+            Console.Clear();
+            scene = 4;
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("Quest!!");
+            Console.ResetColor();
+            Console.WriteLine();
+            for (int i = 0; i < quests.Count; i++)
+            {
+                Console.WriteLine(quests[i].IsAccept ? $"{i + 1}. {quests[i].Title} [수행 중]" : $"{i + 1}. {quests[i].Title}");
+            }
+            Console.WriteLine();   
+            Console.WriteLine($"원하시는 퀘스트를 선택해주세요.");
+        }
+
+        static void QuestScene_choice(string choice)
+        {
+            int input = int.Parse(choice);
+
+            switch(input)
+            {
+                case 0:
+                    MainScene();
+                    scene = 1;
+                    break;
+                default:
+                    int questIdx = input - 1;
+                    quests[questIdx].ShowQuestUI();
+                    break;
+            }
+        }
+          
+        static void SetQuest()
+        {
+            quests.Add(new KillQuest());
+            quests.Add(new EquipQuest());
+            quests.Add(new StatusUpQuest());
         }
 
         static int CheckInput(int min, int max)
