@@ -2,11 +2,18 @@
 using System.Reflection;
 using System.Threading;
 using static sparat_dungeon.Battle;
+using static sparat_dungeon.util;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace sparat_dungeon
 
 {
     public class Program
     {
+        public static int state;
+        public static int map = 0;
+        public static int map_r = 0;
+        public static Action mapFunc;
+
         private static Player player;
         static List<Monster> monsters;
         public static int playerEnterHp;
@@ -16,13 +23,14 @@ namespace sparat_dungeon
         {
             //Battle.BattleSystem battleSystem = new Battle.BattleSystem();
             monsters = new List<Monster>();
-            
+
             List<Quest> quests = new List<Quest>()
             {
                 //new Quest(1, "마을을 위협하는 미니언 처치", false, QuestState.NotStarted),
                 //new Quest(2, "장비를 장착해보자", false, QuestState.NotStarted),
                 //new Quest(3, "더욱 더 강해지기", false, QuestState.NotStarted)
             };
+
 
             Console.WriteLine("스파르타 던전 게임에 오신 것을 환영합니다!");
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -252,6 +260,69 @@ namespace sparat_dungeon
                 {
                     Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
                     Console.Clear();
+                }
+            }
+        }
+
+        public string PlayerInput()
+        {
+            while (Console.KeyAvailable) // 출력되는동안 텍스트 여러번 눌린거 초기화
+            {
+                Console.ReadKey(true);
+            }
+            Console.WriteLine();
+            Console.Write(": ");
+            return Console.ReadLine();
+        }
+
+        private void LoopInput()
+        {
+            while (true)
+            {
+                string choice = PlayerInput();
+
+                if (state == 0)
+                {
+                    switch (map)
+                    {
+                        case 0:
+
+                            break;
+
+                        case 1:
+
+                            break;
+
+                        case 2:
+
+                            break;
+
+                        case 3:
+
+                            break;
+
+
+
+                    }
+                }
+                else if (state == 1)
+                {
+                }
+                else if (state == 2)
+                {
+                }
+                else if (state == 3)
+                {
+                }
+                else if (state == 4)
+                {
+                }
+                else if (state == 5)
+                {
+                }
+                else
+                {
+
                 }
             }
         }

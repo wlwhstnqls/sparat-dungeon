@@ -9,18 +9,6 @@ namespace sparat_dungeon
     internal class util
     {
 
-        public static int map = 0;
-        public static int map_r = 0;
-        public static Action mapFunc;
-
-        public enum State
-        {
-            메인,
-            상태창,
-            인벤토리,
-            장착,
-            소비
-        }
 
 
         public static class Textd
