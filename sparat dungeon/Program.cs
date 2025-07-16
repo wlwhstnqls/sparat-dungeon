@@ -64,8 +64,6 @@ namespace sparat_dungeon
 
                             break;
 
-
-
                     }
                 }
                 else if (state == 1) // 상태창
@@ -96,7 +94,7 @@ namespace sparat_dungeon
 
         static void Title()
         {
-            Console.WriteLine("스파르타 던전 게임에 오신 것을 환영합니다!");
+            Util.Textcolor("검으로 선택지를 베어버렸다.",25,5);
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("1.START");
             Console.ForegroundColor = ConsoleColor.Red;
@@ -109,7 +107,6 @@ namespace sparat_dungeon
             if (choice == "1")
             {
                 Console.WriteLine("게임을 시작합니다");
-
             }
             else if (choice == "2")
             {
@@ -495,7 +492,7 @@ namespace sparat_dungeon
             }
             
             Console.WriteLine();
-            Console.WriteLine("0. 다음");
+            Console.WriteLine(". 다음");
             Console.WriteLine();
             Console.Write(">> ");
 

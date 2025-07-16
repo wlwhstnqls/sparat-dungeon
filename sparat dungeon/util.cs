@@ -11,7 +11,7 @@ namespace sparat_dungeon
 
 
 
-        public static class Textd
+        public static class Util
         {
             public static void Write(string text, int delay, int index)
             {
@@ -27,6 +27,26 @@ namespace sparat_dungeon
                 }
                 Console.WriteLine();
             }
+
+            public static void Textcolor(string text, int delay, int index)
+            {
+                Console.SetCursorPosition(index, Console.CursorTop);
+
+                int colori = 50;
+
+                for (int i = 0; i < colori; i++)
+                {
+                    int bright = 20 + (int)((235.0 / (colori - 1)) * i);
+                    string color = $"\u001b[38;2;{bright};{bright};{bright}m";
+
+                    Console.SetCursorPosition(index, Console.CursorTop);
+                    Console.Write(color + text + "\u001b[0m");
+                    Thread.Sleep(delay);
+                }
+                Console.WriteLine();
+            }
+
+
         }
 
         public static void Set(int r, int g, int b)
