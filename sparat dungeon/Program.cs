@@ -68,20 +68,13 @@ namespace sparat_dungeon
 
                     }
                 }
-                else if (state == 1)
+                else if (state == 1) // 상태창
                 {
+                    StatusScene_choice(choice);
                 }
-                else if (state == 2)
+                else if (state == 2) // 인벤토리
                 {
-                }
-                else if (state == 3)
-                {
-                }
-                else if (state == 4)
-                {
-                }
-                else if (state == 5)
-                {
+                    InventoryScene_choice(choice);
                 }
                 else
                 {
@@ -151,12 +144,14 @@ namespace sparat_dungeon
 
             player = new Player(playerName, jobSelect);
 
-            MainScene();
             scene = 1;
+            MainScene();
         }
 
         static void MainScene()
         {
+            Console.Clear();
+            state = 0;
             SpawnMonster();
             Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n이제 전투를 시작할 수 있습니다.");
             Console.WriteLine("");
@@ -182,46 +177,11 @@ namespace sparat_dungeon
         {
             if (choice == "1")
             {
-                Console.WriteLine("상태보기\n캐릭터의 정보가 표시됩니다.");
-                Console.WriteLine("");
-                player.Playerinfo();
-                Console.WriteLine("");
-                //플레이어 상태를 여기에 추가
-                Console.WriteLine("상태보기에서 나가려면 0 키를 누르세요.");
-                string statusout = Console.ReadLine();
-                if (statusout == "0")
-                {
-                    Console.WriteLine("상태보기를 종료합니다.");
-                }
-                else
-                {
-                    Console.WriteLine("잘못된 입력입니다. 상태보기를 종료합니다.");
-                }
-                Console.Clear();
+                StatusScene();
             }
             else if (choice == "2")
             {
-
-                //인벤토리
-                Item.ShowInventory();
-                string inventoryout = Console.ReadLine();
-                if (inventoryout == "2")
-                {
-                    Player.ShowInventoryC();
-                }
-                else if (inventoryout == "1")
-                {
-                    Player.ShowInventoryE();
-                }
-                if (inventoryout == "0")
-                {
-                    Console.WriteLine("인벤토리를 종료합니다.");
-                }
-                else
-                {
-                    Console.WriteLine("잘못된 입력입니다. 인벤토리를 종료합니다.");
-                }
-                Console.Clear();
+                InventoryScene();
             }
             else if (choice == "3")
             {
@@ -244,6 +204,7 @@ namespace sparat_dungeon
                 }
                 playerEnterHp = player.PlayerHp;
                 ShowBattleUI();
+                MainScene();
             }
             else if (choice == "4")
             {
@@ -282,6 +243,7 @@ namespace sparat_dungeon
                         Console.WriteLine("잘못된 입력입니다.");
                         break;
                 }
+                MainScene();
             }
             else if (choice == "5")
             {
@@ -313,6 +275,7 @@ namespace sparat_dungeon
                 }
                 Thread.Sleep(1000);
                 Console.Clear();
+                MainScene();
             }
             else if (choice == "6")
             {
@@ -333,14 +296,69 @@ namespace sparat_dungeon
                 {
                     Console.WriteLine("잘못된 입력입니다. 상태보기를 종료합니다.");
                 }
-                Console.Clear();
+                MainScene();
             }
             else
             {
                 Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
-                Console.Clear();
+                MainScene();
             }
         }
+
+        static void StatusScene()
+        {
+            state = 1;
+            Console.Clear();
+            Console.WriteLine("상태보기\n캐릭터의 정보가 표시됩니다.");
+            Console.WriteLine("");
+            player.Playerinfo();
+            Console.WriteLine("");
+            Console.WriteLine("상태보기에서 나가려면 0 키를 누르세요.");
+        }
+
+        static void StatusScene_choice(string choice)
+        {
+            Console.WriteLine("상태보기를 종료합니다.");
+            MainScene();
+        }
+
+        static void InventoryScene()
+        {
+            state = 2;
+            Item.ShowInventory();
+        }
+
+        static void InventoryScene_choice(string choice)
+        {
+            //인벤토리
+            if (choice == "1")
+            {
+                state = 3;
+                EquipmentScene();
+            }
+            else if (choice == "2")
+            {
+                state = 4;
+                ConsumableScene();
+            }
+            else
+            {
+                Console.WriteLine("인벤토리를 종료합니다.");
+                MainScene();
+            }
+        }
+
+        static void EquipmentScene()
+        {
+            Player.ShowInventoryE();
+        }
+
+        static void ConsumableScene()
+        {
+            Player.ShowInventoryC();
+        }
+
+
 
 
         static void ShowBattleUI()

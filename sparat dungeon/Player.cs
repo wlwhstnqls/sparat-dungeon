@@ -204,6 +204,7 @@ namespace sparat_dungeon
                 Item.ShowInventory();
                 Console.Write("\x1b[38;2;181;53;53m");
                 Console.Write("[!] 장착 가능한 장비가 없습니다.");
+                Program.state = 2;
             }
             else
             {
@@ -213,6 +214,7 @@ namespace sparat_dungeon
                 Console.Write("뒤로가기");
                 Console.WriteLine("", 30, 10);
                 Item.Inven_eq(Console.ReadLine(), index);
+                Program.state = 2;
             }
 
 
@@ -262,6 +264,7 @@ namespace sparat_dungeon
                 Item.ShowInventory();
                 Console.Write("\x1b[38;2;181;53;53m");
                 Console.Write("[!] 사용 가능한 아이템이 없습니다.");
+                Program.state = 2;
             }
             else
             {
@@ -271,6 +274,7 @@ namespace sparat_dungeon
                 Console.Write("뒤로가기");
                 Console.WriteLine("", 30, 10);
                 Item.Inven_con(Console.ReadLine(), index);
+                Program.state = 2;
             }
 
 
