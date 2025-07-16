@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace sparat_dungeon
 {
+    
 
     public enum ItemType
     {
@@ -33,8 +36,11 @@ namespace sparat_dungeon
         public int Gold { get; set; }
         public ItemType Type { get; set; }
         public SlotType Slot { get; set; }
+<<<<<<< HEAD
         public int item_index { get; set; }
 
+=======
+>>>>>>> main
 
         public Item(string name, string ex, int dmg, int df, int hp, int gold, ItemType type, SlotType slot)
         {
@@ -56,27 +62,76 @@ namespace sparat_dungeon
             new Item("낡은 검", "쉽게 볼 수 있는 낡은 검 입니다.", 2, 0, 0, 600, ItemType.장비, SlotType.무기),
             new Item("청동 도끼", "어디선가 사용됐던거 같은 도끼입니다.", 5, 0, 0, 1500, ItemType.장비, SlotType.무기),
             new Item("스파르타의 창", "스파르타의 전사들이 사용했다는 전설의 창입니다.", 7, 0, 0, 2500, ItemType.장비, SlotType.무기),
+            new Item("힐링 포션", "소량의 체력을 회복시켜줍니다.", 0, 0, 0, 100, ItemType.소비, SlotType.없음),
         };
 
-        //인벤 아이템 배열
-        public static int[] inventory = new int[10]
+        public class Inventory
         {
-            1, 2, 3, 4, 5, 6, 0, 0, 0, 0
+            public Item Item { get; set; }
+            public int Quantity { get; set; }
+
+            public Inventory(Item item, int quantity)
+            {
+                Item = item;
+                Quantity = quantity;
+            }
+        }
+
+        public static Dictionary<int, Inventory> inventory = new Dictionary<int, Inventory>
+        {
+            { 0, new Inventory(items[0], 1) },
+            { 1, new Inventory(items[1], 1) },
+            { 2, new Inventory(items[2], 1) },
+            { 3, new Inventory(items[3], 1) },
+            { 4, new Inventory(items[4], 1) },
+            { 5, new Inventory(items[6], 3) },
+            { 6, new Inventory(items[5], 1) },
         };
+<<<<<<< HEAD
         public static int[] inventoryE = new int[10];
+=======
+
+        public const int MaxInventory = 10;
+
+
+        //인벤 아이템 배열
+        //public static int[] inventory = new int[10]
+        //{
+        //    1, 2, 3, 4, 5, 6, 0, 0, 0, 0
+        //};
+
+        public static int[] inventoryE = new int[MaxInventory];
+>>>>>>> main
 
         public static void AddItem(int itemIndex)
         {
-            for (int i = 0; i < inventory.Length; i++)
+            Item itemToAdd = items[itemIndex];
+
+            if (itemToAdd.Type != ItemType.장비)
             {
-                if (inventory[i] == 0)
+                foreach (KeyValuePair<int, Inventory> entry in inventory)
                 {
-                    inventory[i] = itemIndex + 1;
+                    if (entry.Value.Item == itemToAdd)
+                    {
+                        entry.Value.Quantity++;
+                        return;
+                    }
+                }
+            }
+
+
+            for (int i = 0; i < MaxInventory; i++)
+            {
+                if (!inventory.ContainsKey(i))
+                {
+                    inventory[i] = new Inventory(itemToAdd, 1);
                     return;
                 }
             }
+
             Console.WriteLine("소지품이 가득 찼습니다.");
         }
+
 
 
         public static void ShowInventory()
@@ -87,17 +142,18 @@ namespace sparat_dungeon
             Console.SetCursorPosition(6, 2);
             Console.WriteLine("\u001b[38;2;135;206;250m[소지품 목록]\u001b[38;2;240;248;255m");
             Console.WriteLine("");
-            for (int i = 0; i < inventory.Length; i++)
+            for (int i = 0; i < MaxInventory; i++)
             {
-                int idx = inventory[i];
-                if (idx == 0)
+                if (!inventory.ContainsKey(i))
                 {
                     Console.SetCursorPosition(5, Console.CursorTop);
                     Console.WriteLine($"\u001b[38;2;135;206;250m-\u001b[38;2;240;248;255m 빈 슬롯 ");
                 }
                 else
                 {
-                    Item item = items[idx - 1];
+                    Inventory slot = inventory[i];
+                    Item item = slot.Item;
+                    int qty = slot.Quantity;
 
                     if (Player.EquipWepon == item || Player.EquipArmor == item)
                     {
@@ -108,23 +164,48 @@ namespace sparat_dungeon
                         str = $"\u001b[38;2;135;206;250m-\u001b[38;2;240;248;255m {item.Name} ";
                     }
 
+                    Console.SetCursorPosition(5, Console.CursorTop);
+                    Console.Write(str);
+
                     if (item.DMG > 0)
                     {
-                        str = str + $"{FL} 공격력 +{item.DMG} ";
+                        str = $"{FL} 공격력 +{item.DMG} ";
                     }
                     if (item.DF > 0)
                     {
-                        str = str + $"{FL} 방어력 +{item.DMG} ";
+                        str = $"{FL} 방어력 +{item.DF} ";
                     }
                     if (item.HP > 0)
                     {
-                        str = str + $"{FL} 최대 체력 +{item.DMG} ";
+                        str = $"{FL} 최대 체력 +{item.DMG} ";
+                    }
+                    if (item.Name == "힐링 포션")
+                    {
+                        str = $"{FL} 체력회복 +30 ";
                     }
 
-                    str = str + $"{FL} {item.Ex}";
+                    Console.SetCursorPosition(25, Console.CursorTop);
+                    Console.Write(str);
 
-                    Console.SetCursorPosition(5, Console.CursorTop);
-                    Console.WriteLine(str);
+                    str = $"{FL} {item.Ex}";
+
+                    Console.SetCursorPosition(42, Console.CursorTop);
+                    Console.Write(str);
+
+                    if (item.Type == ItemType.소비)
+                    {
+                        Console.SetCursorPosition(102, Console.CursorTop);
+                        Console.Write($"{FL} {slot.Quantity}개");
+                    }
+                    else
+                    {
+                        Console.SetCursorPosition(102, Console.CursorTop);
+                        Console.Write($"{FL}");
+                    }
+                    Console.SetCursorPosition(112, Console.CursorTop);
+                    Console.Write($"{FL}");
+                    Console.WriteLine();
+
                 }
             }
             Console.WriteLine("");
@@ -137,6 +218,81 @@ namespace sparat_dungeon
         }
 
 
+        public static void Inven_eq(string choice, int index)
+        {
+            int number;
+
+            if (int.TryParse(choice, out number))
+            {
+                if (number > 0 && number <= index)
+                {
+                    int itemIndex = inventoryE[number - 1];
+
+                    if (itemIndex >= 0 && itemIndex < items.Count)
+                    {
+                        Item item = inventory[itemIndex].Item;
+                        Player.EquipItem(item);
+
+                        Console.Write(new string(' ', Console.WindowWidth));
+                        Console.SetCursorPosition(0, Console.CursorTop - 1);
+                        Console.Write("\u001b[38;2;255;200;82m");
+                        Console.Write($"[장착 완료] {item.Name}을(를) 장착했습니다!");
+
+                        Thread.Sleep(1000);
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 아이템입니다.");
+                        Item.Inven_eq(Console.ReadLine(), index);
+                    }
+                }
+                else
+                {
+                }
+            }
+        }
+
+        public static void Inven_con(string choice, int index)
+        {
+            int number;
+
+            if (int.TryParse(choice, out number))
+            {
+                if (number > 0 && number <= index)
+                {
+                    int itemIndex = inventoryE[number - 1];
+
+                    if (itemIndex >= 0 && itemIndex < items.Count)
+                    {
+                        Inventory slot = inventory[itemIndex];
+                        Item item = slot.Item;
+
+
+                        Console.Write(new string(' ', Console.WindowWidth));
+                        Console.SetCursorPosition(0, Console.CursorTop - 1);
+                        Console.Write("\u001b[38;2;255;200;82m");
+                        Console.Write($"[아이템 사용] {item.Name}을(를) 사용했습니다!");
+
+                        slot.Quantity--;
+                        if (slot.Quantity <= 0)
+                        {
+                            inventory.Remove(itemIndex);
+                        }
+
+                        Thread.Sleep(1000);
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 아이템입니다.");
+                        Item.Inven_eq(Console.ReadLine(), index);
+                    }
+                }
+                else
+                {
+                }
+            }
+        }
+
 
 
     }
@@ -146,4 +302,4 @@ namespace sparat_dungeon
 
 
 
-   }
+}

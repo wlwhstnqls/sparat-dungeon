@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static sparat_dungeon.Item;
 
 namespace sparat_dungeon
 {
     internal class Player
     {
+<<<<<<< HEAD
         public int PlayerLevel { get; }
         public string PlayerName { get; }
         public string PlayerJob { get; }
@@ -15,45 +18,285 @@ namespace sparat_dungeon
         public int PlayerDef { get; }
         public int PlayerHp { set; get; }
         public int PlayerGold { get; private set; }
+=======
+        public int PlayerLevel { get; set; }
+        public string PlayerName { get; set; }
+        public string PlayerJob { get; set; }
+        public int PlayerAtk { get; set; }
+        public int PlayerDef { get; set; }
+        public int PlayerHp { set; get; }
+        public int PlayerGold { get; set; }
+        public int PlayerExp { get; set; }
+
+        List<int> ExpTable = new List<int> { 10, 35, 65, 100 };
+>>>>>>> main
 
 
-        public int PlayerExtraAtk { get; private set; }
-        public int PlayerExtraDef { get; private set; }
+        public static int PlayerExtraAtk { get; set; }
+        public static int PlayerExtraDef { get; set; }
+        public int TotalAtk => PlayerAtk + PlayerExtraAtk;
+        public int TotalDef => PlayerDef + PlayerExtraDef;
 
+<<<<<<< HEAD
 
         public static Item EquipWepon { get; set; }
         public static Item EquipArmor { get; set; }
 
         //private List<Item> Inventory = new List<Item>();
         //private List<Item> EquipLIst = new List<Item>();
+=======
+>>>>>>> main
 
-        //public int InventoryCount
-        //{
-        //    get
-        //    {
-        //        return Inventory.Count;
-        //    }
-        //}
+        public static Item EquipWepon { get; set; }
+        public static Item EquipArmor { get; set; }
 
-        public Player(int playerLevel, string playerName, string playerJob, int playerAtk, int playerDef, int playerHp,int playerGold )
+        public Random random = new Random();
+
+        public Player(string playerName, string jobSelect)
         {
-            PlayerLevel = playerLevel;
-            PlayerName = playerName;
-            PlayerJob = playerJob;
-            PlayerAtk = playerAtk;
-            PlayerDef = playerDef;
-            PlayerHp = playerHp;
-            PlayerGold = playerGold;
+            
+
+            if (jobSelect == "1" || jobSelect == "전사")
+            {
+                PlayerLevel = 1;
+                PlayerExp = 0;
+                PlayerName = playerName;
+                PlayerJob = "전사";
+                PlayerHp = 100;
+                PlayerAtk = 10;
+                PlayerDef = 5;
+                PlayerGold = 1500;
+            }
+            else if (jobSelect == "2" || jobSelect == "도적")
+            {
+                PlayerLevel = 1;
+                PlayerExp = 0;
+                PlayerName = playerName;
+                PlayerJob = "도적";
+                PlayerHp = 80;
+                PlayerAtk = 8;
+                PlayerDef = 3;
+                PlayerGold = 1500;
+            }
         }
+
         public void Playerinfo()
         {
             Console.WriteLine($"레벨: {PlayerLevel}");
+            Console.WriteLine($"경험치: {PlayerExp}");
             Console.WriteLine($"이름: {PlayerName}");
             Console.WriteLine($"직업: {PlayerJob}");
             Console.WriteLine(PlayerExtraAtk > 0 ? $"공격력: {PlayerAtk} +{PlayerExtraAtk}" : $"공격력: {PlayerAtk}");
+<<<<<<< HEAD
             Console.WriteLine(PlayerExtraAtk > 0 ? $"방어력: {PlayerAtk} +{PlayerExtraAtk}" : $"방어력: {PlayerAtk}");
+=======
+            Console.WriteLine(PlayerExtraDef > 0 ? $"방어력: {PlayerDef} +{PlayerExtraDef}" : $"방어력: {PlayerDef}");
+>>>>>>> main
             Console.WriteLine($"체력: {PlayerHp}");
             Console.WriteLine($"골드: {PlayerGold} Gold");
+            
+        }
+
+        public void GainHp(int healing)
+        {
+            PlayerHp += healing;
+        }
+
+        public void GainExp(int exp)
+        {
+            PlayerExp += exp;
+            while (PlayerLevel - 1 < ExpTable.Count && PlayerExp >= ExpTable[PlayerLevel - 1])
+            {
+                LevelUp();
+            }
+        }
+
+        public int GetExpToNextLevel()
+        {
+            if (PlayerLevel - 1 < ExpTable.Count)
+                return ExpTable[PlayerLevel - 1];
+            else
+                return -1; 
+
+        }
+
+        public void LevelUp()
+        {
+            PlayerExp -= ExpTable[PlayerLevel - 1];
+            PlayerLevel++;
+            PlayerAtk += 2;
+            PlayerDef += 1;
+            
+            Console.WriteLine($"{PlayerName} 님이 레벨업 하셨습니다! 현재 레벨: {PlayerLevel}");
+        }
+
+        public static void EquipItem(Item item)
+        {
+
+            if (item.Type != ItemType.장비)
+            {
+                Console.WriteLine("장비 아이템이 아닙니다.");
+                return;
+            }
+
+            if (item.Slot == SlotType.무기)
+            {
+                if (EquipWepon == null)
+                {
+                    EquipWepon = item;
+                    PlayerExtraAtk = PlayerExtraAtk + EquipWepon.DMG;
+                }
+                else
+                {
+                    PlayerExtraAtk = PlayerExtraAtk - EquipWepon.DMG;
+                    EquipWepon = item;
+                    PlayerExtraAtk = PlayerExtraAtk + EquipWepon.DMG;
+                }
+
+
+            }
+            else if (item.Slot == SlotType.방어구)
+            {
+                if (EquipArmor == null)
+                {
+                    EquipArmor = item;
+                    PlayerExtraDef = PlayerExtraDef + EquipArmor.DF;
+                }
+                else
+                {
+                    PlayerExtraDef = PlayerExtraDef - EquipArmor.DF;
+                    EquipArmor = item;
+                    PlayerExtraDef = PlayerExtraDef + EquipArmor.DF;
+                }
+            }
+
+        }
+
+        public static void ShowInventoryE()
+        {
+            string str;
+            int index = 0;
+
+            Console.Clear();
+            Console.SetCursorPosition(6, 2);
+            Console.WriteLine("\u001b[38;2;135;206;250m[장착 가능 장비]\u001b[38;2;240;248;255m");
+            Console.WriteLine("");
+            for (int i = 0; i < Item.MaxInventory; i++)
+
+                if (Item.inventory.ContainsKey(i))
+                {
+                    Inventory slot = Item.inventory[i];
+                    Item item = slot.Item;
+
+                    if (ItemType.장비 == item.Type)
+                    {
+                        Item.inventoryE[index] = i;
+                        index++;
+                        if (EquipWepon == item || EquipArmor == item)
+                        {
+                            str = $"\u001b[\u001b[38;2;65;105;225m[E]\u001b[38;2;240;248;255m {item.Name} ";
+                        }
+                        else
+                        {
+                            str = $"\u001b[38;2;135;206;250m[{index}]\u001b[38;2;240;248;255m {item.Name} ";
+                        }
+
+                        if (item.DMG > 0)
+                        {
+                            str = str + $"{Item.FL} 공격력 +{item.DMG} ";
+                        }
+                        if (item.DF > 0)
+                        {
+                            str = str + $"{Item.FL} 방어력 +{item.DF} ";
+                        }
+                        if (item.HP > 0)
+                        {
+                            str = str + $"{Item.FL} 최대 체력 +{item.HP} ";
+                        }
+
+                        str = str + $"{Item.FL} {item.Ex}";
+
+                        Console.SetCursorPosition(5, Console.CursorTop);
+                        Console.WriteLine(str);
+                    }
+                }
+
+
+            if (index == 0)
+            {
+                Item.ShowInventory();
+                Console.Write("\x1b[38;2;181;53;53m");
+                Console.Write("[!] 장착 가능한 장비가 없습니다.");
+            }
+            else
+            {
+                Console.WriteLine("");
+                Console.SetCursorPosition(6, Console.CursorTop);
+                Console.Write($"\x1b[38;2;135;206;250m0.\x1b[38;2;240;248;255m");
+                Console.Write("뒤로가기");
+                Console.WriteLine("", 30, 10);
+                Item.Inven_eq(Console.ReadLine(), index);
+            }
+
+
+        }
+
+        public int PlayerDamageCalc()
+        {
+            int damage = random.Next(TotalAtk - (int)Math.Ceiling((TotalAtk * 0.1)), (int)Math.Ceiling(TotalAtk + (TotalAtk * 0.1)));
+
+            return damage;
+        }
+
+
+        public static void ShowInventoryC()
+        {
+            string str;
+            int index = 0;
+
+            Console.Clear();
+            Console.SetCursorPosition(6, 2);
+            Console.WriteLine("\u001b[38;2;135;206;250m[사용 가능 아이템]\u001b[38;2;240;248;255m");
+            Console.WriteLine("");
+            for (int i = 0; i < Item.MaxInventory; i++)
+
+                if (Item.inventory.ContainsKey(i))
+                {
+                    Inventory slot = Item.inventory[i];
+                    Item item = slot.Item;
+
+                    if (ItemType.소비 == item.Type)
+                    {
+                        Item.inventoryE[index] = i;
+                        index++;
+
+                        str = $"\u001b[38;2;135;206;250m[{index}]\u001b[38;2;240;248;255m {item.Name} ";
+
+                        str = str + $"{Item.FL} {item.Ex}";
+
+                        Console.SetCursorPosition(5, Console.CursorTop);
+                        Console.WriteLine(str);
+                    }
+                }
+
+
+            if (index == 0)
+            {
+                Item.ShowInventory();
+                Console.Write("\x1b[38;2;181;53;53m");
+                Console.Write("[!] 사용 가능한 아이템이 없습니다.");
+            }
+            else
+            {
+                Console.WriteLine("");
+                Console.SetCursorPosition(6, Console.CursorTop);
+                Console.Write($"\x1b[38;2;135;206;250m0.\x1b[38;2;240;248;255m");
+                Console.Write("뒤로가기");
+                Console.WriteLine("", 30, 10);
+                Item.Inven_con(Console.ReadLine(), index);
+            }
+
+
         }
 
         public void EquipItem(Item item)
