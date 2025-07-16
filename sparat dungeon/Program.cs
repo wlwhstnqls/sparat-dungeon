@@ -37,31 +37,40 @@ namespace sparat_dungeon
         }
 
 
+
+
+
         static void LoopChoice()
         {
             while (true)
             {
-                string choice = PlayerInput();
+                string choice;
 
                 if (state == 0)
                 {
                     switch (scene)
                     {
                         case 0:
+                            choice = PlayerInput();
                             Title_choice(choice);
                             break;
 
                         case 1:
+                            choice = PlayerInput();
                             MainScene_choice(choice);
                             break;
 
                         case 2:
-                            WhiteSwordMan_choice(choice);
+                            Rest();
+                            choice = PlayerInput();
+                            Rest_choice(choice);
                             break;
 
                         case 3:
-
+                            choice = PlayerInput();
+                            WhiteSwordMan_choice(choice);
                             break;
+
                         case 4:
                             QuestScene();
                             choice = PlayerInput();
@@ -72,10 +81,12 @@ namespace sparat_dungeon
                 }
                 else if (state == 1) // 상태창
                 {
+                    choice = PlayerInput();
                     StatusScene_choice(choice);
                 }
                 else if (state == 2) // 인벤토리
                 {
+                    choice = PlayerInput();
                     InventoryScene_choice(choice);
                 }
                 else
@@ -109,7 +120,7 @@ namespace sparat_dungeon
             Console.CursorVisible = false;
             Console.WriteLine();
             Console.WriteLine();
-            Util.Textcolor("검으로 선택지를 베어버렸다.",25,5);
+            Util.Textcolor("검으로 선택지를 베어버렸다.", 25, 5);
             Console.WriteLine();
             Console.WriteLine();
             Thread.Sleep(500);
@@ -125,7 +136,7 @@ namespace sparat_dungeon
             if (choice == "1")
             {
             }
-            else if(choice == "2")
+            else if (choice == "2")
             {
                 return;
             }
@@ -208,30 +219,32 @@ namespace sparat_dungeon
         {
             Console.Clear();
             index_c = 0;
-            state = 0;
             SpawnMonster();
             Console.WriteLine();
             Console.WriteLine();
             Util.SetColor(224, 192, 128);
-            Util.Write("스파르타 던전에 오신 여러분 환영합니다.",delay, 5);
-            Util.Write("이제 전투를 시작할 수 있습니다.", delay, 5);
+            Util.Write("당신의 눈앞에, 자그마한 마을이 모습을 드러냅니다.", delay, 5);
+            Thread.Sleep(500);
+            Console.WriteLine();
+            Util.Write("마을 입구에는 비바람에 닳아빠진 낡은 현판이 서 있습니다.", delay, 5);
+            Util.Write("현판에는 '루탄촌(淚歎村)'이라는 글씨가 희미하게 남아, 세월의 흔적을 말해줍니다.", delay, 5);
+            Thread.Sleep(500);
+            Console.WriteLine();
+            Util.Write("허리춤의 낡은 검 한 자루와 해진 옷이 당신의 행색 전부.", delay, 5);
+            Util.Write("이제 무엇을 하시겠습니까?", delay, 5);
+            Thread.Sleep(500);
+            Console.WriteLine();
             Console.WriteLine();
             index_count();
-            Util.Write("【상태 보기 】", delay, 15);
+            Util.Write("【정보를 모은다 】", delay - 20, 15);
             index_count();
-            Util.Write("【소지품 확인 】", delay, 15);
+            Util.Write("【객잔으로 이동 】", delay - 20, 15);
             index_count();
-            Util.Write("【전투 시작 】", delay, 15);
+            Util.Write("【숲으로 향한다 】", delay - 20, 15);
             index_count();
-            Util.Write("【퀘스트 】", delay, 15);
+            Util.Write("【 상태 보기  】", delay - 20, 15);
             index_count();
-            Util.Write("【상점 】", delay, 15);
-            index_count();
-            Util.Write("【휴식 】", delay, 15);
-            //Console.WriteLine("3. 전투 시작");
-            //Console.WriteLine("4. 퀘스트"); // 촌장
-            //Console.WriteLine("5. 상점"); // 용병
-            //Console.WriteLine("6. 휴식"); // 객잔? 숙소? 여관?
+            Util.Write("【소지품 확인 】", delay - 20, 15);
             Console.ResetColor();
             monsters.Clear();
         }
@@ -271,7 +284,42 @@ namespace sparat_dungeon
             }
             else if (choice == "4")
             {
-                QuestScene();
+                Console.Clear();
+                Console.WriteLine("Quest!!");
+                Console.WriteLine("");
+                Console.WriteLine("1. 마을을 위협하는 미니언 처치");
+                Console.WriteLine("2. 장비를 장착해보자");
+                Console.WriteLine("3. 더욱 더 강해지기");
+                Console.WriteLine("");
+                Console.WriteLine("");
+                Console.WriteLine("원하시는 퀘스트를 선택해주세요.");
+                Console.WriteLine("뒤로 가시려면 0을 입력해주세요.");
+                Console.Write(">> ");
+
+                int questinput = int.Parse(Console.ReadLine());
+
+                switch (questinput)
+                {
+                    case 0:
+                        // 메인 화면으로 이동
+                        break;
+                    case 1:
+                        // 1번 퀘스트 출력
+                        //quests[0].ShowQuestUI(1);
+                        break;
+                    case 2:
+                        // 2번 퀘스트 출력
+                        //quests[1].ShowQuestUI(2);
+                        break;
+                    case 3:
+                        // 3번 퀘스트 출력
+                        //quests[2].ShowQuestUI(3);
+                        break;
+                    default:
+                        Console.WriteLine("잘못된 입력입니다.");
+                        break;
+                }
+                MainScene();
             }
             else if (choice == "5")
             {
@@ -279,24 +327,7 @@ namespace sparat_dungeon
             }
             else if (choice == "6")
             {
-                // 휴식 메서드 작동
-                if (player.PlayerHp < 100)
-                {
-                    player.PlayerHp = 100;
-                }
-                else Console.WriteLine("\n당신은 휴식이 필요하지 않습니다.");
-                Console.WriteLine($"\n현재체력 : {player.PlayerHp}");
-
-                string restout = Console.ReadLine();
-                if (restout == "0")
-                {
-                    Console.WriteLine("상태보기를 종료합니다.");
-                }
-                else
-                {
-                    Console.WriteLine("잘못된 입력입니다. 상태보기를 종료합니다.");
-                }
-                MainScene();
+                scene = 2;
             }
             else
             {
@@ -319,39 +350,6 @@ namespace sparat_dungeon
         static void StatusScene_choice(string choice)
         {
             Console.WriteLine("상태보기를 종료합니다.");
-            MainScene();
-        }
-
-        static void WhiteSwordMan()
-        {
-            Console.Clear();
-            Console.WriteLine("상점에 오신것을 환영합니다.");
-            Console.WriteLine("1. 백검귀에게 돈을 준다.");
-            Console.WriteLine("X. 상점에서 나갑니다.");
-            scene = 2;
-        }
-
-        static void WhiteSwordMan_choice(string choice)
-        {
-            if (choice == "1")
-            {
-                if (player.PlayerGold >= 100)
-                {
-                    player.PlayerGold -= 100;
-                    hiredMercenary = new Mercenary("백검귀", 15);
-                    Console.WriteLine("'백검귀'를 고용했습니다!");
-                }
-                else
-                {
-                    Console.WriteLine("Gold가 부족합니다.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("상점을 종료합니다.");
-            }
-            Thread.Sleep(1000);
-            Console.Clear();
             MainScene();
         }
 
@@ -391,7 +389,89 @@ namespace sparat_dungeon
             Player.ShowInventoryC();
         }
 
-         
+
+        static void Rest()
+        {
+            Console.Clear();
+            index_c = 0;
+            Console.WriteLine();
+            Console.WriteLine();
+            Util.SetColor(224, 192, 128);
+            Util.Write("당신의 눈앞에 허름하지만 정겨워 보이는 객잔이 나타납니다.", delay, 5);
+            Thread.Sleep(500);
+            Console.WriteLine();
+            Util.Write("문틈으로 시끌벅적한 사람들의 목소리와 맛있는 음식 냄새가 흘러나옵니다.", delay, 5);
+            Util.Write("당신은 잠시 망설이다 객잔으로 발걸음을 옮깁니다.", delay, 5);
+            Thread.Sleep(500);
+            Console.WriteLine();
+            Util.Write("허리춤의 낡은 검 한 자루와 해진 옷이 당신의 행색 전부.", delay, 5);
+            Util.Write("이제 무엇을 하시겠습니까?", delay, 5);
+            Thread.Sleep(500);
+            Console.WriteLine();
+            Console.WriteLine();
+            index_count();
+            Util.Write("【정보를 모은다 】", delay - 20, 15);
+            index_count();
+            Util.Write("【객잔으로 이동 】", delay - 20, 15);
+            index_count();
+            Util.Write("【숲으로 향한다 】", delay - 20, 15);
+            index_count();
+            Util.Write("【 상태 보기  】", delay - 20, 15);
+            index_count();
+            Util.Write("【소지품 확인 】", delay - 20, 15);
+            Console.ResetColor();
+            scene = 2;
+        }
+
+        static void Rest_choice(string choice)
+        {
+            if (player.PlayerHp < 100)
+            {
+                player.PlayerHp = 100;
+            }
+            else
+                Console.WriteLine("\n당신은 휴식이 필요하지 않습니다.");
+            Console.WriteLine($"\n현재체력 : {player.PlayerHp}");
+
+            Console.ReadLine();
+
+            MainScene();
+        }
+
+        static void WhiteSwordMan()
+        {
+            Console.Clear();
+            Console.WriteLine("상점에 오신것을 환영합니다.");
+            Console.WriteLine("1. 백검귀에게 돈을 준다.");
+            Console.WriteLine("X. 대화를 건다.");
+            scene = 3;
+        }
+
+        static void WhiteSwordMan_choice(string choice)
+        {
+            if (choice == "1")
+            {
+                if (player.PlayerGold >= 100)
+                {
+                    player.PlayerGold -= 100;
+                    hiredMercenary = new Mercenary("백검귀", 15);
+                    Console.WriteLine("'백검귀'를 고용했습니다!");
+                }
+                else
+                {
+                    Console.WriteLine("Gold가 부족합니다.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("상점을 종료합니다.");
+            }
+            Thread.Sleep(1000);
+            Console.Clear();
+            MainScene();
+        }
+
+
 
 
         static void ShowBattleUI()
