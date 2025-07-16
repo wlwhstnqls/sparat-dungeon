@@ -45,7 +45,7 @@ namespace sparat_dungeon
         {
             
 
-            if (jobSelect == "1" || jobSelect == "전사")
+            if (jobSelect == "1" || jobSelect == "검사")
             {
                 PlayerLevel = 1;
                 PlayerExp = 0;
@@ -58,15 +58,28 @@ namespace sparat_dungeon
                 PlayerGold = 1500;
                 Quests = new List<Quest>();
             }
-            else if (jobSelect == "2" || jobSelect == "도적")
+            else if (jobSelect == "2" || jobSelect == "무승")
             {
                 PlayerLevel = 1;
                 PlayerExp = 0;
                 PlayerName = playerName;
-                PlayerJob = "도적";
-                PlayerHp = 80;
+                PlayerJob = "무승";
+                PlayerHp = 120;
                 PlayerMp = 50;
                 PlayerAtk = 8;
+                PlayerDef = 7;
+                PlayerGold = 1500;
+                Quests = new List<Quest>();
+            }
+            else if (jobSelect == "3" || jobSelect == "기공사")
+            {
+                PlayerLevel = 1;
+                PlayerExp = 0;
+                PlayerName = playerName;
+                PlayerJob = "기공사";
+                PlayerHp = 80;
+                PlayerMp = 50;
+                PlayerAtk = 10;
                 PlayerDef = 3;
                 PlayerGold = 1500;
                 Quests = new List<Quest>();
