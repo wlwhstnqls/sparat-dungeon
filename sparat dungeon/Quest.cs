@@ -33,7 +33,7 @@ namespace sparat_dungeon
     // 완료 조건 감시 메서드
     // 보상 주는 메서드 (완료조건 감시 안에 존재)
 
-    public abstract class Quest
+    public class Quest
     {
         // 퀘스트 이름
         // 퀘스트 설명
@@ -45,11 +45,13 @@ namespace sparat_dungeon
         public bool IsAccept;
         public bool IsComplited;
 
-        public abstract void ShowQuestUI();
+        public virtual void ShowQuestUI() { }
 
-        public abstract void CheckComplete(Player player);
+        public virtual void CheckComplete() { }
+        public virtual void CheckComplete(Player player) { }
+        public virtual void CheckComplete(Minion minion) { }
 
-        public abstract void GiveReward(Player player);
+        public virtual void GiveReward(Player player) { }
     }
 
     public class KillQuest : Quest
@@ -86,16 +88,17 @@ namespace sparat_dungeon
             int input = int.Parse(Console.ReadLine());
 
         }
-
-        public override void CheckComplete(Player player)
+        public override void CheckComplete(Minion minion)
         {
             // 플레이어에 킬카운트 만들고 가져와서 충족요건 확인하기
-            
+            if(minion.DeathCount >= 5)
+            {
+                IsComplited = true;
+            }
         }
 
         public override void GiveReward(Player player)
         {
-
         }
     }
 
@@ -131,17 +134,19 @@ namespace sparat_dungeon
             int input = int.Parse(Console.ReadLine());
         }
 
-        public override void CheckComplete(Player player)
+        public override void CheckComplete()
         {
             // 장비 장착 중인지 확인
-
-            //player.e
+            if(Player.EquipWepon != null && Player.EquipArmor != null)
+            {
+                IsComplited = true;
+            }
 
         }
 
         public override void GiveReward(Player player)
         {
-
+            
         }
     }
 
@@ -181,7 +186,12 @@ namespace sparat_dungeon
         public override void CheckComplete(Player player)
         {
             // 현재 공격력 몇인지 체크 
+            //player.PlayerAtk
 
+            if(player.PlayerAtk > 20 && player.PlayerDef > 20)
+            {
+                IsComplited = true;
+            }
         }
 
         public override void GiveReward(Player player)
