@@ -14,6 +14,7 @@ namespace sparat_dungeon
         public static int scene = 0;
         public static int scene_re = 0;
         public static Action mapFunc;
+        public static int debug = 0;
 
         private static Player player;
         private static int delay = 30;
@@ -60,7 +61,7 @@ namespace sparat_dungeon
                             break;
 
                         case 2:
-
+                            WhiteSwordMan_choice(choice);
                             break;
 
                         case 3:
@@ -123,15 +124,19 @@ namespace sparat_dungeon
         {
             if (choice == "1")
             {
-                Console.WriteLine("게임을 시작합니다");
             }
-            else if (choice == "2")
+            else if(choice == "2")
             {
-                Console.WriteLine("게임을 종료합니다.");
+                return;
+            }
+            else if (choice == "3") // 디버그 모드
+            {
+                Console.WriteLine("Debug mode");
+                debug = 1;
             }
             else
             {
-                Console.WriteLine("잘못된 입력입니다. 게임을 종료합니다.");
+                return;
             }
 
             Console.Clear();
@@ -228,7 +233,6 @@ namespace sparat_dungeon
             //Console.WriteLine("5. 상점"); // 용병
             //Console.WriteLine("6. 휴식"); // 객잔? 숙소? 여관?
             Console.ResetColor();
-            Console.WriteLine("");
             monsters.Clear();
         }
 
@@ -306,35 +310,7 @@ namespace sparat_dungeon
             }
             else if (choice == "5")
             {
-                Console.Clear();
-                Console.WriteLine("상점에 오신것을 환영합니다.");
-                Console.WriteLine("1. 용병");
-                Console.WriteLine("0. 상점에서 나갑니다.");
-                string shopInput = Console.ReadLine();
-                if (shopInput == "1")
-                {
-                    if (player.PlayerGold >= 100)
-                    {
-                        player.PlayerGold -= 100;
-                        hiredMercenary = new Mercenary("칼잡이 존", 15);
-                        Console.WriteLine("용병 '칼잡이 존' 을 고용했습니다! (전투 1회용)");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Gold가 부족합니다.");
-                    }
-                }
-                else if (shopInput == "0")
-                {
-                    Console.WriteLine("상점을 나갑니다.");
-                }
-                else
-                {
-                    Console.WriteLine("잘못된 입력입니다. 상점을 종료합니다.");
-                }
-                Thread.Sleep(1000);
-                Console.Clear();
-                MainScene();
+                WhiteSwordMan();
             }
             else if (choice == "6")
             {
@@ -378,6 +354,39 @@ namespace sparat_dungeon
         static void StatusScene_choice(string choice)
         {
             Console.WriteLine("상태보기를 종료합니다.");
+            MainScene();
+        }
+
+        static void WhiteSwordMan()
+        {
+            Console.Clear();
+            Console.WriteLine("상점에 오신것을 환영합니다.");
+            Console.WriteLine("1. 백검귀에게 돈을 준다.");
+            Console.WriteLine("X. 상점에서 나갑니다.");
+            scene = 2;
+        }
+
+        static void WhiteSwordMan_choice(string choice)
+        {
+            if (choice == "1")
+            {
+                if (player.PlayerGold >= 100)
+                {
+                    player.PlayerGold -= 100;
+                    hiredMercenary = new Mercenary("백검귀", 15);
+                    Console.WriteLine("'백검귀'를 고용했습니다!");
+                }
+                else
+                {
+                    Console.WriteLine("Gold가 부족합니다.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("상점을 종료합니다.");
+            }
+            Thread.Sleep(1000);
+            Console.Clear();
             MainScene();
         }
 

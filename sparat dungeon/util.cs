@@ -23,7 +23,10 @@ namespace sparat_dungeon
                 foreach (char c in text) // 순회문 루프문이랑 비슷함 text안에 텍스트를 하나씩 꺼내와서 c에 추가함
                 {
                     Console.Write(c); // 출력 텍스트
-                    Thread.Sleep(delay); // 딜레이
+                    if (Program.debug == 0)
+                    {
+                        Thread.Sleep(delay);
+                    }
                 }
                 Console.WriteLine();
             }
@@ -40,7 +43,10 @@ namespace sparat_dungeon
                     string color = $"\u001b[38;2;{bright};{bright};{bright}m";
                     Console.SetCursorPosition(index, top);
                     Console.Write(color + text + "\u001b[0m");
-                    Thread.Sleep(delay);
+                    if (Program.debug == 0) 
+                    {
+                        Thread.Sleep(delay);
+                    }
                 }
                 Console.WriteLine();
             }
