@@ -47,6 +47,11 @@ namespace sparat_dungeon
 
         public virtual void ShowQuestUI() { }
 
+        public virtual void AcceptQuest()
+        {
+            IsAccept = true;
+        }
+
         public virtual void CheckComplete() { }
         public virtual void CheckComplete(Player player) { }
         public virtual void CheckComplete(Minion minion) { }
@@ -56,7 +61,7 @@ namespace sparat_dungeon
 
     public class KillQuest : Quest
     {
-        KillQuest()
+        public KillQuest()
         {
             Id = 0;
             Title = "도적 처치하기";
@@ -77,16 +82,28 @@ namespace sparat_dungeon
             Console.WriteLine($"- 도적 5명 처치"); // 조건 달기 (미니언 죽을때마다 숫자 올려주기)
             Console.WriteLine();
             Console.WriteLine("-보상-");
-            Console.WriteLine("쓸만한 방패 x 1"); // 괜찮은 걸로 설정 하기
-            Console.WriteLine("5 G");
+            Console.WriteLine("??"); // 괜찮은 걸로 설정 하기
+            Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("1. 수락");
             Console.WriteLine("2. 거절");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">> ");
-            int input = int.Parse(Console.ReadLine());
 
+            string input = Console.ReadLine();
+            if(input == "1")
+            {
+                // 퀘스트 수락 로직
+                AcceptQuest();
+            }
+            else if(input == "2")
+            {
+                // 뒤로 가기
+            }
+            else
+            {
+                Console.WriteLine("없는 선택이오..");
+            }
         }
         public override void CheckComplete(Minion minion)
         {
@@ -104,7 +121,7 @@ namespace sparat_dungeon
 
     public class EquipQuest : Quest
     {
-        EquipQuest()
+        public EquipQuest()
         {
             Id = 1;
             Title = "장비 장착 해보기";
@@ -130,8 +147,6 @@ namespace sparat_dungeon
             Console.WriteLine("2. 거절");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">> ");
-            int input = int.Parse(Console.ReadLine());
         }
 
         public override void CheckComplete()
@@ -152,7 +167,7 @@ namespace sparat_dungeon
 
     public class StatusUpQuest : Quest
     {
-        StatusUpQuest()
+        public StatusUpQuest()
         {
             Id = 2;
             Title = "능력치 올려 보기";
@@ -179,8 +194,6 @@ namespace sparat_dungeon
             Console.WriteLine("2. 거절");
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">> ");
-            int input = int.Parse(Console.ReadLine());
         }
 
         public override void CheckComplete(Player player)
