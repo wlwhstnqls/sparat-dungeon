@@ -360,9 +360,9 @@ namespace sparat_dungeon
 
         static void ShowBattleUI()
         {
-            Console.Clear();
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine("Battle!!");
                 Console.WriteLine();
                 for (int i = 0; i < monsters.Count; i++)
@@ -444,7 +444,9 @@ namespace sparat_dungeon
             Random rand = new Random();
 
             Console.Clear();
-            Console.WriteLine("Battle!!");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("Battle!! - YourTurn");
+            Console.ResetColor();
             Console.WriteLine();
             Console.WriteLine($"{player.PlayerName} 의 공격!!");
             int damage = player.PlayerDamageCalc();
@@ -492,89 +494,71 @@ namespace sparat_dungeon
             }
             
             Console.WriteLine();
-            Console.WriteLine(". 다음");
+
+            Console.WriteLine("x. 다음");
             Console.WriteLine();
             Console.Write(">> ");
 
-            int input = int.Parse(Console.ReadLine());
+            Console.ReadLine();
 
-            if (input == 0)
-            {
-                ShowMonsterPhaseUI();
-                return;
-            }
-            else
-            {
-                Console.WriteLine("잘못된 입력입니다.");
-            }
+            ShowMonsterPhaseUI();
+            return;
         }
 
         static public void ShowMonsterPhaseUI()
         {
+            bool allDead = true;
 
-            for (int i = 0; i < monsters.Count; i++)
+            foreach (Monster monster in monsters)
+            {
+                if (!monster.IsDead)
+                {
+                    allDead = false;
+                }
+            }
+            if (allDead == false)
             {
                 int playerEnterHp = player.PlayerHp;
                 Console.Clear();
-                Console.WriteLine("Battle!!");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Battle!! - Monster Turn");
+                Console.ResetColor();
                 Console.WriteLine();
 
-                if (monsters[i].IsDead == false)
+                for (int i = 0; i < monsters.Count; i++)
                 {
-                    Console.WriteLine($"Lv.{monsters[i].Level} {monsters[i].Name} 의 공격!!");
-                    Console.WriteLine($"{player.PlayerName}를 맞췄습니다. [데미지 : {monsters[i].DamageCalc()}]");
-
-                    Console.Write($"HP {playerEnterHp} -> ");
-                    monsters[i].ApplyDamage(player);
-                    Console.WriteLine(player.PlayerHp <= 0 ? "Dead" : $"{player.PlayerHp}");
-                    
-                    Console.WriteLine();
-                    Console.WriteLine("0. 다음");
-                    Console.WriteLine();
-                    Console.Write(">> ");
-
-                    int result = CheckInput(0, 0);
-
-
-                    if (result == 0)
+                    if (monsters[i].IsDead == false)
                     {
-                        if (player.PlayerHp <= 0)
-                        {
-                            ShowResultUI();  // 패배
-                            return;
-                        }
-
-                        if (i == monsters.Count - 1)
-                        {
-                            //ShowBattleUI();  // 다시 공격 선택으로
-                            return;
-                        }
-                        else
-                        {
-                            continue;
-                        }
+                        Console.WriteLine($"Lv.{monsters[i].Level} {monsters[i].Name} 의 공격!!");
+                        Console.WriteLine($"{player.PlayerName}를 맞췄습니다. [데미지 : {monsters[i].DamageCalc()}]");
+                        Console.Write(i == 0 ? $"HP {playerEnterHp} -> " : $"HP {player.PlayerHp} -> ");
+                        monsters[i].ApplyDamage(player);
+                        Console.WriteLine(player.PlayerHp <= 0 ? "Dead" : $"{player.PlayerHp}");
+                        Console.WriteLine();
                     }
-                    else
-                    {
-                        Console.WriteLine("잘못된 입력입니다.");
-                    }                   
                 }
-            }
+                Console.WriteLine();
+                Console.WriteLine("x. 다음");
+                Console.WriteLine();
+                Console.Write(">> ");
 
-            bool allDead = true;
-            foreach (var m in monsters)
+                Console.ReadLine();
+
+            }
+            if (player.PlayerHp <= 0)
             {
-                if (!m.IsDead)
+                ShowResultUI();  // 패배
+                return;
+            }
+            else
+            {
+                if (player.PlayerHp > 0 && allDead)
                 {
-                    allDead = false;
-                    break;
+                    ShowResultUI(); // 승리
                 }
             }
-
-            if (player.PlayerHp > 0 && allDead)
-            {
-                ShowResultUI(); // 승리
-            }
+                //ShowBattleUI();  // 다시 공격 선택으로
+                //return;                
         }
 
         static void ShowResultUI()
@@ -583,12 +567,15 @@ namespace sparat_dungeon
             // 플레이어 체력 0일 경우 패베 출력
             if (player.PlayerHp <= 0)
             {
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
                 Console.WriteLine("You Lose - Result\n");
+                Console.ResetColor();
                 Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName}");
                 Console.WriteLine($"HP {playerEnterHp} -> 0\n");
                 Console.WriteLine("0. 다음\n");
                 Console.Write(">> ");
                 Console.ReadLine();
+                Environment.Exit(0);
                 // 게임 종료?
             }
 
@@ -608,6 +595,10 @@ namespace sparat_dungeon
                 int totalGold = 0;
                 List<Item> droppedItems = new List<Item>();
                 int MaxExp = player.GetExpToNextLevel();
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("Victory - Result\n");
+                Console.ResetColor();
+                Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.\n");
                 foreach (var monster in monsters)
                 {
                     totalExp += monster.MonsterExp();
@@ -625,8 +616,6 @@ namespace sparat_dungeon
                     }
                 }
                 player.GainExp(totalExp);
-                Console.WriteLine("Victory - Result\n");
-                Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.\n");
                 Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName}");
                 Console.WriteLine($"HP {playerEnterHp} -> {player.PlayerHp}\n");
                 Console.WriteLine("0. 다음\n");
