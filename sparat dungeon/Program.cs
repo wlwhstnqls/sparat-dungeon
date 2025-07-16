@@ -284,42 +284,7 @@ namespace sparat_dungeon
             }
             else if (choice == "4")
             {
-                Console.Clear();
-                Console.WriteLine("Quest!!");
-                Console.WriteLine("");
-                Console.WriteLine("1. 마을을 위협하는 미니언 처치");
-                Console.WriteLine("2. 장비를 장착해보자");
-                Console.WriteLine("3. 더욱 더 강해지기");
-                Console.WriteLine("");
-                Console.WriteLine("");
-                Console.WriteLine("원하시는 퀘스트를 선택해주세요.");
-                Console.WriteLine("뒤로 가시려면 0을 입력해주세요.");
-                Console.Write(">> ");
-
-                int questinput = int.Parse(Console.ReadLine());
-
-                switch (questinput)
-                {
-                    case 0:
-                        // 메인 화면으로 이동
-                        break;
-                    case 1:
-                        // 1번 퀘스트 출력
-                        //quests[0].ShowQuestUI(1);
-                        break;
-                    case 2:
-                        // 2번 퀘스트 출력
-                        //quests[1].ShowQuestUI(2);
-                        break;
-                    case 3:
-                        // 3번 퀘스트 출력
-                        //quests[2].ShowQuestUI(3);
-                        break;
-                    default:
-                        Console.WriteLine("잘못된 입력입니다.");
-                        break;
-                }
-                MainScene();
+                QuestScene();
             }
             else if (choice == "5")
             {
