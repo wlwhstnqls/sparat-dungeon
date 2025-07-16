@@ -8,7 +8,7 @@ using static sparat_dungeon.Item;
 
 namespace sparat_dungeon
 {
-    internal class Player
+    public class Player
     {
         public int PlayerLevel { get; set; }
         public string PlayerName { get; set; }
@@ -116,15 +116,15 @@ namespace sparat_dungeon
             Console.WriteLine($"{PlayerName} 님이 레벨업 하셨습니다! 현재 레벨: {PlayerLevel}");
         }
 
-        public void UseSkill(int skillIndex, Monster target)
-        {
-            if (skillIndex < 0 || skillIndex >= Skills.Count)
-            {
-                Console.WriteLine("잘못된 스킬 선택입니다.");
-                return;
-            }
-            Skills[skillIndex].UseSkill(this, target);
-        }
+        //public void UseSkill(int skillIndex, Monster target)
+        //{
+        //    if (skillIndex < 0 || skillIndex >= Skills.Count)
+        //    {
+        //        Console.WriteLine("잘못된 스킬 선택입니다.");
+        //        return;
+        //    }
+        //    Skills[skillIndex].UseSkill(this, target);
+        //}
 
 
         public static void EquipItem(Item item)
