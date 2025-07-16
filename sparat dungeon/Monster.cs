@@ -67,8 +67,10 @@ namespace sparat_dungeon
         }
 
     }
-    internal class Minion : Monster
+    public class Minion : Monster
     {
+        int DeathCount;
+
         public Minion()
         {
             Level = 2;
@@ -76,9 +78,18 @@ namespace sparat_dungeon
             Hp = 15;
             Atk = 5;
             IsDead = false;
+            DeathCount = 0;
+        }
+        public void OnDie()
+        {
+            if (Hp <= 0)
+            {
+                IsDead = true;
+                DeathCount++;
+            }
         }
     }
-    internal class VoidBug : Monster
+    public class VoidBug : Monster
     {
         public VoidBug()
         {
@@ -89,7 +100,7 @@ namespace sparat_dungeon
             IsDead = false;
         }
     }
-    internal class CanonMinion : Monster
+    public class CanonMinion : Monster
     {
         public CanonMinion()
         {
