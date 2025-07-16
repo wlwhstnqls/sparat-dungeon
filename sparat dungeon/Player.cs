@@ -50,7 +50,7 @@ namespace sparat_dungeon
                 PlayerLevel = 1;
                 PlayerExp = 0;
                 PlayerName = playerName;
-                PlayerJob = "전사";
+                PlayerJob = "검사";
                 PlayerHp = 100;
                 PlayerMp = 50;
                 PlayerAtk = 10;
