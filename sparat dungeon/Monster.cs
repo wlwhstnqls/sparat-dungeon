@@ -69,8 +69,6 @@ namespace sparat_dungeon
     }
     public class Minion : Monster
     {
-        public int DeathCount { get; private set; }
-
         public Minion()
         {
             Level = 2;
@@ -78,15 +76,6 @@ namespace sparat_dungeon
             Hp = 15;
             Atk = 5;
             IsDead = false;
-            DeathCount = 0;
-        }
-        public void OnDie()
-        {
-            if (Hp <= 0)
-            {
-                IsDead = true;
-                DeathCount++;
-            }
         }
     }
     public class VoidBug : Monster
