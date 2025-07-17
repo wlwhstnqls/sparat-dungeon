@@ -2,30 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using static sparat_dungeon.Item;
 
 namespace sparat_dungeon
 {
-    public enum JobType
-    {
-        
-        검호,
-        자객,
-        도인,
-        검존,
-        귀객,
-        도사,
-        검성,
-        유협,
-        현인
-    }
+   
     public class Player
     {
         public int PlayerLevel { get; set; }
         public string PlayerName { get; set; }
-        public JobType PlayerJob { get; set; }
+        public string PlayerJob { get; set; }
         public int PlayerAtk { get; set; }
         public int PlayerDef { get; set; }
         public int PlayerHp { set; get; }
@@ -43,7 +32,7 @@ namespace sparat_dungeon
         public int TotalAtk => PlayerAtk + PlayerExtraAtk;
         public int TotalDef => PlayerDef + PlayerExtraDef;
 
-        public int QuestKillCount { get; set; }
+        public static int QuestKillCount { get; set; }
         public static Item EquipWepon { get; set; }
         public static Item EquipArmor { get; set; }
 
@@ -60,7 +49,7 @@ namespace sparat_dungeon
                 PlayerLevel = 1;
                 PlayerExp = 0;
                 PlayerName = playerName;
-                PlayerJob = JobType.검호;
+                PlayerJob = "검호";
                 PlayerHp = 100;
                 PlayerMp = 50;
                 PlayerAtk = 10;
@@ -73,7 +62,7 @@ namespace sparat_dungeon
                 PlayerLevel = 1;
                 PlayerExp = 0;
                 PlayerName = playerName;
-                PlayerJob = JobType.자객;
+                PlayerJob = "자객";
                 PlayerHp = 120;
                 PlayerMp = 50;
                 PlayerAtk = 12;
@@ -86,7 +75,7 @@ namespace sparat_dungeon
                 PlayerLevel = 1;
                 PlayerExp = 0;
                 PlayerName = playerName;
-                PlayerJob = JobType.도인;
+                PlayerJob = "도인";
                 PlayerHp = 80;
                 PlayerMp = 100;
                 PlayerAtk = 8;
@@ -151,71 +140,95 @@ namespace sparat_dungeon
 
             switch (PlayerJob)
             {
-                case JobType.검호:
-                case JobType.검존:
-                case JobType.검성:
+                case "검호":
+                case "검존":
+                case "검성":
                     Skills.Add(new Skill("참격", 20, 5));
                     Skills.Add(new Skill("유성참", 30, 10));
                     break;
 
-                case JobType.자객:
-                case JobType.귀객:
-                case JobType.유협:
+                case "자객":
+                case "귀객":
+                case "유협":
                     Skills.Add(new Skill("암살", 25, 8));
                     Skills.Add(new Skill("절개", 15, 4));
                     break;
 
-                case JobType.도인:
-                case JobType.도사:
-                case JobType.현인:
+                case "도인":
+                case "도사":
+                case "현인":
                     Skills.Add(new Skill("화염구", 20, 6));
                     Skills.Add(new Skill("화염폭풍", 35, 15));
                     break;
 
             }
         }
+        public void UseSkill(int skillIndex, Monster monster)
+        {
+            if (skillIndex < 0 || skillIndex >= Skills.Count)
+            {
+                Console.WriteLine("잘못된 스킬 번호입니다.");
+                return;
+            }
 
+            Skill skill = Skills[skillIndex];
+
+            if (PlayerMp < skill.SkillMana)
+            {
+                Console.WriteLine("MP가 부족하여 스킬을 사용할 수 없습니다.");
+                return;
+            }
+
+            PlayerMp -= skill.SkillMana;
+
+            Console.WriteLine($"{PlayerName} 이(가) {skill.SkillName} 스킬을 사용했습니다!");
+            Console.WriteLine($"→ Lv.{monster.Level} {monster.Name} 에게 {skill.SkillDamage}의 데미지!");
+
+            monster.TakeDamage(skill.SkillDamage);
+
+            Console.WriteLine($"→ 남은 몬스터 HP: {(monster.IsDead ? "Dead" : monster.Hp.ToString())}");
+        }
 
 
         // 승급
         public void Advancement()
         {
             // 1차 전직
-            if (PlayerLevel == 2 && PlayerJob == JobType.검호)
+            if (PlayerLevel == 2 && PlayerJob == "검호")
             {
-                PlayerJob = JobType.검존;
+                PlayerJob = "검존";
 
                 Console.WriteLine($"\n {PlayerName} 님이 승급 하여 {PlayerJob}이(가) 되셨습니다!");
             }
-            else if(PlayerLevel == 2 && PlayerJob == JobType.자객)
+            else if(PlayerLevel == 2 && PlayerJob == "자객")
             {
-                PlayerJob = JobType.귀객;
+                PlayerJob = "귀객";
 
                 Console.WriteLine($"\n{PlayerName} 님이 승급 하여 {PlayerJob}이(가) 되셨습니다!");
             }
-            else if (PlayerLevel == 3 && PlayerJob == JobType.도인)
+            else if (PlayerLevel == 2 && PlayerJob == "도인")
             {
-                PlayerJob = JobType.도사;
+                PlayerJob = "도사";
 
                 Console.WriteLine($"\n{PlayerName} 님이 승급 하여 {PlayerJob}이(가) 되셨습니다!");
             }
 
             // 2차 전직
-            else if (PlayerLevel == 3 && PlayerJob == JobType.검존)
+            else if (PlayerLevel == 3 && PlayerJob == "검존")
             {
-                PlayerJob = JobType.검성;
+                PlayerJob = "검성";
 
                 Console.WriteLine($"\n{PlayerName} 님이 승급 하여 {PlayerJob}이(가) 되셨습니다!");
             }
-            else if (PlayerLevel == 3 && PlayerJob == JobType.귀객)
+            else if (PlayerLevel == 3 && PlayerJob == "귀객")
             {
-                PlayerJob = JobType.유협;
+                PlayerJob = "유협";
 
                 Console.WriteLine($"\n {PlayerName} 님이 승급 하여 {PlayerJob}이(가) 되셨습니다!");
             }
-            else if (PlayerLevel == 3 && PlayerJob == JobType.도사)
+            else if (PlayerLevel == 3 && PlayerJob == "도사")
             {
-                PlayerJob = JobType.현인;
+                PlayerJob = "현인";
 
                 Console.WriteLine($"\n {PlayerName} 님이 승급 하여 {PlayerJob}이(가) 되셨습니다!");
             }

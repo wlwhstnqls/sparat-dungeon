@@ -218,6 +218,7 @@ namespace sparat_dungeon
 
             scene = 1;
             MainScene();
+            player.SetSkill();
         }
 
         static void MainScene()
@@ -640,6 +641,7 @@ namespace sparat_dungeon
                 Console.WriteLine("[내 정보]");
                 Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName} ({player.PlayerJob})");
                 Console.WriteLine($"HP {player.PlayerHp} / 100");
+                Console.WriteLine($"MP {player.PlayerMp}");
                 Console.WriteLine();
                 Console.WriteLine("0. 취소");
                 Console.WriteLine();
@@ -703,51 +705,91 @@ namespace sparat_dungeon
             Console.WriteLine("Battle!! - YourTurn");
             Console.ResetColor();
             Console.WriteLine();
-            Console.WriteLine($"{player.PlayerName} 의 공격!!");
-            int damage = player.PlayerDamageCalc();
-            int avoid = rand.Next(1, 101);
-            if (avoid < 11)
+
+            Console.WriteLine("1. 일반 공격");
+            Console.WriteLine("2. 스킬 사용");
+            Console.WriteLine("선택 : ");
+            string AttackChoice = Console.ReadLine();
+            if (AttackChoice == "1")
             {
-                Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 공격했지만 아무일도 일어나지 않았습니다.");
+                NomalAttack(monster, rand);
             }
-            else
+            else if (AttackChoice == "2")
             {
-                int critical = rand.Next(1, 101);
-                if(critical < 16)
+                SkillAttack(monster);
+            }
+            else 
+            {
+                Console.WriteLine("잘못된 입력입니다.");
+            }
+
+            Console.WriteLine($"{player.PlayerName} 의 공격!!");
+            static void NomalAttack(Monster monster, Random rand)
+            { 
+              int damage = player.PlayerDamageCalc();
+              int avoid = rand.Next(1, 101);
+                if (avoid < 11)
                 {
-                    damage = (int)(damage * 1.6f);
-                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {damage}] - 치명타 공격!!");
-                    Console.WriteLine();
-                    Console.WriteLine($"Lv.{monster.Level} {monster.Name}");
-                    Console.Write($"HP {monster.Hp}  -> ");
-                    monster.TakeDamage(damage);
-                    if (monster.IsDead == true)
-                    {
-                        Console.WriteLine("Dead");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"{monster.Hp}");
-                    }
+                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 공격했지만 아무일도 일어나지 않았습니다.");
                 }
                 else
                 {
-                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {damage}]");
-                    Console.WriteLine();
-                    Console.WriteLine($"Lv.{monster.Level} {monster.Name}");
-                    Console.Write($"HP {monster.Hp}  -> ");
-                    monster.TakeDamage(damage);
-                    if (monster.IsDead == true)
+                    int critical = rand.Next(1, 101);
+                    if (critical < 16)
                     {
-                        Console.WriteLine("Dead");
+                        damage = (int)(damage * 1.6f);
+                        Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {damage}] - 치명타 공격!!");
+                        Console.WriteLine();
+                        Console.WriteLine($"Lv.{monster.Level} {monster.Name}");
+                        Console.Write($"HP {monster.Hp}  -> ");
+                        monster.TakeDamage(damage);
+                        if (monster.IsDead == true)
+                        {
+                            Console.WriteLine("Dead");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{monster.Hp}");
+                        }
                     }
                     else
                     {
-                        Console.WriteLine($"{monster.Hp}");
+                        Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {damage}]");
+                        Console.WriteLine();
+                        Console.WriteLine($"Lv.{monster.Level} {monster.Name}");
+                        Console.Write($"HP {monster.Hp}  -> ");
+                        monster.TakeDamage(damage);
+                        if (monster.IsDead == true)
+                        {
+                            Console.WriteLine("Dead");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{monster.Hp}");
+                        }
                     }
                 }
             }
-            
+            static void SkillAttack(Monster monster)
+            {
+                Console.WriteLine("사용할 스킬을 선택하세요:");
+                for (int i = 0; i < player.Skills.Count; i++)
+                {
+                    var skill = player.Skills[i];
+                    Console.WriteLine($"{i + 1}. {skill.SkillName} (데미지: {skill.SkillDamage}, MP 소모: {skill.SkillMana})");
+                }
+
+                Console.Write("선택: ");
+                if (int.TryParse(Console.ReadLine(), out int skillIndex) && skillIndex >= 1 && skillIndex <= player.Skills.Count)
+                {
+                    player.UseSkill(skillIndex - 1, monster);
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 스킬 선택입니다.");
+                }
+            }
+
             Console.WriteLine();
 
             Console.WriteLine("X. 다음");
