@@ -145,6 +145,7 @@ namespace sparat_dungeon
                     fake = false;
                 }
             }
+
             Console.CursorVisible = false;
             Thread.Sleep(500);
 
@@ -314,10 +315,12 @@ namespace sparat_dungeon
         {
             if (choice == "1")
             {
+                delay = 30;
                 QuestScene();
             }
             else if (choice == "2")
             {
+                delay = 30;
                 scene = 2;
             }
             else if (choice == "3")
@@ -459,6 +462,7 @@ namespace sparat_dungeon
             }
             else
             {
+                delay = 0;
                 MainScene();
                 scene = 1;
             }
@@ -547,11 +551,15 @@ namespace sparat_dungeon
             }
             else if (choice == "2")
             {
+                Console.Clear();
+                Console.WriteLine();
+                Console.WriteLine();
                 WhiteSwordMan2();
                 scene = 5;
             }
             else
             {
+                delay = 0;
                 MainScene();
                 scene = 1;
             }
@@ -559,11 +567,11 @@ namespace sparat_dungeon
 
         static void WhiteSwordMan2_choice(string choice)
         {
-            Console.Clear();
-            Console.WriteLine();
-            Console.WriteLine();
             if (choice == "1")
             {
+                Console.Clear();
+                Console.WriteLine();
+                Console.WriteLine();
                 Util.SetColor(224, 192, 128);
                 Util.Write("백검귀는 당신을 위아래로 훑어보더니, 코웃음을 칩니다.", delay, 5);
                 Thread.Sleep(500);
@@ -584,12 +592,19 @@ namespace sparat_dungeon
                 Util.SetColor(181, 53, 53);
                 Util.Write("[백검귀는 당신의 요청을 무시합니다.]", delay-20, 5);
                 Util.SetColor(224, 192, 128);
+                PlayerInput();
+                delay = 0;
+                WhiteSwordMan1();
+                scene = 3;
             }
             else if (choice == "2")
             {
                 
                 if (player.PlayerGold >= 2000)
                 {
+                    Console.Clear();
+                    Console.WriteLine();
+                    Console.WriteLine();
                     Util.SetColor(224, 192, 128);
                     Util.Write("당신이 말없이 은자가 든 주머니를 테이블에 올려놓자, \u001b[38;2;135;206;250m'달그락'\u001b[38;2;224;192;128m 소리와 함께 그의 시선이 아주 잠시 머뭅니다.", delay, 5);
                     Util.Write("그는 돈을 세어보지도 않고, 다시 당신을 봅니다. 이전보다 눈빛이 조금 달라져 있습니다.", delay, 5);
@@ -615,14 +630,26 @@ namespace sparat_dungeon
                     Util.SetColor(224, 192, 128);
                     player.PlayerGold -= 2000;
                     hiredMercenary = new Mercenary("백검귀", 15);
+                    PlayerInput();
+                    delay = 0;
+                    WhiteSwordMan1();
+                    scene = 3;
                 }
                 else
                 {
-                    // 돈부족
+                    Util.False_();
+                    Console.SetCursorPosition(0, Console.CursorTop - 2);
+                    Console.Write("\x1b[38;2;181;53;53m");
+                    Util.Write("[!] 소지금이 부족합니다.", 20, 5);
+                    Console.SetCursorPosition(0, Console.CursorTop - 1);
+                    Console.ResetColor();
                 }
             }
             else if (choice == "3")
             {
+                Console.Clear();
+                Console.WriteLine();
+                Console.WriteLine();
                 Util.SetColor(224, 192, 128);
                 Util.Write("백검귀는 미동도 없이 말합니다.", delay, 5);
                 Thread.Sleep(500);
@@ -643,9 +670,16 @@ namespace sparat_dungeon
                 Util.SetColor(181, 53, 53);
                 Util.Write("[백검귀는 흥미를 보이지 않습니다.]", delay - 20, 5);
                 Util.SetColor(224, 192, 128);
+                PlayerInput();
+                delay = 0;
+                WhiteSwordMan1();
+                scene = 3;
             }
             else
             {
+                Console.Clear();
+                Console.WriteLine();
+                Console.WriteLine();
                 Util.SetColor(224, 192, 128);
                 Util.Write("당신이 술을 따르려 하자, 백검귀가 손으로 당신의 술병을 막아섭니다.", delay, 5);
                 Thread.Sleep(500);
@@ -666,11 +700,12 @@ namespace sparat_dungeon
                 Util.SetColor(181, 53, 53);
                 Util.Write("[백검귀가 당신을 노골적으로 적대합니다.]", delay - 20, 5);
                 Util.SetColor(224, 192, 128);
+                PlayerInput();
+                delay = 0;
+                WhiteSwordMan1();
+                scene = 3;
             }
-            PlayerInput();
-            delay = 0;
-            WhiteSwordMan1();
-            scene = 3;
+            
         }
 
 
@@ -1021,9 +1056,17 @@ namespace sparat_dungeon
                     MainScene();
                     scene = 1;
                     break;
+                case 1:
+                case 2:
+                case 3:
+                    if(input >0 && input < quests.Count + 1)
+                    {
+                        int questIdx = input - 1;
+                        quests[questIdx].ShowQuestUI();
+                    }
+                    break;
                 default:
-                    int questIdx = input - 1;
-                    quests[questIdx].ShowQuestUI();
+                    { Console.WriteLine("잘못된 입력이오."); }
                     break;
             }
         }

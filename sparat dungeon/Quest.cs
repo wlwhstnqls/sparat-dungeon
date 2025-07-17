@@ -78,30 +78,50 @@ namespace sparat_dungeon
         public override void ShowQuestUI()
         {
             Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.SetCursorPosition(6, Console.CursorTop);
             Console.WriteLine(Title);
             Console.WriteLine();
-            Console.WriteLine("소협! 이 설명촌 주변에 도적놈들과 파렴치한 놈들이 많소");
+            Console.SetCursorPosition(5, Console.CursorTop);
+            Console.Write("\u001b[38;2;240;248;255m");
+            Console.WriteLine("소협! 이 루탄촌 주변에 도적놈들과 파렴치한 놈들이 많소");
+            Console.SetCursorPosition(5, Console.CursorTop);
             Console.WriteLine("우리 마을에 젊은 장정들과 아녀자들이 잡혀가고 상인들도 털리오..");
+            Console.SetCursorPosition(5, Console.CursorTop);
             Console.WriteLine("지푸라기라도 잡는 심정으로 청하오.");
+            Console.SetCursorPosition(5, Console.CursorTop);
             Console.WriteLine("도적 뗴로부터 이 설명촌을 구해주시오!");
             Console.WriteLine();
+            Console.Write("\u001b[38;2;135;206;250m");
+            Console.SetCursorPosition(6, Console.CursorTop);
             Console.WriteLine($"- 주변 적들 5명 처치"); // 조건 달기 (미니언 죽을때마다 숫자 올려주기)
+            Console.Write("\u001b[38;2;240;248;255m");
             Console.WriteLine();
+            Console.Write("\u001b[38;2;135;206;250m");
+            Console.SetCursorPosition(6, Console.CursorTop);
             Console.WriteLine("-보상-");
+            Console.SetCursorPosition(7, Console.CursorTop);
             Console.WriteLine("??"); // 괜찮은 걸로 설정 하기
+            Console.Write("\u001b[38;2;240;248;255m");
             Console.WriteLine();
             Console.WriteLine();
             if(IsAccept)
             {
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("1. 보상 수령(미구현)");
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("2. 뒤로 가기");
             }
             else
             {
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("1. 수락");
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("2. 거절");
             }
             Console.WriteLine();
+            Console.SetCursorPosition(5, Console.CursorTop);
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
             string input = Console.ReadLine();
@@ -116,6 +136,7 @@ namespace sparat_dungeon
                     // 조건 결과에 따라 보상 지급
                     if (!IsCompleted)
                     {
+                        Console.SetCursorPosition(5, Console.CursorTop);
                         Console.WriteLine("아직 의뢰 조건을 채우지 못했소");
                     }
                     else if (IsCompleted)
@@ -137,6 +158,7 @@ namespace sparat_dungeon
             }
             else
             {
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("없는 선택이오..");
             }
         }
@@ -151,6 +173,7 @@ namespace sparat_dungeon
 
         public override void GiveReward()
         {
+
             Console.WriteLine("1번 퀘 완");
             
         }
@@ -171,29 +194,45 @@ namespace sparat_dungeon
         public override void ShowQuestUI()
         {
             Console.Clear();
+            Console.SetCursorPosition(6, Console.CursorTop);
             Console.WriteLine(Title);
             Console.WriteLine();
+            Console.Write("\u001b[38;2;240;248;255m");
+            Console.SetCursorPosition(5, Console.CursorTop);
             Console.WriteLine("더 강해지고 싶지 않소?");
+            Console.SetCursorPosition(5, Console.CursorTop);
             Console.WriteLine("대장간에서 장비를 구해 장착하면 더 강해질 수 있을거요.");
+            Console.SetCursorPosition(5, Console.CursorTop);
             Console.WriteLine("한번 시도 해보시오. 후회하지 않을거요.");
             Console.WriteLine();
+            Console.Write("\u001b[38;2;135;206;250m");
+            Console.SetCursorPosition(6, Console.CursorTop);
             Console.WriteLine($"- 무기, 방어구 둘 다 장착하기"); // 조건 달기 (장착 관리에서 데이터 받기)
             Console.WriteLine();
+            Console.Write("\u001b[38;2;135;206;250m");
+            Console.SetCursorPosition(6, Console.CursorTop);
             Console.WriteLine("-보상-");
+            Console.SetCursorPosition(7, Console.CursorTop);
             Console.WriteLine("??");  // 보상 생각하기
+            Console.Write("\u001b[38;2;240;248;255m");
             Console.WriteLine();
             Console.WriteLine();
             if (IsAccept)
             {
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("1. 보상 수령(미구현)");
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("2. 뒤로 가기");
             }
             else
             {
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("1. 수락");
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("2. 거절");
             }
             Console.WriteLine();
+            Console.SetCursorPosition(5, Console.CursorTop);
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
             string input = Console.ReadLine();
@@ -208,6 +247,7 @@ namespace sparat_dungeon
                     // 조건 결과에 따라 보상 지급
                     if (!IsCompleted)
                     {
+                        Console.SetCursorPosition(5, Console.CursorTop);
                         Console.WriteLine("아직 의뢰 조건을 채우지 못했소");
                     }
                     else if (IsCompleted)
@@ -229,6 +269,7 @@ namespace sparat_dungeon
             }
             else
             {
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("없는 선택이오..");
             }
         }
@@ -245,6 +286,7 @@ namespace sparat_dungeon
 
         public override void GiveReward()
         {
+            Console.SetCursorPosition(5, Console.CursorTop);
             Console.WriteLine("2번 퀘 완");
         }
     }
@@ -263,31 +305,49 @@ namespace sparat_dungeon
         public override void ShowQuestUI()
         {
             Console.Clear();
+            Console.SetCursorPosition(6, Console.CursorTop);
             Console.WriteLine(Title);
             Console.WriteLine();
+            Console.Write("\u001b[38;2;240;248;255m");
+            Console.SetCursorPosition(5, Console.CursorTop);
             Console.WriteLine("이제 제법 무림인 같아 보이는 구만!");
+            Console.SetCursorPosition(5, Console.CursorTop);
             Console.WriteLine("더욱 강해지기 위해서는 공력을 올려야 한다고 들었소.");
+            Console.SetCursorPosition(5, Console.CursorTop);
             Console.WriteLine("공력를 올리기 위해서는 실전을 통해 수련해야 하지 않겠소?");
+            Console.SetCursorPosition(5, Console.CursorTop);
             Console.WriteLine("공력을 올려서 강해져보시오!");
             Console.WriteLine();
+            Console.SetCursorPosition(5, Console.CursorTop);
             Console.WriteLine("여러 전투를 통해서 공력 올릴 수 있습니다.");
+            Console.Write("\u001b[38;2;135;206;250m");
+            Console.SetCursorPosition(6, Console.CursorTop);
             Console.WriteLine($"- 공격력 ?? , 방어력 ?? 달성하기"); // 조건 달기(+된 공격력 방어력 받아오기)
             Console.WriteLine();
+            Console.Write("\u001b[38;2;135;206;250m");
+            Console.SetCursorPosition(6, Console.CursorTop);
             Console.WriteLine("-보상-");
+            Console.SetCursorPosition(7, Console.CursorTop);
             Console.WriteLine($"???"); // 보상 생각하기
+            Console.Write("\u001b[38;2;240;248;255m");
             Console.WriteLine();
             Console.WriteLine();
             if (IsAccept)
             {
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("1. 보상 수령(미구현)");
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("2. 뒤로 가기");
             }
             else
             {
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("1. 수락");
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("2. 거절");
             }
             Console.WriteLine();
+            Console.SetCursorPosition(5, Console.CursorTop);
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
             string input = Console.ReadLine();
@@ -302,6 +362,7 @@ namespace sparat_dungeon
                     // 조건 결과에 따라 보상 지급
                     if (!IsCompleted)
                     {
+                        Console.SetCursorPosition(5, Console.CursorTop);
                         Console.WriteLine("아직 의뢰 조건을 채우지 못했소");
                     }
                     else if (IsCompleted)
@@ -323,6 +384,7 @@ namespace sparat_dungeon
             }
             else
             {
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("없는 선택이오..");
             }
         }
@@ -341,6 +403,7 @@ namespace sparat_dungeon
         public override void GiveReward()
         {
             // 보상 정해서 넣어주기
+            Console.SetCursorPosition(5, Console.CursorTop);
             Console.WriteLine("3번 퀘 완");
         }
     }
