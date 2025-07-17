@@ -1056,9 +1056,17 @@ namespace sparat_dungeon
                     MainScene();
                     scene = 1;
                     break;
+                case 1:
+                case 2:
+                case 3:
+                    if(input >0 && input < quests.Count + 1)
+                    {
+                        int questIdx = input - 1;
+                        quests[questIdx].ShowQuestUI();
+                    }
+                    break;
                 default:
-                    int questIdx = input - 1;
-                    quests[questIdx].ShowQuestUI();
+                    { Console.WriteLine("잘못된 입력이오."); }
                     break;
             }
         }
