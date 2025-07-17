@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Threading;
-using static sparat_dungeon.Battle;
+
 using static sparat_dungeon.util;
 using static System.Formats.Asn1.AsnWriter;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -27,13 +27,9 @@ namespace sparat_dungeon
         static Mercenary hiredMercenary = null;
         static void Main(string[] args)
         {
-            //Battle.BattleSystem battleSystem = new Battle.BattleSystem();
-            
-
             SetQuest();
             Title();
             LoopChoice();
-
         }
 
 
