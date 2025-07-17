@@ -8,11 +8,24 @@ using static sparat_dungeon.Item;
 
 namespace sparat_dungeon
 {
+    public enum JobType
+    {
+        
+        검호,
+        자객,
+        도인,
+        검존,
+        귀객,
+        도사,
+        검성,
+        유협,
+        현인
+    }
     public class Player
     {
         public int PlayerLevel { get; set; }
         public string PlayerName { get; set; }
-        public string PlayerJob { get; set; }
+        public JobType PlayerJob { get; set; }
         public int PlayerAtk { get; set; }
         public int PlayerDef { get; set; }
         public int PlayerHp { set; get; }
@@ -22,11 +35,8 @@ namespace sparat_dungeon
 
         List<int> ExpTable = new List<int> { 8, 15, 20, 35 };
 
-        public List<Skill> Skills { get; set; } = new List<Skill>
-        {
-            new Skill("1000포인트 주세요", 20, 10), 
-            new Skill("탈것갖고싶어요", 15, 5)
-        };
+        public List<Skill> Skills { get; set; } = new List<Skill>();
+       
 
         public static int PlayerExtraAtk { get; set; }
         public static int PlayerExtraDef { get; set; }
@@ -50,7 +60,7 @@ namespace sparat_dungeon
                 PlayerLevel = 1;
                 PlayerExp = 0;
                 PlayerName = playerName;
-                PlayerJob = "검호";
+                PlayerJob = JobType.검호;
                 PlayerHp = 100;
                 PlayerMp = 50;
                 PlayerAtk = 10;
@@ -63,7 +73,7 @@ namespace sparat_dungeon
                 PlayerLevel = 1;
                 PlayerExp = 0;
                 PlayerName = playerName;
-                PlayerJob = "자객";
+                PlayerJob = JobType.자객;
                 PlayerHp = 120;
                 PlayerMp = 50;
                 PlayerAtk = 12;
@@ -71,12 +81,12 @@ namespace sparat_dungeon
                 PlayerGold = 1500;
                 Quests = new List<Quest>();
             }
-            else if (jobSelect == "3" || jobSelect == "도사")
+            else if (jobSelect == "3" || jobSelect == "도인")
             {
                 PlayerLevel = 1;
                 PlayerExp = 0;
                 PlayerName = playerName;
-                PlayerJob = "도사";
+                PlayerJob = JobType.도인;
                 PlayerHp = 80;
                 PlayerMp = 100;
                 PlayerAtk = 8;
@@ -134,46 +144,78 @@ namespace sparat_dungeon
 
             Advancement();
         }
+        //스킬
+        public void SetSkill()
+        {
+            Skills.Clear();
+
+            switch (PlayerJob)
+            {
+                case JobType.검호:
+                case JobType.검존:
+                case JobType.검성:
+                    Skills.Add(new Skill("참격", 20, 5));
+                    Skills.Add(new Skill("유성참", 30, 10));
+                    break;
+
+                case JobType.자객:
+                case JobType.귀객:
+                case JobType.유협:
+                    Skills.Add(new Skill("암살", 25, 8));
+                    Skills.Add(new Skill("절개", 15, 4));
+                    break;
+
+                case JobType.도인:
+                case JobType.도사:
+                case JobType.현인:
+                    Skills.Add(new Skill("화염구", 20, 6));
+                    Skills.Add(new Skill("화염폭풍", 35, 15));
+                    break;
+
+            }
+        }
+
+
 
         // 승급
         public void Advancement()
         {
             // 1차 전직
-            if (PlayerLevel == 2 && PlayerJob == "검호")
+            if (PlayerLevel == 2 && PlayerJob == JobType.검호)
             {
-                PlayerJob = "검존";
+                PlayerJob = JobType.검존;
 
                 Console.WriteLine($"\n {PlayerName} 님이 승급 하여 {PlayerJob}이(가) 되셨습니다!");
             }
-            else if(PlayerLevel == 2 && PlayerJob == "자객")
+            else if(PlayerLevel == 2 && PlayerJob == JobType.자객)
             {
-                PlayerJob = "귀객";
+                PlayerJob = JobType.귀객;
 
                 Console.WriteLine($"\n{PlayerName} 님이 승급 하여 {PlayerJob}이(가) 되셨습니다!");
             }
-            else if (PlayerLevel == 3 && PlayerJob == "도인")
+            else if (PlayerLevel == 3 && PlayerJob == JobType.도인)
             {
-                PlayerJob = "도사";
+                PlayerJob = JobType.도사;
 
                 Console.WriteLine($"\n{PlayerName} 님이 승급 하여 {PlayerJob}이(가) 되셨습니다!");
             }
 
             // 2차 전직
-            else if (PlayerLevel == 3 && PlayerJob == "검존")
+            else if (PlayerLevel == 3 && PlayerJob == JobType.검존)
             {
-                PlayerJob = "검성";
+                PlayerJob = JobType.검성;
 
                 Console.WriteLine($"\n{PlayerName} 님이 승급 하여 {PlayerJob}이(가) 되셨습니다!");
             }
-            else if (PlayerLevel == 3 && PlayerJob == "귀객")
+            else if (PlayerLevel == 3 && PlayerJob == JobType.귀객)
             {
-                PlayerJob = "유협";
+                PlayerJob = JobType.유협;
 
                 Console.WriteLine($"\n {PlayerName} 님이 승급 하여 {PlayerJob}이(가) 되셨습니다!");
             }
-            else if (PlayerLevel == 3 && PlayerJob == "도사")
+            else if (PlayerLevel == 3 && PlayerJob == JobType.도사)
             {
-                PlayerJob = "현인";
+                PlayerJob = JobType.현인;
 
                 Console.WriteLine($"\n {PlayerName} 님이 승급 하여 {PlayerJob}이(가) 되셨습니다!");
             }
