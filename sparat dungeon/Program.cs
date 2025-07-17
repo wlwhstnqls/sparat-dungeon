@@ -28,8 +28,7 @@ namespace sparat_dungeon
         static void Main(string[] args)
         {
             SetQuest();
-            Title();
-            LoopChoice();
+            FakeTitle();
         }
 
 
@@ -105,7 +104,7 @@ namespace sparat_dungeon
             }
             Console.WriteLine();
             Console.SetCursorPosition(6, Console.CursorTop);
-            Console.Write(": ");
+            Console.Write(">>");
             return Console.ReadLine();
         }
 
@@ -116,12 +115,72 @@ namespace sparat_dungeon
             Console.Write($"\u001b[38;2;255;194;89m{index_c}.\u001b[38;2;224;192;128m");
         }
 
+        static void FakeTitle()
+        {
+            bool fake = true;
+            int i = 0;
+            int i2 = 30;
+
+            while (fake)
+            {
+                i += 1;
+                Console.WriteLine("스파르타 마을애 오신 여러분 환영합니다.");
+                Console.WriteLine("이곳애서 던전으로 들어가기전 활동을 할 수 잇습니다.");
+                Console.WriteLine();
+                Console.WriteLine("1. 상태 보기");
+                Console.WriteLine("2. 인벤토리");
+                Console.WriteLine("3. 상점");
+                if (i >= 10)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("4. 텍스트를 벤다");
+                    Console.ResetColor();
+                }
+                Console.WriteLine();
+                Console.WriteLine("원하시는 행동을 입력해주세요.");
+                Console.Write(">>");
+                string choice = Console.ReadLine();
+                if (choice == "4")
+                {
+                    fake = false;
+                }
+            }
+            Console.CursorVisible = false;
+            Thread.Sleep(500);
+
+            while ( i2 >= 1 )
+            {
+                i2 = i2-1;
+                Console.SetCursorPosition(15, i2);
+                Console.WriteLine("│");
+                Thread.Sleep(1);
+            }
+
+            Console.SetCursorPosition(0, 0);
+
+
+            Thread.Sleep(500);
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Clear();
+
+            Thread.Sleep(50);
+
+            Title();
+            LoopChoice();
+            Console.CursorVisible = true;
+
+        }
+
         static void Title()
         {
             Console.CursorVisible = false;
+            Thread.Sleep(1);
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Clear();
+            Thread.Sleep(3000);
             Console.WriteLine();
             Console.WriteLine();
-            Util.Textcolor("검으로 선택지를 베어버렸다.", 25, 5);
+            Util.Textcolor("검으로 \u001b[38;2;225;25;25m텍스트\u001b[38;2;255;255;255m를 베어버렸다.", 25, 5);
             Console.WriteLine();
             Console.WriteLine();
             Thread.Sleep(500);
@@ -167,7 +226,7 @@ namespace sparat_dungeon
             Console.CursorVisible = false;
             Console.WriteLine();
             Console.WriteLine();
-            Util.Textcolor($"[{playerName}]…강호의 길에 들어선 당신.", 25, 5);
+            Util.Textcolor($"[\u001b[38;2;135;206;250m{playerName}\u001b[38;2;240;248;255m]…강호의 길에 들어선 당신.", 25, 5);
             Util.Textcolor("수련한 무공을 고르십시오.", 25, 5);
             Console.WriteLine();
             Thread.Sleep(500);
@@ -207,7 +266,7 @@ namespace sparat_dungeon
             Util.Textcolor($"이름: {playerName}", 10, 5);
             Util.Textcolor($"직업: {jobSelect_str}", 10, 5);
             Console.WriteLine();
-            Util.Textcolor($"[{playerName}] 님, [{jobSelect_str}]의 길을 걷게 되었습니다.", 30, 5);
+            Util.Textcolor($"[\u001b[38;2;135;206;250m{playerName}\u001b[38;2;240;248;255m] 님, [\u001b[38;2;135;206;250m{jobSelect_str}\u001b[38;2;240;248;255m]의 길을 걷게 되었습니다.", 30, 5);
             Util.Textcolor($"강호의 운명이 당신을 기다리고 있습니다...", 30, 5);
             Thread.Sleep(1000);
 
@@ -242,7 +301,7 @@ namespace sparat_dungeon
             index_count();
             Util.Write("【객잔으로 이동 】", delay - 20, 15);
             index_count();
-            Util.Write("【숲으로 향한다 】", delay - 20, 15);
+            Util.Write("【협행을 떠난다 】", delay - 20, 15);
             index_count();
             Util.Write("【 상태 보기  】", delay - 20, 15);
             index_count();
@@ -292,14 +351,14 @@ namespace sparat_dungeon
             {
                 InventoryScene();
             }
-            else if (choice == "6")
-            {
-                WhiteSwordMan1();
-            }
             else
             {
-                Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
-                MainScene();
+                Util.False_();
+                Console.SetCursorPosition(0, Console.CursorTop - 2);
+                Console.Write("\x1b[38;2;181;53;53m");
+                Util.Write("[!] 잘못된 입력입니다. 다시 시도해주세요.", 20, 5);
+                Console.SetCursorPosition(0, Console.CursorTop - 1);
+                Console.ResetColor();
             }
         }
 
@@ -307,11 +366,7 @@ namespace sparat_dungeon
         {
             state = 1;
             Console.Clear();
-            Console.WriteLine("상태보기\n캐릭터의 정보가 표시됩니다.");
-            Console.WriteLine("");
             player.Playerinfo();
-            Console.WriteLine("");
-            Console.WriteLine("상태보기에서 나가려면 0 키를 누르세요.");
         }
 
         static void StatusScene_choice(string choice)
@@ -532,32 +587,33 @@ namespace sparat_dungeon
             }
             else if (choice == "2")
             {
-                Util.SetColor(224, 192, 128);
-                Util.Write("당신이 말없이 은자가 든 주머니를 테이블에 올려놓자, \u001b[38;2;135;206;250m'달그락'\u001b[38;2;224;192;128m 소리와 함께 그의 시선이 아주 잠시 머뭅니다.", delay, 5);
-                Util.Write("그는 돈을 세어보지도 않고, 다시 당신을 봅니다. 이전보다 눈빛이 조금 달라져 있습니다.", delay, 5);
-                Thread.Sleep(500);
-                Console.WriteLine();
-                Util.SetColor(227, 255, 254);
-                Util.Write(" \"...\"", delay, 5);
-                Thread.Sleep(500);
-                Util.Write(" \"이 정도로는... 딱 한 번이다.\"", delay, 5);
-                Util.SetColor(224, 192, 128);
-                Thread.Sleep(500);
-                Console.WriteLine();
-                Util.Write("그가 나지막이 말합니다.", delay, 5);
-                Thread.Sleep(500);
-                Console.WriteLine();
-                Util.SetColor(227, 255, 254);
-                Util.Write(" \"어디서, 누구의 피를 보면 되는가?\"", delay, 5);
-                Util.SetColor(224, 192, 128);
-                Thread.Sleep(500);
-                Console.WriteLine();
-                Util.SetColor(255, 207, 105);
-                Util.Write("[거래가 성립되었습니다. 백검귀가 다음 1회의 전투에서 당신을 돕습니다.]", delay - 20, 5);
-                Util.SetColor(224, 192, 128);
-                if (player.PlayerGold >= 100)
+                
+                if (player.PlayerGold >= 2000)
                 {
-                    player.PlayerGold -= 100;
+                    Util.SetColor(224, 192, 128);
+                    Util.Write("당신이 말없이 은자가 든 주머니를 테이블에 올려놓자, \u001b[38;2;135;206;250m'달그락'\u001b[38;2;224;192;128m 소리와 함께 그의 시선이 아주 잠시 머뭅니다.", delay, 5);
+                    Util.Write("그는 돈을 세어보지도 않고, 다시 당신을 봅니다. 이전보다 눈빛이 조금 달라져 있습니다.", delay, 5);
+                    Thread.Sleep(500);
+                    Console.WriteLine();
+                    Util.SetColor(227, 255, 254);
+                    Util.Write(" \"...\"", delay, 5);
+                    Thread.Sleep(500);
+                    Util.Write(" \"이 정도로는... 딱 한 번이다.\"", delay, 5);
+                    Util.SetColor(224, 192, 128);
+                    Thread.Sleep(500);
+                    Console.WriteLine();
+                    Util.Write("그가 나지막이 말합니다.", delay, 5);
+                    Thread.Sleep(500);
+                    Console.WriteLine();
+                    Util.SetColor(227, 255, 254);
+                    Util.Write(" \"어디서, 누구의 피를 보면 되는가?\"", delay, 5);
+                    Util.SetColor(224, 192, 128);
+                    Thread.Sleep(500);
+                    Console.WriteLine();
+                    Util.SetColor(255, 207, 105);
+                    Util.Write("[거래가 성립되었습니다. 백검귀가 다음 1회의 전투에서 당신을 돕습니다.]", delay - 20, 5);
+                    Util.SetColor(224, 192, 128);
+                    player.PlayerGold -= 2000;
                     hiredMercenary = new Mercenary("백검귀", 15);
                 }
                 else

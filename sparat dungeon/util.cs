@@ -51,6 +51,13 @@ namespace sparat_dungeon
                 Console.WriteLine();
             }
 
+            public static void False_()
+            {
+                Console.SetCursorPosition(5, Console.CursorTop);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, Console.CursorTop - 1);
+            }
+
             public static void SetColor(int r, int g, int b)
             {
                 Console.Write($"\x1b[38;2;{r};{g};{b}m");
