@@ -409,7 +409,7 @@ namespace sparat_dungeon
             else
             {
                 MainScene();
-                scene = 0;
+                scene = 1;
             }
 
             
@@ -502,7 +502,7 @@ namespace sparat_dungeon
             else
             {
                 MainScene();
-                scene = 0;
+                scene = 1;
             }
         }
 
@@ -546,6 +546,7 @@ namespace sparat_dungeon
                 Thread.Sleep(500);
                 Util.Write(" \"이 정도로는... 딱 한 번이다.\"", delay, 5);
                 Util.SetColor(224, 192, 128);
+                Thread.Sleep(500);
                 Console.WriteLine();
                 Util.Write("그가 나지막이 말합니다.", delay, 5);
                 Thread.Sleep(500);
@@ -555,9 +556,18 @@ namespace sparat_dungeon
                 Util.SetColor(224, 192, 128);
                 Thread.Sleep(500);
                 Console.WriteLine();
-                Util.SetColor(181, 53, 53);
-                Util.Write("[거래가 성립되었습니다. 백검귀가 다음 1회의 전투에서 당신을 돕습니다.]", delay - 20, 5);
                 Util.SetColor(255, 207, 105);
+                Util.Write("[거래가 성립되었습니다. 백검귀가 다음 1회의 전투에서 당신을 돕습니다.]", delay - 20, 5);
+                Util.SetColor(224, 192, 128);
+                if (player.PlayerGold >= 100)
+                {
+                    player.PlayerGold -= 100;
+                    hiredMercenary = new Mercenary("백검귀", 15);
+                }
+                else
+                {
+                    // 돈부족
+                }
             }
             else if (choice == "3")
             {
