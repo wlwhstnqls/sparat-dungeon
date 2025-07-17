@@ -175,30 +175,30 @@ namespace sparat_dungeon
             Util.Textcolor("수련한 무공을 고르십시오.", 25, 5);
             Console.WriteLine();
             Thread.Sleep(500);
-            Util.Textcolor("1.【검사 】", 10, 11);
-            Util.Textcolor("2.【무승 】", 10, 11);
-            Util.Textcolor("3.【기공사 】", 10, 11);
+            Util.Textcolor("1.【검호 】", 10, 11);
+            Util.Textcolor("2.【자객 】", 10, 11);
+            Util.Textcolor("3.【도인 】", 10, 11);
             Console.WriteLine();
             Thread.Sleep(500);
             Console.SetCursorPosition(6, Console.CursorTop);
             Console.Write(": ");
             Console.CursorVisible = true;
             string jobSelect = Console.ReadLine();
-            string jobSelect_str = "검사";
+            string jobSelect_str = "검호";
 
             player = new Player(playerName, jobSelect);
 
             if (jobSelect == "1")
             {
-                jobSelect_str = "검사";
+                jobSelect_str = "검호";
             }
             else if (jobSelect == "2")
             {
-                jobSelect_str = "무승";
+                jobSelect_str = "자객";
             }
             else if (jobSelect == "3")
             {
-                jobSelect_str = "기공사";
+                jobSelect_str = "도인";
             }
             else
             {
