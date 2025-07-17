@@ -77,6 +77,11 @@ namespace sparat_dungeon
                             QuestScene_choice(choice);
                             break;
 
+                        case 5:
+                            choice = PlayerInput();
+                            WhiteSwordMan2_choice(choice);
+                            break;
+
                     }
                 }
                 else if (state == 1) // 상태창
@@ -236,7 +241,7 @@ namespace sparat_dungeon
             Console.WriteLine();
             Console.WriteLine();
             index_count();
-            Util.Write("【정보를 모은다 】", delay - 20, 15);
+            Util.Write("【촌장과 대화 】", delay - 20, 15);
             index_count();
             Util.Write("【객잔으로 이동 】", delay - 20, 15);
             index_count();
@@ -253,11 +258,11 @@ namespace sparat_dungeon
         {
             if (choice == "1")
             {
-                StatusScene();
+                QuestScene();
             }
             else if (choice == "2")
             {
-                InventoryScene();
+                scene = 2;
             }
             else if (choice == "3")
             {
@@ -284,15 +289,15 @@ namespace sparat_dungeon
             }
             else if (choice == "4")
             {
-                QuestScene();
+                StatusScene();
             }
             else if (choice == "5")
             {
-                WhiteSwordMan();
+                InventoryScene();
             }
             else if (choice == "6")
             {
-                scene = 2;
+                WhiteSwordMan1();
             }
             else
             {
@@ -314,7 +319,7 @@ namespace sparat_dungeon
 
         static void StatusScene_choice(string choice)
         {
-            Console.WriteLine("상태보기를 종료합니다.");
+            state = 0;
             MainScene();
         }
 
@@ -339,7 +344,7 @@ namespace sparat_dungeon
             }
             else
             {
-                Console.WriteLine("인벤토리를 종료합니다.");
+                state = 0;
                 MainScene();
             }
         }
@@ -369,21 +374,16 @@ namespace sparat_dungeon
             Util.Write("당신은 잠시 망설이다 객잔으로 발걸음을 옮깁니다.", delay, 5);
             Thread.Sleep(500);
             Console.WriteLine();
-            Util.Write("허리춤의 낡은 검 한 자루와 해진 옷이 당신의 행색 전부.", delay, 5);
-            Util.Write("이제 무엇을 하시겠습니까?", delay, 5);
+            Util.Write("딸그랑, 소리를 내며 문을 열자 객잔 안의 모든 시선이 당신에게로 쏠립니다.", delay, 5);
             Thread.Sleep(500);
             Console.WriteLine();
             Console.WriteLine();
             index_count();
-            Util.Write("【정보를 모은다 】", delay - 20, 15);
+            Util.Write("【음식을 시킨다 】", delay - 20, 15);
             index_count();
-            Util.Write("【객잔으로 이동 】", delay - 20, 15);
+            Util.Write("【주변을 살펴본다 】", delay - 20, 15);
             index_count();
-            Util.Write("【숲으로 향한다 】", delay - 20, 15);
-            index_count();
-            Util.Write("【 상태 보기  】", delay - 20, 15);
-            index_count();
-            Util.Write("【소지품 확인 】", delay - 20, 15);
+            Util.Write("【객잔에서 나가기 】", delay - 20, 15);
             Console.ResetColor();
             scene = 2;
         }
@@ -401,18 +401,91 @@ namespace sparat_dungeon
             Console.ReadLine();
 
             MainScene();
+            scene = 0;
         }
 
-        static void WhiteSwordMan()
+        static void WhiteSwordMan1()
         {
             Console.Clear();
-            Console.WriteLine("상점에 오신것을 환영합니다.");
-            Console.WriteLine("1. 백검귀에게 돈을 준다.");
-            Console.WriteLine("X. 대화를 건다.");
+            index_c = 0;
+            Console.WriteLine();
+            Console.WriteLine();
+            Util.SetColor(224, 192, 128);
+            Util.Write("시선이 쏠린 것도 잠시, 사람들은 다시 자신의 술잔으로 고개를 돌립니다.", delay, 5);
+            Util.Write("하지만 그중에서도 유독 한 사람.", delay, 5);
+            Thread.Sleep(500);
+            Console.WriteLine();
+            Util.Write("객잔 구석, 어두운 자리에 홀로 앉은 사내가 있습니다.", delay, 5);
+            Util.Write("온통 새하얀 옷차림은 시끌벅적한 이곳과 어울리지 않게 기묘한 분위기를 자아냅니다.", delay, 5);
+            Util.Write("그의 옆에는 상아로 만든 듯한 흰 검 한 자루가 조용히 놓여 있습니다.", delay, 5);
+            Thread.Sleep(500);
+            Console.WriteLine();
+            Console.WriteLine();
+            index_count();
+            Util.Write("【음식 주문하기 】", delay - 20, 15);
+            index_count();
+            Util.Write("【흰 옷의 사내에게 다가가기 】", delay - 20, 15);
+            index_count();
+            Util.Write("【객잔에서 나가기 】", delay - 20, 15);
+            Console.ResetColor();
             scene = 3;
         }
 
-        static void WhiteSwordMan_choice(string choice)
+        static void WhiteSwordMan2()
+        {
+            Console.Clear();
+            index_c = 0;
+            Console.WriteLine();
+            Console.WriteLine();
+            Util.SetColor(224, 192, 128);
+            Util.Write("온통 흰 옷을 입고 있지만, 풍기는 분위기는 왠지 모르게 서늘합니다. 그의 옆에는 백옥처럼 흰 검이 놓여 있습니다.", delay, 5);
+            Util.Write("주변 사람들은 그를 '백검귀(白劍鬼)'라 부르며 수군거립니다.", delay, 5);
+            Util.Write("당신이 다가가자, 백검귀는 술잔을 든 채 힐끗 당신을 쳐다봅니다.", delay, 5);
+            Thread.Sleep(500);
+            Console.WriteLine();
+            Util.Write("객잔 구석, 어두운 자리에 홀로 앉은 사내가 있습니다.", delay, 5);
+            Thread.Sleep(500);
+            Console.WriteLine();
+            Util.Write("온통 새하얀 옷차림은 시끌벅적한 이곳과 어울리지 않게 기묘한 분위기를 자아냅니다.", delay, 5);
+            Util.Write("그의 옆에는 상아로 만든 듯한 흰 검 한 자루가 조용히 놓여 있습니다.", delay, 5);
+            Thread.Sleep(500);
+            Console.WriteLine();
+            Console.WriteLine();
+            index_count();
+            Util.Write("【음식 주문하기 】", delay - 20, 15);
+            index_count();
+            Util.Write("【흰 옷의 사내에게 다가가기 】", delay - 20, 15);
+            index_count();
+            Util.Write("【객잔에서 나가기 】", delay - 20, 15);
+            Console.ResetColor();
+            scene = 5;
+        }
+
+        static void WhiteSwordMan1_choice(string choice)
+        {
+            if (choice == "1")
+            {
+                if (player.PlayerGold >= 100)
+                {
+                    player.PlayerGold -= 100;
+                    hiredMercenary = new Mercenary("백검귀", 15);
+                    Console.WriteLine("'백검귀'를 고용했습니다!");
+                }
+                else
+                {
+                    Console.WriteLine("Gold가 부족합니다.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("상점을 종료합니다.");
+            }
+            Thread.Sleep(1000);
+            Console.Clear();
+            MainScene();
+        }
+
+        static void WhiteSwordMan2_choice(string choice)
         {
             if (choice == "1")
             {
