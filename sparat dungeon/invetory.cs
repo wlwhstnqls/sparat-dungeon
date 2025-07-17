@@ -51,13 +51,13 @@ namespace sparat_dungeon
 
         public static List<Item> items = new List<Item>
         {
-            new Item("수련자 갑옷", "수련에 도움을 주는 갑옷입니다.", 0, 5, 0, 1000, ItemType.장비, SlotType.방어구),
-            new Item("무쇠갑옷", "무쇠로 만들어져 튼튼한 갑옷입니다.", 0, 9, 0, 2000, ItemType.장비, SlotType.방어구),
-            new Item("스파르타의 갑옷", "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", 0, 15, 0, 3500, ItemType.장비, SlotType.방어구),
-            new Item("낡은 검", "쉽게 볼 수 있는 낡은 검 입니다.", 2, 0, 0, 600, ItemType.장비, SlotType.무기),
-            new Item("청동 도끼", "어디선가 사용됐던거 같은 도끼입니다.", 5, 0, 0, 1500, ItemType.장비, SlotType.무기),
-            new Item("스파르타의 창", "스파르타의 전사들이 사용했다는 전설의 창입니다.", 7, 0, 0, 2500, ItemType.장비, SlotType.무기),
-            new Item("힐링 포션", "소량의 체력을 회복시켜줍니다.", 0, 0, 0, 100, ItemType.소비, SlotType.없음),
+            new Item("가죽 도포", "가죽으로 만들어진 도포.", 0, 5, 0, 1000, ItemType.장비, SlotType.방어구),
+            new Item("무쇠 도포", "무쇠로 만들어진 도포.", 0, 9, 0, 1500, ItemType.장비, SlotType.방어구),
+            new Item("비단 장삼", "비단으로 만들어진 장삼.", 0, 15, 0, 2000, ItemType.장비, SlotType.방어구),
+            new Item("목검", "나무를 날카롭게 깎아 만들었다.", 2, 0, 0, 1000, ItemType.장비, SlotType.무기),
+            new Item("철단도", "강철을 두드려 만든 무거운 단도.", 5, 0, 0, 1500, ItemType.장비, SlotType.무기),
+            new Item("사두목검", "익숙해지기 어려운 무거운 목검.", 7, 0, 0, 2000, ItemType.장비, SlotType.무기),
+            new Item("약초", "소량의 체력을 회복시켜줍니다.", 0, 0, 0, 100, ItemType.소비, SlotType.없음),
         };
 
         public class Inventory

@@ -130,17 +130,17 @@ namespace sparat_dungeon
                 Console.WriteLine("1. 상태 보기");
                 Console.WriteLine("2. 인벤토리");
                 Console.WriteLine("3. 상점");
-                if (i >= 10)
+                if (i >= 5)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("4. 텍스트를 벤다");
+                    Console.WriteLine("4. 텍스트를 벤다.");
                     Console.ResetColor();
                 }
                 Console.WriteLine();
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
                 Console.Write(">>");
                 string choice = Console.ReadLine();
-                if (choice == "4")
+                if (choice == "벤다")
                 {
                     fake = false;
                 }
