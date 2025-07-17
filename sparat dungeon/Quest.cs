@@ -97,10 +97,6 @@ namespace sparat_dungeon
                 {
                     Console.WriteLine("1. 보상 수령");
                 }
-                else
-                {
-                    Console.WriteLine($"미완료 {playerCh.QuestKillCount}/5");
-                }
                 Console.WriteLine("2. 뒤로 가기");
             }
             else
@@ -195,10 +191,6 @@ namespace sparat_dungeon
                 if (IsCompleted)
                 {
                     Console.WriteLine("1. 보상 수령");
-                }
-                else
-                {
-                    Console.WriteLine("미완료");
                 }
                 Console.WriteLine("2. 뒤로 가기");
             }
@@ -298,9 +290,6 @@ namespace sparat_dungeon
                     Console.WriteLine("1. 보상 수령");
                 }
                 else
-                {
-                    Console.WriteLine("미완료");
-                }
                 Console.WriteLine("2. 뒤로 가기");
             }
             else
