@@ -93,10 +93,7 @@ namespace sparat_dungeon
             Console.WriteLine();
             if(IsAccept)
             {
-                if (IsCompleted)
-                {
-                    Console.WriteLine("1. 보상 수령");
-                }
+                Console.WriteLine("1. 보상 수령(미구현)");
                 Console.WriteLine("2. 뒤로 가기");
             }
             else
@@ -188,10 +185,7 @@ namespace sparat_dungeon
             Console.WriteLine();
             if (IsAccept)
             {
-                if (IsCompleted)
-                {
-                    Console.WriteLine("1. 보상 수령");
-                }
+                Console.WriteLine("1. 보상 수령(미구현)");
                 Console.WriteLine("2. 뒤로 가기");
             }
             else
@@ -285,11 +279,7 @@ namespace sparat_dungeon
             Console.WriteLine();
             if (IsAccept)
             {
-                if(IsCompleted)
-                {
-                    Console.WriteLine("1. 보상 수령");
-                }
-                else
+                Console.WriteLine("1. 보상 수령(미구현)");
                 Console.WriteLine("2. 뒤로 가기");
             }
             else
