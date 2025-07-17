@@ -799,6 +799,16 @@ namespace sparat_dungeon
                     Console.WriteLine("잘못된 스킬 선택입니다.");
                 }
             }
+            if (hiredMercenary != null)
+            {
+                // 만약 지금 공격한 몬스터가 이미 죽었다면 → 다음 살아 있는 몬스터 찾기
+                Monster target = monsters.FirstOrDefault(m => !m.IsDead);
+
+                if (target != null)
+                {
+                    hiredMercenary.Attack(target);
+                }
+            }
 
             Console.WriteLine();
 
