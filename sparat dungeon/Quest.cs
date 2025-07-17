@@ -85,18 +85,42 @@ namespace sparat_dungeon
             Console.WriteLine("??"); // 괜찮은 걸로 설정 하기
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("1. 수락");
-            Console.WriteLine("2. 거절");
+            if(IsAccept)
+            {
+                Console.WriteLine("1. 보상 수령");
+                Console.WriteLine("2. 뒤로 가기");
+            }
+            else
+            {
+                Console.WriteLine("1. 수락");
+                Console.WriteLine("2. 거절");
+            }
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
 
             string input = Console.ReadLine();
-            if(input == "1")
+            if (input == "1")
             {
+                if(IsAccept)
+                {
+                    CheckComplete();
+                }
+
                 // 퀘스트 수락 로직
-                AcceptQuest();
+                if(!IsAccept && !IsComplited)
+                {
+                    AcceptQuest();
+                }
+                else if(IsAccept && !IsComplited)
+                {
+                    Console.WriteLine("아직 의뢰 조건을 채우지 못했소");
+                }
+                else if(IsAccept && IsComplited)
+                {
+                    //GiveReward();
+                }
             }
-            else if(input == "2")
+            else if (input == "2")
             {
                 // 뒤로 가기
             }
@@ -105,13 +129,10 @@ namespace sparat_dungeon
                 Console.WriteLine("없는 선택이오..");
             }
         }
-        public override void CheckComplete(Minion minion)
+        public override void CheckComplete(Player player)
         {
             // 플레이어에 킬카운트 만들고 가져와서 충족요건 확인하기
-            if(minion.DeathCount >= 5)
-            {
-                IsComplited = true;
-            }
+            
         }
 
         public override void GiveReward(Player player)

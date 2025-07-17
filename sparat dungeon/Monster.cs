@@ -69,7 +69,7 @@ namespace sparat_dungeon
     }
     public class Minion : Monster
     {
-        public int DeathCount { get; private set; }
+        public static int DeathCount { get; private set; }
 
         public Minion()
         {
