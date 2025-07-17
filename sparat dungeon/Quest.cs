@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,13 +41,15 @@ namespace sparat_dungeon
         // 퀘스트 달성 조건
         // 보상
 
+        
+
         public int Id;
         public string Title;
         public bool IsAccept;
-        public bool IsComplited;
+        public bool IsCompleted;
 
         public virtual void ShowQuestUI() { }
-
+        
         public virtual void AcceptQuest()
         {
             IsAccept = true;
@@ -56,17 +59,20 @@ namespace sparat_dungeon
         public virtual void CheckComplete(Player player) { }
         public virtual void CheckComplete(Minion minion) { }
 
-        public virtual void GiveReward(Player player) { }
+        public virtual void GiveReward() { }
     }
 
     public class KillQuest : Quest
     {
-        public KillQuest()
+        public Player playerCh { get; set; }
+
+        public KillQuest(Player player)
         {
             Id = 0;
-            Title = "도적 처치하기";
+            Title = "마을의 평화를 위해";
             IsAccept = false;
-            IsComplited = false;
+            IsCompleted = false;
+            playerCh = player;
         }
 
         public override void ShowQuestUI()
@@ -74,12 +80,12 @@ namespace sparat_dungeon
             Console.Clear();
             Console.WriteLine(Title);
             Console.WriteLine();
-            Console.WriteLine("소협! 이 설명촌 주변에 도적들이 많소");
+            Console.WriteLine("소협! 이 설명촌 주변에 도적놈들과 파렴치한 놈들이 많소");
             Console.WriteLine("우리 마을에 젊은 장정들과 아녀자들이 잡혀가고 상인들도 털리오..");
             Console.WriteLine("지푸라기라도 잡는 심정으로 청하오.");
             Console.WriteLine("도적 뗴로부터 이 설명촌을 구해주시오!");
             Console.WriteLine();
-            Console.WriteLine($"- 도적 5명 처치"); // 조건 달기 (미니언 죽을때마다 숫자 올려주기)
+            Console.WriteLine($"- 주변 적들 5명 처치"); // 조건 달기 (미니언 죽을때마다 숫자 올려주기)
             Console.WriteLine();
             Console.WriteLine("-보상-");
             Console.WriteLine("??"); // 괜찮은 걸로 설정 하기
@@ -87,7 +93,14 @@ namespace sparat_dungeon
             Console.WriteLine();
             if(IsAccept)
             {
-                Console.WriteLine("1. 보상 수령");
+                if (IsCompleted)
+                {
+                    Console.WriteLine("1. 보상 수령");
+                }
+                else
+                {
+                    Console.WriteLine($"미완료 {playerCh.QuestKillCount}/5");
+                }
                 Console.WriteLine("2. 뒤로 가기");
             }
             else
@@ -108,13 +121,13 @@ namespace sparat_dungeon
                     CheckComplete();
 
                     // 조건 결과에 따라 보상 지급
-                    if (!IsComplited)
+                    if (!IsCompleted)
                     {
                         Console.WriteLine("아직 의뢰 조건을 채우지 못했소");
                     }
-                    else if (IsComplited)
+                    else if (IsCompleted)
                     {
-                        //GiveReward();
+                        GiveReward();
                     }
                 }
                 // 만약 수락중이 아니라면
@@ -134,25 +147,32 @@ namespace sparat_dungeon
                 Console.WriteLine("없는 선택이오..");
             }
         }
-        public override void CheckComplete(Player player)
+        public override void CheckComplete()
         {
             // 플레이어에 킬카운트 만들고 가져와서 충족요건 확인하기
-            
+            if(playerCh.QuestKillCount >= 5)
+            {
+                IsCompleted = true;
+            }
         }
 
-        public override void GiveReward(Player player)
+        public override void GiveReward()
         {
+            Console.WriteLine("1번 퀘 완");
+            
         }
     }
 
     public class EquipQuest : Quest
     {
-        public EquipQuest()
+        public Player playerCh { get; set; }
+        public EquipQuest(Player player)
         {
             Id = 1;
             Title = "장비 장착 해보기";
             IsAccept = false;
-            IsComplited = false;
+            IsCompleted = false;
+            playerCh = player;
         }
 
         public override void ShowQuestUI()
@@ -172,7 +192,14 @@ namespace sparat_dungeon
             Console.WriteLine();
             if (IsAccept)
             {
-                Console.WriteLine("1. 보상 수령");
+                if (IsCompleted)
+                {
+                    Console.WriteLine("1. 보상 수령");
+                }
+                else
+                {
+                    Console.WriteLine("미완료");
+                }
                 Console.WriteLine("2. 뒤로 가기");
             }
             else
@@ -193,13 +220,13 @@ namespace sparat_dungeon
                     CheckComplete();
 
                     // 조건 결과에 따라 보상 지급
-                    if (!IsComplited)
+                    if (!IsCompleted)
                     {
                         Console.WriteLine("아직 의뢰 조건을 채우지 못했소");
                     }
-                    else if (IsComplited)
+                    else if (IsCompleted)
                     {
-                        //GiveReward();
+                        GiveReward();
                     }
                 }
                 // 만약 수락중이 아니라면
@@ -225,25 +252,27 @@ namespace sparat_dungeon
             // 장비 장착 중인지 확인
             if(Player.EquipWepon != null && Player.EquipArmor != null)
             {
-                IsComplited = true;
+                IsCompleted = true;
             }
 
         }
 
-        public override void GiveReward(Player player)
+        public override void GiveReward()
         {
-            
+            Console.WriteLine("2번 퀘 완");
         }
     }
 
     public class StatusUpQuest : Quest
     {
-        public StatusUpQuest()
+        public Player playerCh { get; set; }
+        public StatusUpQuest(Player player)
         {
             Id = 2;
             Title = "능력치 올려 보기";
             IsAccept = false;
-            IsComplited = false;
+            IsCompleted = false;
+            playerCh = player;
         }
         public override void ShowQuestUI()
         {
@@ -264,7 +293,14 @@ namespace sparat_dungeon
             Console.WriteLine();
             if (IsAccept)
             {
-                Console.WriteLine("1. 보상 수령");
+                if(IsCompleted)
+                {
+                    Console.WriteLine("1. 보상 수령");
+                }
+                else
+                {
+                    Console.WriteLine("미완료");
+                }
                 Console.WriteLine("2. 뒤로 가기");
             }
             else
@@ -285,13 +321,13 @@ namespace sparat_dungeon
                     CheckComplete();
 
                     // 조건 결과에 따라 보상 지급
-                    if (!IsComplited)
+                    if (!IsCompleted)
                     {
                         Console.WriteLine("아직 의뢰 조건을 채우지 못했소");
                     }
-                    else if (IsComplited)
+                    else if (IsCompleted)
                     {
-                        //GiveReward();
+                        GiveReward();
                     }
                 }
                 // 만약 수락중이 아니라면
@@ -312,20 +348,21 @@ namespace sparat_dungeon
             }
         }
 
-        public override void CheckComplete(Player player)
+        public override void CheckComplete()
         {
             // 현재 공격력 몇인지 체크 
             //player.PlayerAtk
 
-            if(player.PlayerAtk > 20 && player.PlayerDef > 20)
-            {
-                IsComplited = true;
-            }
+            //if(Player.PlayerAtk > 20 && player.PlayerDef > 20)
+            //{
+            //    IsCompleted = true;
+            //}
         }
 
-        public override void GiveReward(Player player)
+        public override void GiveReward()
         {
-
+            // 보상 정해서 넣어주기
+            Console.WriteLine("3번 퀘 완");
         }
     }
 }

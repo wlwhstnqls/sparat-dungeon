@@ -755,6 +755,8 @@ namespace sparat_dungeon
                         monster.TakeDamage(damage);
                         if (monster.IsDead == true)
                         {
+                            player.QuestKillCount++;
+                            Console.WriteLine(player.QuestKillCount);
                             Console.WriteLine("Dead");
                         }
                         else
@@ -780,6 +782,7 @@ namespace sparat_dungeon
                     }
                 }
             }
+
             static void SkillAttack(Monster monster)
             {
                 Console.WriteLine("사용할 스킬을 선택하세요:");
@@ -967,9 +970,9 @@ namespace sparat_dungeon
           
         static void SetQuest()
         {
-            quests.Add(new KillQuest());
-            quests.Add(new EquipQuest());
-            quests.Add(new StatusUpQuest());
+            quests.Add(new KillQuest(player));
+            quests.Add(new EquipQuest(player));
+            quests.Add(new StatusUpQuest(player));
         }
 
         static int CheckInput(int min, int max)

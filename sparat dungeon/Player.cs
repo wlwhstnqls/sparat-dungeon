@@ -32,13 +32,11 @@ namespace sparat_dungeon
         public int TotalAtk => PlayerAtk + PlayerExtraAtk;
         public int TotalDef => PlayerDef + PlayerExtraDef;
 
-        public static int QuestKillCount { get; set; }
+        public int QuestKillCount { get; set; }
         public static Item EquipWepon { get; set; }
         public static Item EquipArmor { get; set; }
 
         public Random random = new Random();
-
-        public List<Quest> Quests { get; private set; }
 
         public Player(string playerName, string jobSelect)
         {
@@ -55,7 +53,6 @@ namespace sparat_dungeon
                 PlayerAtk = 10;
                 PlayerDef = 7;
                 PlayerGold = 1500;
-                Quests = new List<Quest>();
             }
             else if (jobSelect == "2" || jobSelect == "자객")
             {
@@ -68,7 +65,6 @@ namespace sparat_dungeon
                 PlayerAtk = 12;
                 PlayerDef = 5;
                 PlayerGold = 1500;
-                Quests = new List<Quest>();
             }
             else if (jobSelect == "3" || jobSelect == "도인")
             {
@@ -81,7 +77,6 @@ namespace sparat_dungeon
                 PlayerAtk = 8;
                 PlayerDef = 3;
                 PlayerGold = 1500;
-                Quests = new List<Quest>();
             }
         }
 
@@ -186,7 +181,17 @@ namespace sparat_dungeon
 
             monster.TakeDamage(skill.SkillDamage);
 
-            Console.WriteLine($"→ 남은 몬스터 HP: {(monster.IsDead ? "Dead" : monster.Hp.ToString())}");
+            Console.Write($"→ 남은 몬스터 HP: ");
+            if (monster.IsDead == true)
+            {
+                QuestKillCount++;
+                Console.WriteLine("Dead");
+            }
+            else
+            {
+                Console.WriteLine(monster.Hp.ToString());
+            }
+
         }
 
 

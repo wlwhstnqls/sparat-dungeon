@@ -77,13 +77,6 @@ namespace sparat_dungeon
             Atk = 5;
             IsDead = false;
         }
-        public void OnDie()
-        {
-            if (Hp <= 0)
-            {
-                IsDead = true;
-            }
-        }
     }
     public class VoidBug : Monster
     {
