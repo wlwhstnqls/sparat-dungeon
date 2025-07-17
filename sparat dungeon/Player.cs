@@ -281,13 +281,13 @@ namespace sparat_dungeon
         public static void EquipItem(Item item)
         {
 
-            if (item.Type != ItemType.장비)
+            if (item.Type != ItemType.Equipment)
             {
                 Console.WriteLine("장비 아이템이 아닙니다.");
                 return;
             }
 
-            if (item.Slot == SlotType.무기)
+            if (item.Slot == SlotType.Weapon)
             {
                 if (EquipWepon == null)
                 {
@@ -303,7 +303,7 @@ namespace sparat_dungeon
 
 
             }
-            else if (item.Slot == SlotType.방어구)
+            else if (item.Slot == SlotType.Armor)
             {
                 if (EquipArmor == null)
                 {
@@ -336,7 +336,7 @@ namespace sparat_dungeon
                     Inventory slot = Item.inventory[i];
                     Item item = slot.Item;
 
-                    if (ItemType.장비 == item.Type)
+                    if (ItemType.Equipment == item.Type)
                     {
                         Item.inventoryE[index] = i;
                         index++;
@@ -418,7 +418,7 @@ namespace sparat_dungeon
                     Inventory slot = Item.inventory[i];
                     Item item = slot.Item;
 
-                    if (ItemType.소비 == item.Type)
+                    if (ItemType.Consumable == item.Type)
                     {
                         Item.inventoryE[index] = i;
                         index++;

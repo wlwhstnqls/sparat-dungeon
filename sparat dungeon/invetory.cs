@@ -13,16 +13,16 @@ namespace sparat_dungeon
 
     public enum ItemType
     {
-        기타,
-        장비,
-        소비
+        Etc,
+        Equipment,
+        Consumable
     }
 
     public enum SlotType
     {
-        없음,
-        무기,
-        방어구
+        None,
+        Weapon ,
+        Armor
     }
 
 
@@ -52,13 +52,13 @@ namespace sparat_dungeon
 
         public static List<Item> items = new List<Item>
         {
-            new Item("헤진 옷", "세월과 싸움이 스민 너덜너덜한 무복.", 0, 5, 0, 1000, ItemType.장비, SlotType.방어구),
-            new Item("무쇠갑옷", "무쇠로 만들어져 튼튼한 갑옷입니다.", 0, 9, 0, 2000, ItemType.장비, SlotType.방어구),
-            new Item("스파르타의 갑옷", "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", 0, 15, 0, 3500, ItemType.장비, SlotType.방어구),
-            new Item("낡은 검", "녹슬었지만 아직 날을 잃지 않은 오래된 검.", 2, 0, 0, 600, ItemType.장비, SlotType.무기),
-            new Item("청동 도끼", "어디선가 사용됐던거 같은 도끼입니다.", 5, 0, 0, 1500, ItemType.장비, SlotType.무기),
-            new Item("스파르타의 창", "스파르타의 전사들이 사용했다는 전설의 창입니다.", 7, 0, 0, 2500, ItemType.장비, SlotType.무기),
-            new Item("약초", "소량의 체력을 회복시켜줍니다.", 0, 0, 0, 100, ItemType.소비, SlotType.없음),
+            new Item("헤진 옷", "세월과 싸움이 스민 너덜너덜한 무복.", 0, 5, 0, 1000, ItemType.Equipment, SlotType.Armor),
+            new Item("무쇠갑옷", "무쇠로 만들어져 튼튼한 갑옷입니다.", 0, 9, 0, 2000, ItemType.Equipment, SlotType.Armor),
+            new Item("스파르타의 갑옷", "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", 0, 15, 0, 3500, ItemType.Equipment, SlotType.Armor),
+            new Item("낡은 검", "녹슬었지만 아직 날을 잃지 않은 오래된 검.", 2, 0, 0, 600, ItemType.Equipment, SlotType.Weapon),
+            new Item("청동 도끼", "어디선가 사용됐던거 같은 도끼입니다.", 5, 0, 0, 1500, ItemType.Equipment, SlotType.Weapon),
+            new Item("스파르타의 창", "스파르타의 전사들이 사용했다는 전설의 창입니다.", 7, 0, 0, 2500, ItemType.Equipment, SlotType.Weapon),
+            new Item("약초", "소량의 체력을 회복시켜줍니다.", 0, 0, 0, 100, ItemType.Consumable, SlotType.None),
         };
 
         public class Inventory
@@ -95,7 +95,7 @@ namespace sparat_dungeon
         {
             Item itemToAdd = items[itemIndex];
 
-            if (itemToAdd.Type != ItemType.장비)
+            if (itemToAdd.Type != ItemType.Equipment)
             {
                 foreach (KeyValuePair<int, Inventory> entry in inventory)
                 {
@@ -180,7 +180,7 @@ namespace sparat_dungeon
                     Console.SetCursorPosition(42, Console.CursorTop);
                     Console.Write(str);
 
-                    if (item.Type == ItemType.소비)
+                    if (item.Type == ItemType.Consumable)
                     {
                         Console.SetCursorPosition(102, Console.CursorTop);
                         Console.Write($"{FL} {slot.Quantity}개");
