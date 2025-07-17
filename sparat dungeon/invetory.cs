@@ -5,6 +5,7 @@ using System.Numerics;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static sparat_dungeon.util;
 
 namespace sparat_dungeon
 {
@@ -51,13 +52,13 @@ namespace sparat_dungeon
 
         public static List<Item> items = new List<Item>
         {
-            new Item("수련자 갑옷", "수련에 도움을 주는 갑옷입니다.", 0, 5, 0, 1000, ItemType.장비, SlotType.방어구),
+            new Item("헤진 옷", "세월과 싸움이 스민 너덜너덜한 무복.", 0, 5, 0, 1000, ItemType.장비, SlotType.방어구),
             new Item("무쇠갑옷", "무쇠로 만들어져 튼튼한 갑옷입니다.", 0, 9, 0, 2000, ItemType.장비, SlotType.방어구),
             new Item("스파르타의 갑옷", "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", 0, 15, 0, 3500, ItemType.장비, SlotType.방어구),
-            new Item("낡은 검", "쉽게 볼 수 있는 낡은 검 입니다.", 2, 0, 0, 600, ItemType.장비, SlotType.무기),
+            new Item("낡은 검", "녹슬었지만 아직 날을 잃지 않은 오래된 검.", 2, 0, 0, 600, ItemType.장비, SlotType.무기),
             new Item("청동 도끼", "어디선가 사용됐던거 같은 도끼입니다.", 5, 0, 0, 1500, ItemType.장비, SlotType.무기),
             new Item("스파르타의 창", "스파르타의 전사들이 사용했다는 전설의 창입니다.", 7, 0, 0, 2500, ItemType.장비, SlotType.무기),
-            new Item("힐링 포션", "소량의 체력을 회복시켜줍니다.", 0, 0, 0, 100, ItemType.소비, SlotType.없음),
+            new Item("약초", "소량의 체력을 회복시켜줍니다.", 0, 0, 0, 100, ItemType.소비, SlotType.없음),
         };
 
         public class Inventory
@@ -74,13 +75,9 @@ namespace sparat_dungeon
 
         public static Dictionary<int, Inventory> inventory = new Dictionary<int, Inventory>
         {
-            //{ 0, new Inventory(items[0], 1) },
-            //{ 1, new Inventory(items[1], 1) },
-            //{ 2, new Inventory(items[2], 1) },
-            //{ 3, new Inventory(items[3], 1) },
-            //{ 4, new Inventory(items[4], 1) },
-            //{ 5, new Inventory(items[6], 3) },
-            //{ 6, new Inventory(items[5], 1) },
+            { 0, new Inventory(items[0], 1) },
+            { 1, new Inventory(items[3], 1) },
+            { 2, new Inventory(items[6], 3) },
         };
 
         public const int MaxInventory = 10;
@@ -170,7 +167,7 @@ namespace sparat_dungeon
                     {
                         str = $"{FL} 최대 체력 +{item.DMG} ";
                     }
-                    if (item.Name == "힐링 포션")
+                    if (item.Name == "약초")
                     {
                         str = $"{FL} 체력회복 +30 ";
                     }
@@ -224,12 +221,14 @@ namespace sparat_dungeon
                         Item item = inventory[itemIndex].Item;
                         Player.EquipItem(item);
 
-                        Console.Write(new string(' ', Console.WindowWidth));
-                        Console.SetCursorPosition(0, Console.CursorTop - 1);
+                        Util.False_();
                         Console.Write("\u001b[38;2;255;200;82m");
-                        Console.Write($"[장착 완료] {item.Name}을(를) 장착했습니다!");
+                        Util.Write($"[장착 완료] {item.Name}을(를) 장착했습니다!", 20, 5);
+                        Console.SetCursorPosition(0, Console.CursorTop - 1);
+                        Console.ResetColor();
 
                         Thread.Sleep(1000);
+                        ShowInventory();
                     }
                     else
                     {
@@ -239,6 +238,7 @@ namespace sparat_dungeon
                 }
                 else
                 {
+                    ShowInventory();
                 }
             }
         }
@@ -259,10 +259,12 @@ namespace sparat_dungeon
                         Item item = slot.Item;
 
 
-                        Console.Write(new string(' ', Console.WindowWidth));
-                        Console.SetCursorPosition(0, Console.CursorTop - 1);
+                       
+                        Util.False_();
                         Console.Write("\u001b[38;2;255;200;82m");
-                        Console.Write($"[아이템 사용] {item.Name}을(를) 사용했습니다!");
+                        Util.Write($"[아이템 사용] {item.Name}을(를) 사용했습니다!", 20, 5);
+                        Console.SetCursorPosition(0, Console.CursorTop - 1);
+                        Console.ResetColor();
 
                         slot.Quantity--;
                         if (slot.Quantity <= 0)
@@ -271,6 +273,7 @@ namespace sparat_dungeon
                         }
 
                         Thread.Sleep(1000);
+                        ShowInventory();
                     }
                     else
                     {
@@ -280,6 +283,7 @@ namespace sparat_dungeon
                 }
                 else
                 {
+                    ShowInventory();
                 }
             }
         }
