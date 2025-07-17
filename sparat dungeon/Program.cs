@@ -638,6 +638,10 @@ namespace sparat_dungeon
                     monster.TakeDamage(damage);
                     if (monster.IsDead == true)
                     {
+                        if(monster.Name== "도적")
+                        {
+                            player.QuestKillCount++;
+                        }
                         Console.WriteLine("Dead");
                     }
                     else

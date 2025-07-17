@@ -101,24 +101,29 @@ namespace sparat_dungeon
             string input = Console.ReadLine();
             if (input == "1")
             {
+                // 만약 퀘스트 수락 중이면
                 if(IsAccept)
                 {
+                    // 조건 검사후
                     CheckComplete();
-                }
 
-                // 퀘스트 수락 로직
-                if(!IsAccept && !IsComplited)
+                    // 조건 결과에 따라 보상 지급
+                    if (!IsComplited)
+                    {
+                        Console.WriteLine("아직 의뢰 조건을 채우지 못했소");
+                    }
+                    else if (IsComplited)
+                    {
+                        //GiveReward();
+                    }
+                }
+                // 만약 수락중이 아니라면
+                else
                 {
+                    // 퀘스트 수락
                     AcceptQuest();
                 }
-                else if(IsAccept && !IsComplited)
-                {
-                    Console.WriteLine("아직 의뢰 조건을 채우지 못했소");
-                }
-                else if(IsAccept && IsComplited)
-                {
-                    //GiveReward();
-                }
+
             }
             else if (input == "2")
             {
@@ -164,10 +169,55 @@ namespace sparat_dungeon
             Console.WriteLine("-보상-");
             Console.WriteLine("??");  // 보상 생각하기
             Console.WriteLine();
-            Console.WriteLine("1. 수락");
-            Console.WriteLine("2. 거절");
+            Console.WriteLine();
+            if (IsAccept)
+            {
+                Console.WriteLine("1. 보상 수령");
+                Console.WriteLine("2. 뒤로 가기");
+            }
+            else
+            {
+                Console.WriteLine("1. 수락");
+                Console.WriteLine("2. 거절");
+            }
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
+
+            string input = Console.ReadLine();
+            if (input == "1")
+            {
+                // 만약 퀘스트 수락 중이면
+                if (IsAccept)
+                {
+                    // 조건 검사후
+                    CheckComplete();
+
+                    // 조건 결과에 따라 보상 지급
+                    if (!IsComplited)
+                    {
+                        Console.WriteLine("아직 의뢰 조건을 채우지 못했소");
+                    }
+                    else if (IsComplited)
+                    {
+                        //GiveReward();
+                    }
+                }
+                // 만약 수락중이 아니라면
+                else
+                {
+                    // 퀘스트 수락
+                    AcceptQuest();
+                }
+
+            }
+            else if (input == "2")
+            {
+                // 뒤로 가기
+            }
+            else
+            {
+                Console.WriteLine("없는 선택이오..");
+            }
         }
 
         public override void CheckComplete()
@@ -200,7 +250,7 @@ namespace sparat_dungeon
             Console.Clear();
             Console.WriteLine(Title);
             Console.WriteLine();
-            Console.WriteLine("제법 무림인 같소. 태가 나오!");
+            Console.WriteLine("이제 제법 무림인 같아 보이는 구만!");
             Console.WriteLine("더욱 강해지기 위해서는 공력을 올려야 한다고 들었소.");
             Console.WriteLine("공력를 올리기 위해서는 실전을 통해 수련해야 하지 않겠소?");
             Console.WriteLine("공력을 올려서 강해져보시오!");
@@ -211,10 +261,55 @@ namespace sparat_dungeon
             Console.WriteLine("-보상-");
             Console.WriteLine($"???"); // 보상 생각하기
             Console.WriteLine();
-            Console.WriteLine("1. 수락");
-            Console.WriteLine("2. 거절");
+            Console.WriteLine();
+            if (IsAccept)
+            {
+                Console.WriteLine("1. 보상 수령");
+                Console.WriteLine("2. 뒤로 가기");
+            }
+            else
+            {
+                Console.WriteLine("1. 수락");
+                Console.WriteLine("2. 거절");
+            }
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
+
+            string input = Console.ReadLine();
+            if (input == "1")
+            {
+                // 만약 퀘스트 수락 중이면
+                if (IsAccept)
+                {
+                    // 조건 검사후
+                    CheckComplete();
+
+                    // 조건 결과에 따라 보상 지급
+                    if (!IsComplited)
+                    {
+                        Console.WriteLine("아직 의뢰 조건을 채우지 못했소");
+                    }
+                    else if (IsComplited)
+                    {
+                        //GiveReward();
+                    }
+                }
+                // 만약 수락중이 아니라면
+                else
+                {
+                    // 퀘스트 수락
+                    AcceptQuest();
+                }
+
+            }
+            else if (input == "2")
+            {
+                // 뒤로 가기
+            }
+            else
+            {
+                Console.WriteLine("없는 선택이오..");
+            }
         }
 
         public override void CheckComplete(Player player)
