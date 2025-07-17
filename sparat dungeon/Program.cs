@@ -716,17 +716,22 @@ namespace sparat_dungeon
             while (true)
             {
                 Console.Clear();
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("Battle!!");
                 Console.WriteLine();
                 for (int i = 0; i < monsters.Count; i++)
                 {
                     if (monsters[i].IsDead == true)
                     {
+                        Console.SetCursorPosition(5, Console.CursorTop);
                         Console.ForegroundColor = ConsoleColor.DarkGray;
                         Console.WriteLine($"{i + 1} Lv.{monsters[i].Level} {monsters[i].Name} HP 0");
                     }
                     else
                     {
+                        Console.SetCursorPosition(5, Console.CursorTop);
                         Console.WriteLine($"{i + 1} Lv.{monsters[i].Level} {monsters[i].Name} HP {monsters[i].Hp}");
                     }
                     Console.ResetColor();
@@ -735,13 +740,19 @@ namespace sparat_dungeon
                 Console.WriteLine();
 
                 // 플레이어 정보 가져오기
+                Console.SetCursorPosition(6, Console.CursorTop);
                 Console.WriteLine("[내 정보]");
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine($"Lv.{player.PlayerLevel} {player.PlayerName} ({player.PlayerJob})");
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine($"HP {player.PlayerHp} / 100");
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine($"MP {player.PlayerMp}");
                 Console.WriteLine();
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("0. 취소");
                 Console.WriteLine();
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("대상을 선택해주세요.");
                 Console.WriteLine();
                 Console.Write(">> ");
@@ -762,8 +773,11 @@ namespace sparat_dungeon
                 }
                 else
                 {
+                    Console.SetCursorPosition(5, Console.CursorTop);
                     Console.WriteLine("이미 사망했습니다.");
+                    Console.SetCursorPosition(5, Console.CursorTop);
                     Console.WriteLine("0. 다시 선택");
+                    Console.SetCursorPosition(5, Console.CursorTop);
                     Console.Write(">> ");
                     Console.ReadLine(); // 사용자 확인 기다렸다가 다시 반복
                 }
@@ -798,6 +812,8 @@ namespace sparat_dungeon
             Random rand = new Random();
 
             Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("Battle!! - YourTurn");
             Console.ResetColor();
