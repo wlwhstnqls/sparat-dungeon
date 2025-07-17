@@ -80,7 +80,7 @@ namespace sparat_dungeon
             Console.Clear();
             Console.WriteLine(Title);
             Console.WriteLine();
-            Console.WriteLine("소협! 이 설명촌 주변에 도적놈들과 파렴치한 놈들이 많소");
+            Console.WriteLine("소협! 이 루탄촌 주변에 도적놈들과 파렴치한 놈들이 많소");
             Console.WriteLine("우리 마을에 젊은 장정들과 아녀자들이 잡혀가고 상인들도 털리오..");
             Console.WriteLine("지푸라기라도 잡는 심정으로 청하오.");
             Console.WriteLine("도적 뗴로부터 이 설명촌을 구해주시오!");
