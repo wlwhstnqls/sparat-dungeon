@@ -12,6 +12,7 @@ namespace sparat_dungeon
     {
         public static int state;
         public static int scene = 0;
+        public static int ev = 1;
         public static int debug = 0;
 
         private static Player player;
@@ -323,7 +324,16 @@ namespace sparat_dungeon
             }
             else if (choice == "3")
             {
-                Console.Clear();
+                if (ev >= 2)
+                {
+                    monsters.Clear();
+                    monsters.Add(new Boss());
+                    ShowBattleUI();
+                }
+                else
+                {
+                    ev++;
+                    Console.Clear();
                 bool allDead = true;
                 foreach (var m in monsters)
                 {
@@ -343,6 +353,7 @@ namespace sparat_dungeon
                 playerEnterHp = player.PlayerHp;
                 ShowBattleUI();
                 MainScene();
+                }
             }
             else if (choice == "4")
             {
@@ -625,7 +636,7 @@ namespace sparat_dungeon
             else if (choice == "2")
             {
                 
-                if (player.PlayerGold >= 2000)
+                if (player.PlayerGold >= 1000)
                 {
                     Console.Clear();
                     Console.WriteLine();
