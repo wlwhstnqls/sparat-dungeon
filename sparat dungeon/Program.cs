@@ -102,7 +102,7 @@ namespace sparat_dungeon
             }
             Console.WriteLine();
             Console.SetCursorPosition(6, Console.CursorTop);
-            Console.Write(">>");
+            Console.Write(">> ");
             return Console.ReadLine();
         }
 
@@ -122,21 +122,33 @@ namespace sparat_dungeon
             while (fake)
             {
                 i += 1;
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.SetCursorPosition(40, Console.CursorTop);
                 Console.WriteLine("스파르타 마을애 오신 여러분 환영합니다.");
+                Console.WriteLine();
+                Console.SetCursorPosition(35, Console.CursorTop);
                 Console.WriteLine("이곳애서 던전으로 들어가기전 활동을 할 수 잇습니다.");
                 Console.WriteLine();
+                Console.SetCursorPosition(52, Console.CursorTop);
                 Console.WriteLine("1. 상태 보기");
+                Console.SetCursorPosition(52, Console.CursorTop);
                 Console.WriteLine("2. 인벤토리");
+                Console.SetCursorPosition(52, Console.CursorTop);
                 Console.WriteLine("3. 상점");
                 if (i >= 5)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
+                    Console.SetCursorPosition(53, Console.CursorTop);
                     Console.WriteLine("4. 텍스트를 벤다.");
                     Console.ResetColor();
                 }
                 Console.WriteLine();
+                Console.SetCursorPosition(43, Console.CursorTop);
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
-                Console.Write(">>");
+                Console.WriteLine();
+                Console.SetCursorPosition(52, Console.CursorTop);
+                Console.Write(">> ");
                 string choice = Console.ReadLine();
                 if (choice == "4" || choice == "벤다")
                 {
@@ -150,10 +162,10 @@ namespace sparat_dungeon
             while ( i2 >= 1 )
             {
                 i2 = i2-1;
-                Console.SetCursorPosition(15, i2);
-                Util.Textcolor("\u001b[38;2;225;25;25m │ ", 0, 50);
+                Console.SetCursorPosition(20, i2);
+                Util.Textcolor("\u001b[38;2;225;25;25m │ ", 0, 56);
                 //Console.WriteLine("│");
-                Thread.Sleep(1);
+                Thread.Sleep(0);
             }
 
             Console.SetCursorPosition(0, 0);
@@ -214,7 +226,7 @@ namespace sparat_dungeon
             Console.CursorVisible = false;
             Console.WriteLine();
             Console.WriteLine();
-            Util.Textcolor("당신의 이름을 알려주십시오, 협객이여.", 25, 5);
+            Util.Textcolor("실례가 안된다면 귀공의 성함을 알려주십시오.", 25, 5);
             Console.WriteLine();
             Thread.Sleep(500);
             Console.SetCursorPosition(6, Console.CursorTop);
@@ -227,12 +239,13 @@ namespace sparat_dungeon
             Console.WriteLine();
             Console.WriteLine();
             Util.Textcolor($"[\u001b[38;2;135;206;250m{playerName}\u001b[38;2;240;248;255m]님이시군요… 강호의 길에 들어선 당신.", 25, 5);
-            Util.Textcolor("수련한 무공을 고르십시오.", 25, 5);
+            Console.WriteLine();
+            Util.Textcolor("행색을 보아하니... 귀공께선....", 25, 5);
             Console.WriteLine();
             Thread.Sleep(500);
-            Util.Textcolor("1.【검호 】", 10, 11);
-            Util.Textcolor("2.【자객 】", 10, 11);
-            Util.Textcolor("3.【도인 】", 10, 11);
+            Util.Textcolor("1.【검호이다 】", 10, 11);
+            Util.Textcolor("2.【자객이다 】", 10, 11);
+            Util.Textcolor("3.【도인이다 】", 10, 11);
             Console.WriteLine();
             Thread.Sleep(500);
             Console.SetCursorPosition(6, Console.CursorTop);
@@ -266,7 +279,8 @@ namespace sparat_dungeon
             Util.Textcolor($"이름: {playerName}", 10, 5);
             Util.Textcolor($"직업: {jobSelect_str}", 10, 5);
             Console.WriteLine();
-            Util.Textcolor($"[\u001b[38;2;135;206;250m{playerName}\u001b[38;2;240;248;255m] 님, [\u001b[38;2;135;206;250m{jobSelect_str}\u001b[38;2;240;248;255m]의 길을 걷게 되었습니다.", 30, 5);
+            Util.Textcolor($"[\u001b[38;2;135;206;250m{playerName}\u001b[38;2;240;248;255m] 님, 역시 [\u001b[38;2;135;206;250m{jobSelect_str}\u001b[38;2;240;248;255m]이시리라 생각했습니다.", 30, 5);
+            Console.WriteLine();
             Util.Textcolor($"강호의 운명이 당신을 기다리고 있습니다...", 30, 5);
             Thread.Sleep(1000);
 
@@ -291,7 +305,7 @@ namespace sparat_dungeon
             Util.Write("현판에는 '루탄촌(淚歎村)'이라는 글씨가 희미하게 남아, 세월의 흔적을 말해줍니다.", delay, 5);
             Thread.Sleep(500);
             Console.WriteLine();
-            Util.Write("허리춤의 낡은 검 한 자루와 해진 옷이 당신의 행색 전부.", delay, 5);
+            Util.Write("허리춤의 목검 한 자루와 해진 옷이 당신의 행색 전부.", delay, 5);
             Util.Write("이제 무엇을 하시겠습니까?", delay, 5);
             Thread.Sleep(500);
             Console.WriteLine();
@@ -324,7 +338,7 @@ namespace sparat_dungeon
             }
             else if (choice == "3")
             {
-                if (ev >= 4)
+                if (ev >= 2)
                 {
                     monsters.Clear();
                     monsters.Add(new Boss());
@@ -754,8 +768,13 @@ namespace sparat_dungeon
                 Console.Clear();
                 Console.WriteLine();
                 Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("전투");
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.SetCursorPosition(6, Console.CursorTop);
+                Console.WriteLine("\u001b[38;2;225;25;25m【적 상태】\u001b[38;2;255;255;255m");
                 Console.WriteLine();
                 for (int i = 0; i < monsters.Count; i++)
                 {
@@ -763,12 +782,15 @@ namespace sparat_dungeon
                     {
                         Console.SetCursorPosition(5, Console.CursorTop);
                         Console.ForegroundColor = ConsoleColor.DarkGray;
-                        Console.WriteLine($"{i + 1} {monsters[i].Level}급 {monsters[i].Name} 0");
+                        //Console.WriteLine($"{i + 1}. {monsters[i].Level}급 {monsters[i].Name} 0");
+                        Console.Write($"{i + 1}. {monsters[i].Level}급 {monsters[i].Name}");
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.Write($"0\n");
                     }
                     else
                     {
                         Console.SetCursorPosition(5, Console.CursorTop);
-                        Console.WriteLine($"{i + 1} {monsters[i].Level}급 {monsters[i].Name} HP {monsters[i].Hp}");
+                        Console.WriteLine($"{i + 1}. {monsters[i].Level}급 {monsters[i].Name} 체력 {monsters[i].Hp}");
                     }
                     Console.ResetColor();
                 }
@@ -777,20 +799,27 @@ namespace sparat_dungeon
 
                 // 플레이어 정보 가져오기
                 Console.SetCursorPosition(6, Console.CursorTop);
-                Console.WriteLine("【현재 상태】");
-                Console.SetCursorPosition(5, Console.CursorTop);
-                Console.WriteLine($"경지 {player.PlayerLevel} {player.PlayerName} ({player.PlayerJob})");
-                Console.SetCursorPosition(5, Console.CursorTop);
-                Console.WriteLine($"체력 {player.PlayerHp} / 100");
-                Console.SetCursorPosition(5, Console.CursorTop);
-                Console.WriteLine($"내공 {player.PlayerMp}");
+                Console.WriteLine("\u001b[38;2;135;206;250m【내 상태】\u001b[38;2;240;248;255m");
                 Console.WriteLine();
                 Console.SetCursorPosition(5, Console.CursorTop);
-                Console.WriteLine("0. 취소");
+                Console.Write($"{player.PlayerLevel}급 ");
+                //Console.SetCursorPosition(5, Console.CursorTop);
+                Console.Write($"\u001b[38;2;135;206;250m{player.PlayerName}\u001b[38;2;240;248;255m({player.PlayerJob}) ");
+                //Console.SetCursorPosition(5, Console.CursorTop);
+                Console.Write($"체력 {player.PlayerHp}");
+                //Console.SetCursorPosition(5, Console.CursorTop);
+                Console.WriteLine($" / 내력 {player.PlayerMp}");
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.SetCursorPosition(5, Console.CursorTop);
+                Console.WriteLine("0. 마을로 돌아가기");
                 Console.WriteLine();
                 Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("대상을 선택해주세요.");
                 Console.WriteLine();
+                Console.SetCursorPosition(5, Console.CursorTop);
                 Console.Write(": ");
 
                 int result = CheckInput(0, monsters.Count);
@@ -810,7 +839,7 @@ namespace sparat_dungeon
                 else
                 {
                     Console.SetCursorPosition(5, Console.CursorTop);
-                    Console.WriteLine("이미 사망했습니다.");
+                    Console.WriteLine("이미 \u001b[38;2;225;25;25m사망\u001b[38;2;255;255;255m했습니다.");
                     Console.SetCursorPosition(5, Console.CursorTop);
                     Console.WriteLine("0. 다시 선택");
                     Console.SetCursorPosition(5, Console.CursorTop);
@@ -863,7 +892,7 @@ namespace sparat_dungeon
             Console.SetCursorPosition(5, Console.CursorTop);
             Console.Write("선택 : ");
             string AttackChoice = Console.ReadLine();
-            Console.SetCursorPosition(5, Console.CursorTop);
+            Console.SetCursorPosition(15, Console.CursorTop);
             if (AttackChoice == "1")
             {
                 NomalAttack(monster, rand);
@@ -878,7 +907,7 @@ namespace sparat_dungeon
             }
 
             Console.SetCursorPosition(5, Console.CursorTop);
-            Console.WriteLine($"{player.PlayerName} 의 공격!!");
+            //Console.WriteLine($"{player.PlayerName} 의 공격!!");
             static void NomalAttack(Monster monster, Random rand)
             { 
               int damage = player.PlayerDamageCalc();
@@ -886,7 +915,7 @@ namespace sparat_dungeon
                 if (avoid < 11)
                 {
                     Console.SetCursorPosition(5, Console.CursorTop);
-                    Console.WriteLine($"{monster.Level}급 {monster.Name} 을(를) 공격했지만 아무일도 일어나지 않았습니다.");
+                    Console.WriteLine($"{monster.Level}급 {monster.Name}을(를) 공격했지만 아무일도 일어나지 않았습니다.");
                 }
                 else
                 {
@@ -895,7 +924,7 @@ namespace sparat_dungeon
                     {
                         damage = (int)(damage * 1.6f);
                         Console.SetCursorPosition(5, Console.CursorTop);
-                        Console.WriteLine($"{monster.Level}급 {monster.Name} 을(를) 맞췄습니다. [피해 : {damage}] - 치명타 공격!!");
+                        Console.WriteLine($"{monster.Level}급 {monster.Name}을(를) 맞췄습니다. [피해 : {damage}] - 치명타 공격!!");
                         Console.WriteLine();
                         Console.SetCursorPosition(5, Console.CursorTop);
                         Console.WriteLine($"{monster.Level}급 {monster.Name}");
@@ -907,17 +936,17 @@ namespace sparat_dungeon
                         {
                             player.QuestKillCount++;
                             Console.WriteLine(player.QuestKillCount);
-                            Console.WriteLine("사망");
+                            Console.WriteLine("-> \u001b[38;2;225;25;25m사망\u001b[38;2;255;255;255m");
                         }
                         else
                         {
-                            Console.WriteLine($"{monster.Hp}");
+                            Console.WriteLine($"-> {monster.Hp}");
                         }
                     }
                     else
                     {
                         Console.SetCursorPosition(5, Console.CursorTop);
-                        Console.WriteLine($"{monster.Level}급 {monster.Name} 을(를) 맞췄습니다. [피해 : {damage}]");
+                        Console.WriteLine($"{monster.Level}급 {monster.Name}을(를) 맞췄습니다. [피해 : {damage}]");
                         Console.WriteLine();
                         Console.SetCursorPosition(5, Console.CursorTop);
                         Console.WriteLine($"{monster.Level}급 {monster.Name}");
@@ -926,7 +955,7 @@ namespace sparat_dungeon
                         monster.TakeDamage(damage);
                         if (monster.IsDead == true)
                         {
-                            Console.WriteLine("사망");
+                            Console.WriteLine("\u001b[38;2;225;25;25m사망\u001b[38;2;255;255;255m");
                         }
                         else
                         {
@@ -946,12 +975,12 @@ namespace sparat_dungeon
                 {
                     Console.SetCursorPosition(5, Console.CursorTop);
                     var skill = player.Skills[i];
-                    Console.WriteLine($"{i + 1}. {skill.SkillName} (피해: {skill.SkillDamage}, 내공 소모: {skill.SkillMana})");
+                    Console.WriteLine($"{i + 1}. {skill.SkillName} (피해: {skill.SkillDamage}, 내력 소모: {skill.SkillMana})");
                 }
 
                 Console.SetCursorPosition(5, Console.CursorTop);
-                Console.Write("선택: ");
-                Console.SetCursorPosition(5, Console.CursorTop);
+                Console.Write("선택 : ");
+                Console.SetCursorPosition(12, Console.CursorTop);
                 if (int.TryParse(Console.ReadLine(), out int skillIndex) && skillIndex >= 1 && skillIndex <= player.Skills.Count)
                 {
                     player.UseSkill(skillIndex - 1, monster);
@@ -1003,9 +1032,9 @@ namespace sparat_dungeon
                 Console.Clear();
                 Console.WriteLine();
                 Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.SetCursorPosition(6, Console.CursorTop);
-                Console.WriteLine("전투 - 적들이 공격합니다.");
+                Console.WriteLine("전투 - \u001b[38;2;225;25;25m적\u001b[38;2;255;255;255m들이 공격합니다.");
                 Console.ResetColor();
                 Console.WriteLine();
 
@@ -1015,12 +1044,14 @@ namespace sparat_dungeon
                     {
                         Console.SetCursorPosition(5, Console.CursorTop);
                         Console.WriteLine($"{monsters[i].Level}급 {monsters[i].Name} 의 공격!!");
+                        Console.WriteLine();
                         Console.SetCursorPosition(5, Console.CursorTop);
-                        Console.WriteLine($"{player.PlayerName}를 맞췄습니다. [피해 : {monsters[i].DamageCalc()}]");
+                        Console.WriteLine($"\u001b[38;2;135;206;250m{player.PlayerName}\u001b[38;2;240;248;255m을(를) 맞췄습니다. (피해 : {monsters[i].DamageCalc()})");
+                        Console.WriteLine();
                         Console.SetCursorPosition(5, Console.CursorTop);
-                        Console.Write(i == 0 ? $"체력 {playerEnterHp} -> " : $"체력 {player.PlayerHp} -> ");
+                        Console.Write(i == 0 ? $"내 남은 체력 {playerEnterHp} -> " : $"내 남은 체력 {player.PlayerHp} -> ");
                         monsters[i].ApplyDamage(player);
-                        Console.WriteLine(player.PlayerHp <= 0 ? "Dead" : $"{player.PlayerHp}");
+                        Console.WriteLine(player.PlayerHp <= 0 ? "\u001b[38;2;225;25;25m사망\u001b[38;2;255;255;255m" : $"{player.PlayerHp}");
                         Console.WriteLine();
                     }
                 }
@@ -1056,19 +1087,24 @@ namespace sparat_dungeon
             Console.Clear();
             Console.WriteLine();
             Console.WriteLine();
-            Console.SetCursorPosition(6, Console.CursorTop);
+            //Console.SetCursorPosition(6, Console.CursorTop);
             // 플레이어 체력 0일 경우 패베 출력
             if (player.PlayerHp <= 0)
             {
-                Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                Console.WriteLine("패배했습니다.\n");
+                for (int i = 0; i < 10; i++)
+                { 
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.WriteLine("패배했습니다.   패배했습니다.   패배했습니다.   패배했습니다.   패배했습니다.   패배했습니다.   패배했습니다.   패배했습니다.   패배했습니다.");
+                }
                 Console.ResetColor();
+                Console.WriteLine();
+                Console.WriteLine();
                 Console.SetCursorPosition(5, Console.CursorTop);
-                Console.WriteLine($"경지 {player.PlayerLevel} {player.PlayerName}");
+                Console.WriteLine($"급수.{player.PlayerLevel}급 {player.PlayerName}({player.PlayerJob})");
                 Console.SetCursorPosition(5, Console.CursorTop);
-                Console.WriteLine($"체력 {playerEnterHp} -> 0\n");
+                Console.WriteLine($"체력 {playerEnterHp} -> 0 (\u001b[38;2;225;25;25m사망\u001b[38;2;255;255;255m)");
                 Console.SetCursorPosition(5, Console.CursorTop);
-                Console.WriteLine("0. 다음\n");
+                Console.WriteLine("여행 종료...\n");
                 Console.SetCursorPosition(5, Console.CursorTop);
                 Console.Write(": ");
                 Console.ReadLine();
@@ -1088,8 +1124,8 @@ namespace sparat_dungeon
 
             if (allDead)
             {
-                Console.WriteLine();
-                Console.WriteLine();
+                //Console.WriteLine();
+                //Console.WriteLine();
                 Console.SetCursorPosition(5, Console.CursorTop);
                 int totalExp = 0;
                 int totalGold = 0;
@@ -1100,7 +1136,7 @@ namespace sparat_dungeon
                 Console.WriteLine("승리했습니다!!\n");
                 Console.ResetColor();
                 Console.SetCursorPosition(5, Console.CursorTop);
-                Console.WriteLine($"총 적들 {monsters.Count}과 무위를 겨루고 승리했습니다.\n");
+                Console.WriteLine($"총 적들 {monsters.Count}과 무위를 겨루고 \u001b[38;2;135;206;250m승리\u001b[38;2;240;248;255m했습니다.\n");
                 foreach (var monster in monsters)
                 {
                     totalExp += monster.MonsterExp();
@@ -1115,14 +1151,19 @@ namespace sparat_dungeon
                         droppedItems.Add(droppedItem);            
                         Item.AddItem(itemIndex);                   
                         Console.SetCursorPosition(5, Console.CursorTop);
-                        Console.WriteLine($"장비 {droppedItem.Name}을(를) 획득했습니다.");
+                        Console.WriteLine($"도구 : \u001b[38;2;135;206;250m{droppedItem.Name}\u001b[38;2;240;248;255m을(를) 획득했습니다.\n");
                     }
                 }
                 player.GainExp(totalExp);
+                Console.WriteLine();
                 Console.SetCursorPosition(5, Console.CursorTop);
-                Console.WriteLine($"체력 {player.PlayerLevel} {player.PlayerName}");
+                Console.WriteLine($"【내 상태】");
                 Console.SetCursorPosition(5, Console.CursorTop);
-                Console.WriteLine($"내공 {playerEnterHp} -> {player.PlayerHp}\n");
+                Console.WriteLine($"\u001b[38;2;135;206;250m{player.PlayerName}\u001b[38;2;240;248;255m({player.PlayerJob})");
+                Console.SetCursorPosition(5, Console.CursorTop);
+                Console.WriteLine($"급수.{player.PlayerLevel}급");
+                Console.SetCursorPosition(5, Console.CursorTop);
+                Console.WriteLine($"체력 {playerEnterHp} -> {player.PlayerHp}\n");
                 Console.SetCursorPosition(5, Console.CursorTop);
                 Console.WriteLine("0. 다음\n");
                 Console.SetCursorPosition(5, Console.CursorTop);

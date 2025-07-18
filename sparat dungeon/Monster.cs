@@ -72,7 +72,7 @@ namespace sparat_dungeon
         public Minion()
         {
             Level = 2;
-            Name = "도적";
+            Name = "\u001b[38;2;225;25;25m도적\u001b[38;2;255;255;255m";
             Hp = 15;
             Atk = 5;
             IsDead = false;
@@ -83,7 +83,7 @@ namespace sparat_dungeon
         public VoidBug()
         {
             Level = 3;
-            Name = "녹림채 잔당";
+            Name = "\u001b[38;2;225;25;25m녹림채 잔당\u001b[38;2;255;255;255m";
             Hp = 10;
             Atk = 9;
             IsDead = false;
@@ -94,7 +94,7 @@ namespace sparat_dungeon
         public CanonMinion()
         {
             Level = 5;
-            Name = "살인광 낭인";
+            Name = "\u001b[38;2;225;25;25m살인광 낭인\u001b[38;2;255;255;255m";
             Hp = 25;
             Atk = 8;
             IsDead = false;
@@ -105,7 +105,7 @@ namespace sparat_dungeon
         public Boss()
         {
             Level = 10;
-            Name = "녹림의 왕 마광팔";
+            Name = "\u001b[38;2;225;25;25m녹림의 왕 마광팔\u001b[38;2;255;255;255m";
             Hp = 2000;
             Atk = 50;
         }

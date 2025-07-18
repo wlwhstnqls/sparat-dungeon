@@ -85,26 +85,26 @@ namespace sparat_dungeon
         public void Playerinfo()
         {
             Console.SetCursorPosition(7, 2);
-            Console.WriteLine("\u001b[38;2;135;206;250m[상태 정보]\u001b[38;2;240;248;255m");
+            Console.WriteLine("[상태 정보]");
             Console.WriteLine();
             Console.SetCursorPosition(5, Console.CursorTop);
-            Console.WriteLine($"\u001b[38;2;135;206;250m - 경지:\u001b[38;2;240;248;255m {PlayerLevel}");
+            Console.WriteLine($" - 이름: \u001b[38;2;135;206;250m{PlayerName}\u001b[38;2;240;248;255m");
             Console.SetCursorPosition(5, Console.CursorTop);
-            Console.WriteLine($"\u001b[38;2;135;206;250m - 경험치:\u001b[38;2;240;248;255m {PlayerExp}");
+            Console.WriteLine($" - 직업: \u001b[38;2;135;206;250m{PlayerJob}\u001b[38;2;240;248;255m");
             Console.SetCursorPosition(5, Console.CursorTop);
-            Console.WriteLine($"\u001b[38;2;135;206;250m - 이름:\u001b[38;2;240;248;255m {PlayerName}");
+            Console.WriteLine($" - 급수: {PlayerLevel} 급");
             Console.SetCursorPosition(5, Console.CursorTop);
-            Console.WriteLine($"\u001b[38;2;135;206;250m - 직업:\u001b[38;2;240;248;255m {PlayerJob}");
+            Console.WriteLine($" - 경험치: {PlayerExp}");
             Console.SetCursorPosition(5, Console.CursorTop);
-            Console.WriteLine(PlayerExtraAtk > 0 ? $"\u001b[38;2;135;206;250m - 공격력:\u001b[38;2;240;248;255m {PlayerAtk} +{PlayerExtraAtk}" : $"\u001b[38;2;135;206;250m - 공격력:\u001b[38;2;240;248;255m {PlayerAtk}");
+            Console.WriteLine(PlayerExtraAtk > 0 ? $" - 공격력: {PlayerAtk} \u001b[38;2;135;206;250m+{PlayerExtraAtk}\u001b[38;2;240;248;255m" : $" - 공격력: {PlayerAtk}");
             Console.SetCursorPosition(5, Console.CursorTop);
-            Console.WriteLine(PlayerExtraDef > 0 ? $"\u001b[38;2;135;206;250m - 방어력:\u001b[38;2;240;248;255m {PlayerDef} +{PlayerExtraDef}" : $"\u001b[38;2;135;206;250m - 방어력:\u001b[38;2;240;248;255m {PlayerDef}");
+            Console.WriteLine(PlayerExtraDef > 0 ? $" - 방어력: {PlayerDef} \u001b[38;2;135;206;250m+{PlayerExtraDef}\u001b[38;2;240;248;255m" : $" - 방어력: {PlayerDef}");
             Console.SetCursorPosition(5, Console.CursorTop);
-            Console.WriteLine($"\u001b[38;2;135;206;250m - 체력:\u001b[38;2;240;248;255m {PlayerHp}");
+            Console.WriteLine($" - 체력: {PlayerHp}");
             Console.SetCursorPosition(5, Console.CursorTop);
-            Console.WriteLine($"\u001b[38;2;135;206;250m - 내공:\u001b[38;2;240;248;255m {PlayerMp}");
+            Console.WriteLine($" - 내력: {PlayerMp}");
             Console.SetCursorPosition(5, Console.CursorTop);
-            Console.WriteLine($"\u001b[38;2;135;206;250m - 소지금:\u001b[38;2;240;248;255m {PlayerGold} 냥");
+            Console.WriteLine($" - 소지금: {PlayerGold} 냥");
             Console.WriteLine();
 
         }
@@ -140,7 +140,7 @@ namespace sparat_dungeon
             PlayerDef += 1;
 
             Console.SetCursorPosition(5, Console.CursorTop);
-            Console.WriteLine($"\n{PlayerName} 님이 레벨업 하셨습니다! 현재 레벨: {PlayerLevel}");
+            Console.WriteLine($"\u001b[38;2;135;206;250m경지\u001b[38;2;240;248;255m가 \u001b[38;2;225;25;25m상승\u001b[38;2;255;255;255m했습니다!\n");
 
             Advancement();
         }
@@ -179,7 +179,7 @@ namespace sparat_dungeon
             if (skillIndex < 0 || skillIndex >= Skills.Count)
             {
                 Console.SetCursorPosition(5, Console.CursorTop);
-                Console.WriteLine("잘못된 스킬 번호입니다.");
+                Console.WriteLine("잘못된 초식입니다.");
                 return;
             }
 
@@ -188,27 +188,30 @@ namespace sparat_dungeon
             if (PlayerMp < skill.SkillMana)
             {
                 Console.SetCursorPosition(5, Console.CursorTop);
-                Console.WriteLine("MP가 부족하여 스킬을 사용할 수 없습니다.");
+                Console.WriteLine("내력이 부족하여 초식을 사용할 수 없습니다.");
                 return;
             }
 
             PlayerMp -= skill.SkillMana;
 
             Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine();
             Console.SetCursorPosition(5, Console.CursorTop);
-            Console.WriteLine($"{PlayerName} 이(가) {skill.SkillName} 스킬을 사용했습니다!\n");
+            Console.WriteLine($"\u001b[38;2;135;206;250m{PlayerName}\u001b[38;2;240;248;255m이(가) {skill.SkillName} 공격!\n");
             Console.SetCursorPosition(5, Console.CursorTop);
-            Console.WriteLine($"→ Lv.{monster.Level} {monster.Name} 에게 {skill.SkillDamage}의 데미지!\n");
+            Console.WriteLine($"→ Lv.{monster.Level} {monster.Name}에게 {skill.SkillDamage}의 피해!\n");
 
             monster.TakeDamage(skill.SkillDamage);
 
             Console.SetCursorPosition(5, Console.CursorTop);
-            Console.Write($"→ 남은 몬스터 HP: \n");
+            Console.Write($"→ {monster.Name}의 남은 체력: ");
+            //Console.WriteLine();
             if (monster.IsDead == true)
             {
                 QuestKillCount++;
-                Console.SetCursorPosition(5, Console.CursorTop);
-                Console.WriteLine("Dead");
+                Console.SetCursorPosition(33, Console.CursorTop);
+                Console.WriteLine("0 (\u001b[38;2;225;25;25m사망\u001b[38;2;255;255;255m)");
             }
             else
             {
@@ -224,47 +227,47 @@ namespace sparat_dungeon
             // 1차 전직
             if (PlayerLevel == 2 && PlayerJob == "검호")
             {
-                PlayerJob = "검존";
+                PlayerJob = "\u001b[38;2;135;206;250m검존\u001b[38;2;240;248;255m";
 
                 Console.SetCursorPosition(5, Console.CursorTop);
-                Console.WriteLine($"\n {PlayerName} 님이 승급 하여 {PlayerJob}이(가) 되셨습니다!");
+                Console.WriteLine($"{PlayerJob}으로 \u001b[38;2;225;25;25m승급\u001b[38;2;255;255;255m했습니다!\n");
             }
             else if(PlayerLevel == 2 && PlayerJob == "자객")
             {
                 PlayerJob = "귀객";
 
                 Console.SetCursorPosition(5, Console.CursorTop);
-                Console.WriteLine($"\n{PlayerName} 님이 승급 하여 {PlayerJob}이(가) 되셨습니다!");
+                Console.WriteLine($"{PlayerJob}으로 \u001b[38;2;225;25;25m승급\u001b[38;2;255;255;255m했습니다!\n");
             }
             else if (PlayerLevel == 2 && PlayerJob == "도인")
             {
                 PlayerJob = "도사";
 
                 Console.SetCursorPosition(5, Console.CursorTop);
-                Console.WriteLine($"\n{PlayerName} 님이 승급 하여 {PlayerJob}이(가) 되셨습니다!");
+                Console.WriteLine($"{PlayerJob}으로 \u001b[38;2;225;25;25m승급\u001b[38;2;255;255;255m했습니다!\n");
             }
 
             // 2차 전직
-            else if (PlayerLevel == 3 && PlayerJob == "검존")
+            else if (PlayerLevel == 3 && PlayerJob == "\u001b[38;2;135;206;250m검존\u001b[38;2;240;248;255m")
             {
-                PlayerJob = "검성";
+                PlayerJob = "\u001b[38;2;135;206;250m검성\u001b[38;2;240;248;255m";
 
                 Console.SetCursorPosition(5, Console.CursorTop);
-                Console.WriteLine($"\n{PlayerName} 님이 승급 하여 {PlayerJob}이(가) 되셨습니다!");
+                Console.WriteLine($"{PlayerJob}으로 \u001b[38;2;225;25;25m승급\u001b[38;2;255;255;255m했습니다!\n");
             }
             else if (PlayerLevel == 3 && PlayerJob == "귀객")
             {
                 PlayerJob = "유협";
 
                 Console.SetCursorPosition(5, Console.CursorTop);
-                Console.WriteLine($"\n {PlayerName} 님이 승급 하여 {PlayerJob}이(가) 되셨습니다!");
+                Console.WriteLine($"{PlayerJob}으로 \u001b[38;2;225;25;25m승급\u001b[38;2;255;255;255m했습니다!\n");
             }
             else if (PlayerLevel == 3 && PlayerJob == "도사")
             {
                 PlayerJob = "현인";
 
                 Console.SetCursorPosition(5, Console.CursorTop);
-                Console.WriteLine($"\n {PlayerName} 님이 승급 하여 {PlayerJob}이(가) 되셨습니다!");
+                Console.WriteLine($"{PlayerJob}으로 \u001b[38;2;225;25;25m승급\u001b[38;2;255;255;255m했습니다!\n");
             }
         }
 
