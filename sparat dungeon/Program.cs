@@ -311,13 +311,6 @@ namespace sparat_dungeon
 
         static void MainScene_choice(string choice)
         {
-            if (ev >= 2)
-            {
-                // 보스몬스터
-            }
-            else
-            {
-                ev++;
             if (choice == "1")
             {
                 delay = 30;
@@ -330,7 +323,14 @@ namespace sparat_dungeon
             }
             else if (choice == "3")
             {
-                Console.Clear();
+                if (ev >= 2)
+                {
+                    // 보스몬스터
+                }
+                else
+                {
+                    ev++;
+                    Console.Clear();
                 bool allDead = true;
                 foreach (var m in monsters)
                 {
@@ -350,6 +350,7 @@ namespace sparat_dungeon
                 playerEnterHp = player.PlayerHp;
                 ShowBattleUI();
                 MainScene();
+                }
             }
             else if (choice == "4")
             {
@@ -367,8 +368,6 @@ namespace sparat_dungeon
                 Util.Write("[!] 잘못된 입력입니다. 다시 시도해주세요.", 20, 5);
                 Console.SetCursorPosition(0, Console.CursorTop - 1);
                 Console.ResetColor();
-            }
-
             }
         }
 
