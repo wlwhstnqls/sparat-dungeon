@@ -12,6 +12,7 @@ namespace sparat_dungeon
     {
         public static int state;
         public static int scene = 0;
+        public static int ev = 1;
         public static int debug = 0;
 
         private static Player player;
@@ -310,6 +311,13 @@ namespace sparat_dungeon
 
         static void MainScene_choice(string choice)
         {
+            if (ev >= 2)
+            {
+                // 보스몬스터
+            }
+            else
+            {
+                ev++;
             if (choice == "1")
             {
                 delay = 30;
@@ -359,6 +367,8 @@ namespace sparat_dungeon
                 Util.Write("[!] 잘못된 입력입니다. 다시 시도해주세요.", 20, 5);
                 Console.SetCursorPosition(0, Console.CursorTop - 1);
                 Console.ResetColor();
+            }
+
             }
         }
 
@@ -624,7 +634,7 @@ namespace sparat_dungeon
             else if (choice == "2")
             {
                 
-                if (player.PlayerGold >= 2000)
+                if (player.PlayerGold >= 1000)
                 {
                     Console.Clear();
                     Console.WriteLine();
