@@ -46,7 +46,7 @@ namespace sparat_dungeon
         }
         public int MonsterExp()
         {
-            return Level;
+            return Level*2;
         }
 
         public int DropGold()

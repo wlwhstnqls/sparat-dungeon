@@ -226,7 +226,7 @@ namespace sparat_dungeon
             Console.CursorVisible = false;
             Console.WriteLine();
             Console.WriteLine();
-            Util.Textcolor($"[\u001b[38;2;135;206;250m{playerName}\u001b[38;2;240;248;255m]…강호의 길에 들어선 당신.", 25, 5);
+            Util.Textcolor($"[\u001b[38;2;135;206;250m{playerName}\u001b[38;2;240;248;255m]님이시군요… 강호의 길에 들어선 당신.", 25, 5);
             Util.Textcolor("수련한 무공을 고르십시오.", 25, 5);
             Console.WriteLine();
             Thread.Sleep(500);
@@ -324,7 +324,7 @@ namespace sparat_dungeon
             }
             else if (choice == "3")
             {
-                if (ev >= 2)
+                if (ev >= 4)
                 {
                     monsters.Clear();
                     monsters.Add(new Boss());
@@ -861,7 +861,7 @@ namespace sparat_dungeon
             Console.SetCursorPosition(5, Console.CursorTop);
             Console.WriteLine("2. 초식 사용");
             Console.SetCursorPosition(5, Console.CursorTop);
-            Console.WriteLine("선택 : ");
+            Console.Write("선택 : ");
             string AttackChoice = Console.ReadLine();
             Console.SetCursorPosition(5, Console.CursorTop);
             if (AttackChoice == "1")

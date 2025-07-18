@@ -54,7 +54,7 @@ namespace sparat_dungeon
                 PlayerMp = 50;
                 PlayerAtk = 10;
                 PlayerDef = 7;
-                PlayerGold = 1500;
+                PlayerGold = 10000;
             }
             else if (jobSelect == "2" || jobSelect == "자객")
             {
@@ -154,8 +154,8 @@ namespace sparat_dungeon
                 case "검호":
                 case "검존":
                 case "검성":
-                    Skills.Add(new Skill("참격", 20, 5));
-                    Skills.Add(new Skill("유성참", 30, 10));
+                    Skills.Add(new Skill("\u001b[38;2;225;25;25m참격\u001b[38;2;255;255;255m", 20, 5));
+                    Skills.Add(new Skill($"\u001b[38;2;135;206;250m유성참\u001b[38;2;240;248;255m", 30, 10));
                     break;
 
                 case "자객":
@@ -194,15 +194,16 @@ namespace sparat_dungeon
 
             PlayerMp -= skill.SkillMana;
 
+            Console.Clear();
             Console.SetCursorPosition(5, Console.CursorTop);
-            Console.WriteLine($"{PlayerName} 이(가) {skill.SkillName} 스킬을 사용했습니다!");
+            Console.WriteLine($"{PlayerName} 이(가) {skill.SkillName} 스킬을 사용했습니다!\n");
             Console.SetCursorPosition(5, Console.CursorTop);
-            Console.WriteLine($"→ Lv.{monster.Level} {monster.Name} 에게 {skill.SkillDamage}의 데미지!");
+            Console.WriteLine($"→ Lv.{monster.Level} {monster.Name} 에게 {skill.SkillDamage}의 데미지!\n");
 
             monster.TakeDamage(skill.SkillDamage);
 
             Console.SetCursorPosition(5, Console.CursorTop);
-            Console.Write($"→ 남은 몬스터 HP: ");
+            Console.Write($"→ 남은 몬스터 HP: \n");
             if (monster.IsDead == true)
             {
                 QuestKillCount++;
