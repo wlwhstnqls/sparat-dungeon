@@ -153,7 +153,8 @@ namespace sparat_dungeon
             {
                 i2 = i2-1;
                 Console.SetCursorPosition(15, i2);
-                Console.WriteLine("│");
+                Util.Textcolor("\u001b[38;2;225;25;25m │ ", 0, 50);
+                //Console.WriteLine("│");
                 Thread.Sleep(1);
             }
 
