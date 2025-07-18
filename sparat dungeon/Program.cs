@@ -136,7 +136,7 @@ namespace sparat_dungeon
                 Console.WriteLine("2. 인벤토리");
                 Console.SetCursorPosition(52, Console.CursorTop);
                 Console.WriteLine("3. 상점");
-                if (i >= 5)
+                if (i >= 10)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.SetCursorPosition(53, Console.CursorTop);
