@@ -16,13 +16,13 @@ namespace sparat_dungeon
             public static void Write(string text, int delay, int index)
             {
                 Console.SetCursorPosition(index, Console.CursorTop);
-                if (delay < 0) // 딜레이가 0보다 작으면 바로 출력되게 0으로 조정
+                if (delay < 0) 
                 {
                     delay = 0;
                 }
-                foreach (char c in text) // 순회문 루프문이랑 비슷함 text안에 텍스트를 하나씩 꺼내와서 c에 추가함
+                foreach (char c in text) 
                 {
-                    Console.Write(c); // 출력 텍스트
+                    Console.Write(c); 
                     if (Program.debug == 0)
                     {
                         Thread.Sleep(delay);

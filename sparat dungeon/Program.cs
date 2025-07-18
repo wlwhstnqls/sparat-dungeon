@@ -366,7 +366,8 @@ namespace sparat_dungeon
                 }
                 playerEnterHp = player.PlayerHp;
                 ShowBattleUI();
-                MainScene();
+                    delay = 0;
+                    MainScene();
                 }
             }
             else if (choice == "4")
@@ -397,12 +398,14 @@ namespace sparat_dungeon
 
         static void StatusScene_choice(string choice)
         {
+            delay = 0;
             state = 0;
             MainScene();
         }
 
         static void InventoryScene()
         {
+            delay = 30;
             state = 2;
             Item.ShowInventory();
         }
@@ -422,6 +425,7 @@ namespace sparat_dungeon
             }
             else
             {
+                delay = 0;
                 state = 0;
                 MainScene();
             }
@@ -1201,6 +1205,7 @@ namespace sparat_dungeon
             switch(input)
             {
                 case 0:
+                    delay = 0;
                     MainScene();
                     scene = 1;
                     break;
