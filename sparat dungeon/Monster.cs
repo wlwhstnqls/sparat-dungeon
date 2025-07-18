@@ -99,10 +99,18 @@ namespace sparat_dungeon
             Atk = 8;
             IsDead = false;
         }
-
-       
-
     }
+    public class Boss : Monster
+    {
+        public Boss()
+        {
+            Level = 10;
+            Name = "녹림의 왕 마광팔";
+            Hp = 2000;
+            Atk = 50;
+        }
+    }
+
 
    
 
