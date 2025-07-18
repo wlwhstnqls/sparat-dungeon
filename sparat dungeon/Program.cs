@@ -325,7 +325,9 @@ namespace sparat_dungeon
             {
                 if (ev >= 2)
                 {
-                    // 보스몬스터
+                    monsters.Clear();
+                    monsters.Add(new Boss());
+                    ShowBattleUI();
                 }
                 else
                 {
