@@ -12,8 +12,6 @@ namespace sparat_dungeon
     {
         public static int state;
         public static int scene = 0;
-        public static int scene_re = 0;
-        public static Action mapFunc;
         public static int debug = 0;
 
         private static Player player;
@@ -56,7 +54,6 @@ namespace sparat_dungeon
                             break;
 
                         case 2:
-                            Rest();
                             choice = PlayerInput();
                             Rest_choice(choice);
                             break;
@@ -140,7 +137,7 @@ namespace sparat_dungeon
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
                 Console.Write(">>");
                 string choice = Console.ReadLine();
-                if (choice == "벤다")
+                if (choice == "4" || choice == "벤다")
                 {
                     fake = false;
                 }
@@ -321,7 +318,7 @@ namespace sparat_dungeon
             else if (choice == "2")
             {
                 delay = 30;
-                scene = 2;
+                Rest();
             }
             else if (choice == "3")
             {
@@ -450,10 +447,22 @@ namespace sparat_dungeon
                 if (player.PlayerHp < 100)
                 {
                     player.PlayerHp = 100;
+                    Util.False_();
+                    Console.SetCursorPosition(0, Console.CursorTop - 2);
+                    Console.Write("\x1b[38;2;25;207;105m");
+                    Util.Write("[따뜻한 음식이 들어가자, 기분 좋은 포만감과 함께 온몸이 개운해졌습니다.]", 20, 5);
+                    Console.SetCursorPosition(0, Console.CursorTop - 1);
+                    Console.ResetColor();
                 }
                 else
-                Console.WriteLine("당신은 휴식이 필요하지 않습니다.");
-                Console.WriteLine($"\n현재체력 : {player.PlayerHp}");
+                {
+                    Util.False_();
+                    Console.SetCursorPosition(0, Console.CursorTop - 2);
+                    Console.Write("\x1b[38;2;181;53;53m");
+                    Util.Write("[배가 고프지 않습니다.]", 20, 5);
+                    Console.SetCursorPosition(0, Console.CursorTop - 1);
+                    Console.ResetColor();
+                }
             }
             else if (choice == "2")
             {
@@ -510,8 +519,11 @@ namespace sparat_dungeon
             Util.SetColor(224, 192, 128);
             Util.Write("온통 흰 옷을 입고 있지만, 풍기는 분위기는 왠지 모르게 서늘합니다.", delay, 5);
             Util.Write("그의 옆에는 백옥처럼 흰 검이 놓여 있습니다.", delay, 5);
+            Console.WriteLine();
             Thread.Sleep(500);
             Util.Write("주변 사람들은 그를 '백검귀(白劍鬼)'라 부르며 수군거립니다.", delay, 5);
+            Console.WriteLine();
+            Thread.Sleep(500);
             Util.Write("당신이 다가가자, 백검귀는 술잔을 든 채 힐끗 당신을 쳐다봅니다.", delay, 5);
             Thread.Sleep(500);
             Console.WriteLine();
@@ -544,10 +556,22 @@ namespace sparat_dungeon
                 if (player.PlayerHp < 100)
                 {
                     player.PlayerHp = 100;
+                    Util.False_();
+                    Console.SetCursorPosition(0, Console.CursorTop - 2);
+                    Console.Write("\x1b[38;2;25;207;105m");
+                    Util.Write("[따뜻한 음식이 들어가자, 기분 좋은 포만감과 함께 온몸이 개운해졌습니다.]", 20, 5);
+                    Console.SetCursorPosition(0, Console.CursorTop - 1);
+                    Console.ResetColor();
                 }
                 else
-                    Console.WriteLine("당신은 휴식이 필요하지 않습니다.");
-                Console.WriteLine($"\n현재체력 : {player.PlayerHp}");
+                {
+                    Util.False_();
+                    Console.SetCursorPosition(0, Console.CursorTop - 2);
+                    Console.Write("\x1b[38;2;181;53;53m");
+                    Util.Write("[배가 고프지 않습니다.]", 20, 5);
+                    Console.SetCursorPosition(0, Console.CursorTop - 1);
+                    Console.ResetColor();
+                }
             }
             else if (choice == "2")
             {

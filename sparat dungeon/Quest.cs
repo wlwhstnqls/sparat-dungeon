@@ -194,6 +194,8 @@ namespace sparat_dungeon
         public override void ShowQuestUI()
         {
             Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine();
             Console.SetCursorPosition(6, Console.CursorTop);
             Console.WriteLine(Title);
             Console.WriteLine();
@@ -305,6 +307,8 @@ namespace sparat_dungeon
         public override void ShowQuestUI()
         {
             Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine();
             Console.SetCursorPosition(6, Console.CursorTop);
             Console.WriteLine(Title);
             Console.WriteLine();
